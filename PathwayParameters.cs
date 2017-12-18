@@ -118,7 +118,7 @@ namespace LayerCanopyPhotosynthesis
         [ModelPar("KcTmin", "", "", "", "")]
         public double KcTMin { get; set; } = 0.0;
         [ModelPar("KcTopt", "", "", "", "")]
-        public double KcTopt { get; set; } = 50.0115;
+        public double KcTOpt { get; set; } = 50.0115;
 
         // Ko μbar	Curvilinear Temperature Model 
         [ModelPar("KoP25", "", "", "", "")]
@@ -130,7 +130,7 @@ namespace LayerCanopyPhotosynthesis
         [ModelPar("KoTmin", "", "", "", "")]
         public double KoTMin { get; set; } = 0.0;
         [ModelPar("KoTopt", "", "", "", "")]
-        public double KoTopt { get; set; } = 37.9682;
+        public double KoTOpt { get; set; } = 37.9682;
 
         //Vcmax μmol/m2/s*	Curvilinear Temperature Model 
         [ModelPar("VcMaxC", "", "V", "c_max", "μmol/m2/s")]
@@ -140,7 +140,7 @@ namespace LayerCanopyPhotosynthesis
         [ModelPar("VcTmin", "", "", "", "")]
         public double VcTMin { get; set; } = 0.0;
         [ModelPar("VcTopt", "", "", "", "")]
-        public double VcTopt { get; set; } = 48.2470;
+        public double VcTOpt { get; set; } = 48.2470;
 
         //Jmax μmol/m2/s*	Curvilinear Temperature Model 
         [ModelPar("JMaxC", "", "V", "c_max", "μmol/m2/s")]
@@ -150,7 +150,7 @@ namespace LayerCanopyPhotosynthesis
         [ModelPar("JTmin", "", "", "", "")]
         public double JTMin { get; set; } = 0.0;
         [ModelPar("JTopt", "", "", "", "")]
-        public double JTopt { get; set; } = 31.2390;
+        public double JTOpt { get; set; } = 31.2390;
 
         //Vcmax/Vomax	-	Curvilinear Temperature Model
         [ModelPar("VcMax.VoMaxP25", "", "", "", "")]
@@ -158,11 +158,11 @@ namespace LayerCanopyPhotosynthesis
         [ModelPar("VcMax.VoMaxC", "", "Vc_max/Vo_max", "", "")]
         public double VcMax_VoMaxC { get; set; } = 0.4242;
         [ModelPar("VcMax.VoMaxTmax", "", "", "", "")]
-        public double VcMax_VoMaxTmax { get; set; } = 60.0;
+        public double VcMax_VoMaxTMax { get; set; } = 60.0;
         [ModelPar("VcMax.VoMaxTmin", "", "", "", "")]
-        public double VcMax_VoMaxTmin { get; set; } = 0.0;
+        public double VcMax_VoMaxTMin { get; set; } = 0.0;
         [ModelPar("VcMax.VoMaxTopt", "", "", "", "")]
-        public double VcMax_VoMaxTopt { get; set; } = 45.0364;
+        public double VcMax_VoMaxTOpt { get; set; } = 45.0364;
 
         // Kp μbar	-- C4
         [ModelPar("KpP25", "", "", "", "")]
@@ -170,31 +170,31 @@ namespace LayerCanopyPhotosynthesis
         [ModelPar("KpC", "", "K", "p", "μbar")]
         public double KpC { get; set; } = 0.6154;
         [ModelPar("KpTmax", "", "", "", "")]
-        public double KpTmax { get; set; } = 60.0;
+        public double KpTMax { get; set; } = 60.0;
         [ModelPar("KpTmin", "", "", "", "")]
-        public double KpTmin { get; set; } = 0.0;
+        public double KpTMin { get; set; } = 0.0;
         [ModelPar("KpTopt", "", "", "", "")]
-        public double KpTopt { get; set; } = 41.4914;
+        public double KpTOpt { get; set; } = 41.4914;
 
         //Vpmax μmol/m2/s*	Curvilinear Temperature Model (C4)
         [ModelPar("VpMaxC", "", "V", "p_max", "μmol/m2/s", "", "", true)]
         public double VpMaxC { get; set; } = 0.5384;
         [ModelPar("VpMaxTmax", "", "", "", "")]
-        public double VpMaxTmax { get; set; } = 45.0;
+        public double VpMaxTMax { get; set; } = 45.0;
         [ModelPar("VpMaxTmin", "", "", "", "")]
-        public double VpMaxTmin { get; set; } = 0.0;
+        public double VpMaxTMin { get; set; } = 0.0;
         [ModelPar("VpMaxTopt", "", "", "", "")]
-        public double VpMaxTopt { get; set; } = 35.8650;
+        public double VpMaxTOpt { get; set; } = 35.8650;
 
         //Rd μmol/m2/s*	
         [ModelPar("RdC", "", "R", "d", "μmol/m2/s")]
         public double RdC { get; set; } = 0.4608;
         [ModelPar("RdTmax", "", "", "", "")]
-        public double RdTmax { get; set; } = 60.0;
+        public double RdTMax { get; set; } = 60.0;
         [ModelPar("RdTmin", "", "", "", "")]
-        public double RdTmin { get; set; } = 0.0;
+        public double RdTMin { get; set; } = 0.0;
         [ModelPar("RdTopt", "", "", "", "")]
-        public double RdTopt { get; set; } = 43.5930;
+        public double RdTOpt { get; set; } = 43.5930;
 
         //gm(Arabidopsis, Bernacchi 2002)    μmol/m2/s/bar	
         [ModelPar("gmP25", "", "", "", "")]
@@ -202,12 +202,14 @@ namespace LayerCanopyPhotosynthesis
         [ModelPar("gmC", "", "R", "d", "μmol/m2/s")]
         public double GmC { get; set; } = 0.5626;
         [ModelPar("GmTmax", "", "", "", "")]
-        public double GmTmax { get; set; } = 42.7227;
+        public double GmTMax { get; set; } = 42.7227;
         [ModelPar("GmTmin", "", "", "", "")]
-        public double GmTmin { get; set; } = 0.0;
+        public double GmTMin { get; set; } = 0.0;
         [ModelPar("GmTopt", "", "", "", "")]
-        public double GmTopt { get; set; } = 33.2424;
+        public double GmTOpt { get; set; } = 33.2424;
 
+        [ModelPar("Beta", "Shape Factor", "", "", "")]
+        public double beta = 1;
 
         #endregion
 

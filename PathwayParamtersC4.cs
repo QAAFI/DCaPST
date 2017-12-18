@@ -72,59 +72,59 @@ namespace LayerCanopyPhotosynthesis
             KcC = 0.1364;
             KcTMax = 60.0;
             KcTMin = 0.0;
-            KcTopt = 49.8308;
+            KcTOpt = 49.8308;
 
             // Ko µbar	Curvilinear Temperature Model 
             KoP25 = 301308.2522;
             KoC = 0.8423;
             KoTMax = 60.0;
             KoTMin = 0.0;
-            KoTopt = 32.4144;
+            KoTOpt = 32.4144;
 
             //Vcmax µmol/m2/s*	Curvilinear Temperature Model 
             VcMaxC = 0.6958;
             VcTMax = 42.0;
             VcTMin = 0.0;
-            VcTopt = 32.3448;
+            VcTOpt = 32.3448;
 
             //Jmax µmol/m2/s*	Curvilinear Temperature Model 
             JMaxC = 0.6731;
             JTMax = 42.0;
             JTMin = 0.0;
-            JTopt = 32.8418;
+            JTOpt = 32.8418;
 
             //Vcmax/Vomax	-	Curvilinear Temperature Model
             VcMax_VoMaxP25 = 4.9015;
             VcMax_VoMaxC = 0.4942;
-            VcMax_VoMaxTmax = 60.0;
-            VcMax_VoMaxTmin = 0.0;
-            VcMax_VoMaxTopt = 44.8955;
+            VcMax_VoMaxTMax = 60.0;
+            VcMax_VoMaxTMin = 0.0;
+            VcMax_VoMaxTOpt = 44.8955;
 
             // Kp µbar	-- C4
             KpP25 = 160.1404;
             KpC = 0.6154;
-            KpTmax = 60.0;
-            KpTmin = 0.0;
-            KpTopt = 41.4914;
+            KpTMax = 60.0;
+            KpTMin = 0.0;
+            KpTOpt = 41.4914;
 
             //Vpmax µmol/m2/s*	Curvilinear Temperature Model (C4)
             VpMaxC = 0.5384;
-            VpMaxTmax = 45.0;
-            VpMaxTmin = 0.0;
-            VpMaxTopt = 35.8650;
+            VpMaxTMax = 45.0;
+            VpMaxTMin = 0.0;
+            VpMaxTOpt = 35.8650;
 
             //Rd µmol/m2/s*	
             RdC = 0.4608;
-            RdTmax = 60.0;
-            RdTmin = 0.0;
-            RdTopt = 43.5930;
+            RdTMax = 60.0;
+            RdTMin = 0.0;
+            RdTOpt = 43.5930;
 
             //gm(Arabidopsis, Bernacchi 2002)    µmol/m2/s/bar	
             GmP25 = 0.55;
             GmC = 0.5626;
-            GmTmax = 42.7227;
-            GmTmin = 0.0;
-            GmTopt = 33.2424;
+            GmTMax = 42.7227;
+            GmTMin = 0.0;
+            GmTOpt = 33.2424;
 
 
             #endregion
