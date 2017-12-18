@@ -44,7 +44,7 @@ namespace LayerCanopyPhotosynthesis
         [ModelPar("Kc_b", "", "", "", "")]
         public double Kc_b { get; set; } = 9741.400;
 
-        // Kc μbar	-- C4
+        // Kp μbar	-- C4
         [ModelPar("Kp_P25", "", "", "", "")]
         public double Kp_P25 { get; set; } = 139;
         [ModelPar("Kp_c", "", "K", "p", "μbar")]
@@ -105,6 +105,111 @@ namespace LayerCanopyPhotosynthesis
         public double F2 = 0.75;
         [ModelPar("6RyTa", "Quantum efficiency of PSI e- flow at the strictly limiting light level", "ɸ", "1(LL)", "")]
         public double F1 = 0.95;
+
+        #region Curvilinear Temperature Model
+        
+        // Kc μbar	Curvilinear Temperature Model
+        [ModelPar("KcP25", "", "", "", "")]
+        public double KcP25 { get; set; } = 267.9295;
+        [ModelPar("KcC", "", "K", "c", "μbar")]
+        public double KcC { get; set; } = 0.1403;
+        [ModelPar("KcTmax", "", "", "", "")]
+        public double KcTMax { get; set; } = 60.0;
+        [ModelPar("KcTmin", "", "", "", "")]
+        public double KcTMin { get; set; } = 0.0;
+        [ModelPar("KcTopt", "", "", "", "")]
+        public double KcTopt { get; set; } = 50.0115;
+
+        // Ko μbar	Curvilinear Temperature Model 
+        [ModelPar("KoP25", "", "", "", "")]
+        public double KoP25 { get; set; } = 164991.8069;
+        [ModelPar("KoC", "", "K", "c", "μbar")]
+        public double KoC { get; set; } = 0.7230;
+        [ModelPar("KoTmax", "", "", "", "")]
+        public double KoTMax { get; set; } = 60.0;
+        [ModelPar("KoTmin", "", "", "", "")]
+        public double KoTMin { get; set; } = 0.0;
+        [ModelPar("KoTopt", "", "", "", "")]
+        public double KoTopt { get; set; } = 37.9682;
+
+        //Vcmax μmol/m2/s*	Curvilinear Temperature Model 
+        [ModelPar("VcMaxC", "", "V", "c_max", "μmol/m2/s")]
+        public double VcMaxC { get; set; } = 0.2352;
+        [ModelPar("VcTmax", "", "", "", "")]
+        public double VcTMax { get; set; } = 60.0;
+        [ModelPar("VcTmin", "", "", "", "")]
+        public double VcTMin { get; set; } = 0.0;
+        [ModelPar("VcTopt", "", "", "", "")]
+        public double VcTopt { get; set; } = 48.2470;
+
+        //Jmax μmol/m2/s*	Curvilinear Temperature Model 
+        [ModelPar("JMaxC", "", "V", "c_max", "μmol/m2/s")]
+        public double JMaxC { get; set; } = 0.7991;
+        [ModelPar("JTmax", "", "", "", "")]
+        public double JTMax { get; set; } = 42.9922;
+        [ModelPar("JTmin", "", "", "", "")]
+        public double JTMin { get; set; } = 0.0;
+        [ModelPar("JTopt", "", "", "", "")]
+        public double JTopt { get; set; } = 31.2390;
+
+        //Vcmax/Vomax	-	Curvilinear Temperature Model
+        [ModelPar("VcMax.VoMaxP25", "", "", "", "")]
+        public double VcMax_VoMaxP25 { get; set; } = 4.1672;
+        [ModelPar("VcMax.VoMaxC", "", "Vc_max/Vo_max", "", "")]
+        public double VcMax_VoMaxC { get; set; } = 0.4242;
+        [ModelPar("VcMax.VoMaxTmax", "", "", "", "")]
+        public double VcMax_VoMaxTmax { get; set; } = 60.0;
+        [ModelPar("VcMax.VoMaxTmin", "", "", "", "")]
+        public double VcMax_VoMaxTmin { get; set; } = 0.0;
+        [ModelPar("VcMax.VoMaxTopt", "", "", "", "")]
+        public double VcMax_VoMaxTopt { get; set; } = 45.0364;
+
+        // Kp μbar	-- C4
+        [ModelPar("KpP25", "", "", "", "")]
+        public double KpP25 { get; set; } = 160.1404;
+        [ModelPar("KpC", "", "K", "p", "μbar")]
+        public double KpC { get; set; } = 0.6154;
+        [ModelPar("KpTmax", "", "", "", "")]
+        public double KpTmax { get; set; } = 60.0;
+        [ModelPar("KpTmin", "", "", "", "")]
+        public double KpTmin { get; set; } = 0.0;
+        [ModelPar("KpTopt", "", "", "", "")]
+        public double KpTopt { get; set; } = 41.4914;
+
+        //Vpmax μmol/m2/s*	Curvilinear Temperature Model (C4)
+        [ModelPar("VpMaxC", "", "V", "p_max", "μmol/m2/s", "", "", true)]
+        public double VpMaxC { get; set; } = 0.5384;
+        [ModelPar("VpMaxTmax", "", "", "", "")]
+        public double VpMaxTmax { get; set; } = 45.0;
+        [ModelPar("VpMaxTmin", "", "", "", "")]
+        public double VpMaxTmin { get; set; } = 0.0;
+        [ModelPar("VpMaxTopt", "", "", "", "")]
+        public double VpMaxTopt { get; set; } = 35.8650;
+
+        //Rd μmol/m2/s*	
+        [ModelPar("RdC", "", "R", "d", "μmol/m2/s")]
+        public double RdC { get; set; } = 0.4608;
+        [ModelPar("RdTmax", "", "", "", "")]
+        public double RdTmax { get; set; } = 60.0;
+        [ModelPar("RdTmin", "", "", "", "")]
+        public double RdTmin { get; set; } = 0.0;
+        [ModelPar("RdTopt", "", "", "", "")]
+        public double RdTopt { get; set; } = 43.5930;
+
+        //gm(Arabidopsis, Bernacchi 2002)    μmol/m2/s/bar	
+        [ModelPar("gmP25", "", "", "", "")]
+        public double GmP25 { get; set; } = 0.55;
+        [ModelPar("gmC", "", "R", "d", "μmol/m2/s")]
+        public double GmC { get; set; } = 0.5626;
+        [ModelPar("GmTmax", "", "", "", "")]
+        public double GmTmax { get; set; } = 42.7227;
+        [ModelPar("GmTmin", "", "", "", "")]
+        public double GmTmin { get; set; } = 0.0;
+        [ModelPar("GmTopt", "", "", "", "")]
+        public double GmTopt { get; set; } = 33.2424;
+
+
+        #endregion
 
         #endregion
     }

@@ -52,6 +52,59 @@ namespace LayerCanopyPhotosynthesis
 
             F2 = 0.75;
             F1 = 0.95;
+
+            #region Curvilinear Temperature Model
+
+            // Kc µbar	Curvilinear Temperature Model 
+            KcP25 = 267.9295;
+            KcC = 0.1403;
+            KcTMax = 60.0;
+            KcTMin = 0.0;
+            KcTopt = 50.0115;
+
+            // Ko µbar	Curvilinear Temperature Model 
+            KoP25 = 164991.8069;
+            KoC = 0.7230;
+            KoTMax = 60.0;
+            KoTMin = 0.0;
+            KoTopt = 37.9682;
+
+            //Vcmax µmol/m2/s*	Curvilinear Temperature Model 
+            VcMaxC = 0.2352;
+            VcTMax = 60.0;
+            VcTMin = 0.0;
+            VcTopt = 48.2470;
+
+            //Jmax µmol/m2/s*	Curvilinear Temperature Model 
+            JMaxC = 0.7991;
+            JTMax = 42.9922;
+            JTMin = 0.0;
+            JTopt = 31.2390;
+
+            //Vcmax/Vomax	-	Curvilinear Temperature Model
+            VcMax_VoMaxP25 = 4.1672;
+            VcMax_VoMaxC = 0.4242;
+            VcMax_VoMaxTmax = 60.0;
+            VcMax_VoMaxTmin = 0.0;
+            VcMax_VoMaxTopt = 45.0364;
+
+            //Rd µmol/m2/s*	
+            RdC = 0.4608;
+            RdTmax = 60.0;
+            RdTmin = 0.0;
+            RdTopt = 43.5930;
+
+            //gm(Arabidopsis, Bernacchi 2002)    µmol/m2/s/bar	
+            GmP25 = 0.55;
+            GmC = 0.5626;
+            GmTmax = 42.7227;
+            GmTmin = 0.0;
+            GmTopt = 33.2424;
+
+
+            #endregion
+
+
         }
     }
 }
