@@ -15,7 +15,7 @@ namespace LayerCanopyPhotosynthesis
     public class TemperatureFunction
     {
         public TemperatureFunction() { }
-        public static double Val(double temp, double P25, double tMin, double tOpt, double tMax, double c, double beta)
+        public static double Val(double temp, double P25, double c, double tMax,  double tMin, double tOpt, double beta)
         {
             double alpha = Math.Log(2) / (Math.Log((tMax - tMin) / (tOpt - tMin)));
             double numerator = 2 * Math.Pow((temp - tMin), alpha) * Math.Pow((tOpt - tMin), alpha) - Math.Pow((temp - tMin), 2 * alpha);
