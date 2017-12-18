@@ -162,7 +162,7 @@ namespace LayerCanopyPhotosynthesis
                     sunlitAssimilations.Add(Math.Min(PM.SunlitAC1.A[0], PM.SunlitAJ.A[0]));
                     shadedAssimilations.Add(Math.Min(PM.ShadedAC1.A[0], PM.ShadedAJ.A[0]));
                 }
-                catch(Exception e)
+                catch(Exception)
                 {
                     sunlitAssimilations.Add(0);
                     shadedAssimilations.Add(0);

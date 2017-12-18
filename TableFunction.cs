@@ -79,7 +79,7 @@ namespace Utilities
                 slope = (Math.Abs(_xVals[sector] - _xVals[sector - 1]) < Double.Epsilon) ? 0 :
                                  (_yVals[sector] - _yVals[sector - 1]) / (_xVals[sector] - _xVals[sector - 1]);
             }
-            catch(DivideByZeroException dbz)
+            catch(DivideByZeroException)
             {
                 slope = 0;
             }
