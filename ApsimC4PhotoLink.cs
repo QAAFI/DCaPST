@@ -12,7 +12,7 @@ namespace LayerCanopyPhotosynthesis
     [System.Runtime.InteropServices.ComVisible(true)]
     public interface IApsimC4PhotoLink
     {
-        double[] Calc(int DOY, double latitude, double maxT, double minT, double radn, double lai, double SLN, double soilWaterAvail,
+        double[] Calc(string[] d, double DOY, double latitude, double maxT, double minT, double radn, double lai, double SLN, double soilWaterAvail,
             double B, double RootShootRatio, double LeafAngle, double SLNRatioTop, double psiVc, double psiJ, double psiRd, double psiVp,
             double psiFactor, double Ca, double CiCaRatio, double gbs, double gm25, double Vpr, double structuralN);
     };
@@ -23,7 +23,7 @@ namespace LayerCanopyPhotosynthesis
     public class ApsimC4PhotoLink : IApsimC4PhotoLink
     {
         public void Calc() { } //deliberately empty 
-        public double[] Calc(int DOY, double latitude, double maxT, double minT, double radn, double lai, double SLN, double soilWaterAvail,
+        public double[] Calc(string[] d, double DOY, double latitude, double maxT, double minT, double radn, double lai, double SLN, double soilWaterAvail,
             double B, double RootShootRatio, double LeafAngle, double SLNRatioTop, double psiVc, double psiJ, double psiRd, double psiVp, 
             double psiFactor, double Ca, double CiCaRatio, double gbs, double gm25, double Vpr, double structuralN) //0 = simple conductance
         {
@@ -38,7 +38,7 @@ namespace LayerCanopyPhotosynthesis
             PM.Canopy.NLayers = 1;
 
             PM.EnvModel.LatitudeD = latitude;
-            PM.EnvModel.DOY = DOY;
+            PM.EnvModel.DOY = (int)DOY;
             PM.EnvModel.MaxT = maxT;
             PM.EnvModel.MinT = minT;
             PM.EnvModel.Radn = radn;  // Check that this changes ratio
