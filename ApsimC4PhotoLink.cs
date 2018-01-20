@@ -12,7 +12,7 @@ namespace LayerCanopyPhotosynthesis
     [System.Runtime.InteropServices.ComVisible(true)]
     public interface IApsimC4PhotoLink
     {
-        double[] Calc(string[] d, double DOY, double latitude, double maxT, double minT, double radn, double lai, double SLN, double soilWaterAvail,
+        double[] Calc(string[] paramNames, double[] paramValues, double DOY, double latitude, double maxT, double minT, double radn, double lai, double SLN, double soilWaterAvail,
             double B, double RootShootRatio, double LeafAngle, double SLNRatioTop, double psiVc, double psiJ, double psiRd, double psiVp,
             double psiFactor, double Ca, double CiCaRatio, double gbs, double gm25, double Vpr, double structuralN);
     };
@@ -23,7 +23,7 @@ namespace LayerCanopyPhotosynthesis
     public class ApsimC4PhotoLink : IApsimC4PhotoLink
     {
         public void Calc() { } //deliberately empty 
-        public double[] Calc(string[] d, double DOY, double latitude, double maxT, double minT, double radn, double lai, double SLN, double soilWaterAvail,
+        public double[] Calc(string[] paramNames, double[] paramValues, double DOY, double latitude, double maxT, double minT, double radn, double lai, double SLN, double soilWaterAvail,
             double B, double RootShootRatio, double LeafAngle, double SLNRatioTop, double psiVc, double psiJ, double psiRd, double psiVp, 
             double psiFactor, double Ca, double CiCaRatio, double gbs, double gm25, double Vpr, double structuralN) //0 = simple conductance
         {
