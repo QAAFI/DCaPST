@@ -27,6 +27,11 @@ namespace LayerCanopyPhotosynthesis
             double B, double RootShootRatio, double LeafAngle, double SLNRatioTop, double psiVc, double psiJ, double psiRd, double psiVp, 
             double psiFactor, double Ca, double CiCaRatio, double gbs, double gm25, double Vpr, double structuralN) //0 = simple conductance
         {
+            Dictionary<string, double> parameters = new Dictionary<string, double>();
+            for(int i=0;i<paramNames.Count();i++)
+            {
+                parameters.Add(paramNames[i], paramValues[i]);
+            }
 
             LayerCanopyPhotosynthesis.PhotosynthesisModelC4 PM = new LayerCanopyPhotosynthesis.PhotosynthesisModelC4();
             PM.Initialised = false;
@@ -50,7 +55,7 @@ namespace LayerCanopyPhotosynthesis
             PM.Canopy.U0 = 1;
             PM.Canopy.Ku = 0.5;
 
-            PM.Canopy.CPath.CiCaRatio = CiCaRatio;
+            PM.Canopy.CPath.CiCaRatio = parameters["CiCaRatio"];
 
             PM.Canopy.CPath.SLNAv = SLN;
             PM.Canopy.CPath.SLNRatioTop = SLNRatioTop;
