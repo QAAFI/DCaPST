@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LayerCanopyPhotosynthesis
 {
-
+    
     // Interface declaration.
     [System.Runtime.InteropServices.Guid("8f9e78bf-de86-4151-868b-db5c23608eba")]
     [System.Runtime.InteropServices.ComVisible(true)]
@@ -15,6 +15,7 @@ namespace LayerCanopyPhotosynthesis
         double[] Calc(string[] paramNames, double[] paramValues, double DOY, double latitude, double maxT, double minT, double radn, double lai, double SLN, double soilWaterAvail,
             double B, double RootShootRatio, double LeafAngle, double SLNRatioTop, double psiVc, double psiJ, double psiRd, double psiVp,
             double psiFactor, double Ca, double CiCaRatio, double gbs, double gm25, double Vpr, double structuralN);
+        void Setup(string[] paramNames, double[] paramValues);
     };
     
     // Interface implementation.
@@ -22,6 +23,11 @@ namespace LayerCanopyPhotosynthesis
     [System.Runtime.InteropServices.ComVisible(true)]
     public class ApsimC4PhotoLink : IApsimC4PhotoLink
     {
+        public void Setup(string[] paramNames, double[] paramValues)
+        {
+            LayerCanopyPhotosynthesis.PhotosynthesisModelC4 PM = new LayerCanopyPhotosynthesis.PhotosynthesisModelC4();
+            PM.Canopy.CPath.CiCaRatio = paramValues[4];
+        }
         public void Calc() { } //deliberately empty 
         public double[] Calc(string[] paramNames, double[] paramValues, double DOY, double latitude, double maxT, double minT, double radn, double lai, double SLN, double soilWaterAvail,
             double B, double RootShootRatio, double LeafAngle, double SLNRatioTop, double psiVc, double psiJ, double psiRd, double psiVp, 
