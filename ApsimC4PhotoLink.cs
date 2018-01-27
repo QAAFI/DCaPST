@@ -30,7 +30,7 @@ namespace LayerCanopyPhotosynthesis
         }
         public void Calc() { } //deliberately empty 
         public double[] Calc(string[] paramNames, double[] paramValues, double DOY, double latitude, double maxT, double minT, double radn, double lai, double SLN, double soilWaterAvail,
-            double B, double RootShootRatio, double LeafAngle, double SLNRatioTop, double psiVc, double psiJ, double psiRd, double psiVp, 
+            double RootShootRatio, double B, double LeafAngle, double SLNRatioTop, double psiVc, double psiJ, double psiRd, double psiVp, 
             double psiFactor, double Ca, double CiCaRatio, double gbs, double gm25, double Vpr, double structuralN) //0 = simple conductance
         {
             Dictionary<string, double> parameters = new Dictionary<string, double>();
@@ -64,13 +64,14 @@ namespace LayerCanopyPhotosynthesis
             PM.Canopy.CPath.CiCaRatio = parameters["CiCaRatio"];
 
             PM.Canopy.CPath.SLNAv = SLN;
-            PM.Canopy.CPath.SLNRatioTop = SLNRatioTop;
-            PM.Canopy.CPath.StructuralN = structuralN;
+            PM.Canopy.CPath.SLNRatioTop = parameters["SLNRatioTop"];
+            PM.Canopy.CPath.StructuralN = parameters["structuralN"];
 
-            PM.Canopy.CPath.PsiVc = psiVc * psiFactor;
-            PM.Canopy.CPath.PsiJ = psiJ * psiFactor;
-            PM.Canopy.CPath.PsiRd = psiRd * psiFactor;
-            PM.Canopy.CPath.PsiVp = psiVp * psiFactor;
+            double psiFact  = parameters["psiFactor"];
+            PM.Canopy.CPath.PsiVc = parameters["psiVc"] * psiFact;
+            PM.Canopy.CPath.PsiJ = parameters["psiJ"] * psiFact;
+            PM.Canopy.CPath.PsiRd = parameters["psiRd"] * psiFact;
+            PM.Canopy.CPath.PsiVp = parameters["psiVp"] * psiFact;
 
             PM.Canopy.Rcp = 1200;
             PM.Canopy.G = 0.066;
@@ -80,7 +81,7 @@ namespace LayerCanopyPhotosynthesis
             PM.Canopy.θ = 0.7;
             PM.Canopy.F = 0.15;
             PM.Canopy.OxygenPartialPressure = 210000;
-            PM.Canopy.Ca = Ca;
+            PM.Canopy.Ca = parameters["Ca"];
 
             PM.Canopy.Gbs_CO2 = 0.003;
             PM.Canopy.Alpha = 0.1;
@@ -118,9 +119,9 @@ namespace LayerCanopyPhotosynthesis
             PM.Canopy.CPath.Gm_TOpt = 34.309;
             PM.Canopy.CPath.Gm_Omega = 20.791;
 
-            PM.Canopy.Gbs_CO2 = gbs;
-            PM.Canopy.CPath.Gm_P25 = gm25;
-            PM.Canopy.Vpr_l = Vpr;
+            PM.Canopy.Gbs_CO2 = parameters["gbs"];
+            PM.Canopy.CPath.Gm_P25 = parameters["gm25"];
+            PM.Canopy.Vpr_l = parameters["Vpr"];
 
             PM.EnvModel.Initilised = true;
             PM.EnvModel.Run();
