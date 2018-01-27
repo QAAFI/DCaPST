@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="LayerCanopyPhotosynthesis.Angle" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAACADAIAAAAAQAgAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Angle.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.ApsimC3PhotoLink" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ApsimC3PhotoLink.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.ApsimC4PhotoLink" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAACAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ApsimC4PhotoLink.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.EnvironmentModel" Collapsed="true">
+    <Position X="10.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>he3BU0iAiHEAYATMTIMIEQEsOngUIaUxIUIFRRFEURs=</HashCode>
+      <FileName>EnvironmentModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.LayerModel" Collapsed="true">
+    <Position X="12" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LayerModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.LeafCanopy" Collapsed="true">
+    <Position X="13.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>3C7cgqkPbBWqSQMkKvQnttIPvB09B5U/XWkCuu/7wfM=</HashCode>
+      <FileName>LeafCanopy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.LightVar" Collapsed="true">
+    <Position X="15.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAEAAACAAAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>LightVar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.ModArrhenius" Collapsed="true">
+    <Position X="10.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModArrhehenius.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.ModelPar" Collapsed="true">
+    <Position X="5.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAACCAAAAAAgACAAAAAAAAAAAAAAACAAEAgAAAAACAA=</HashCode>
+      <FileName>ModelPar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.ModelVar" Collapsed="true">
+    <Position X="5.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModelVar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.NaturalSpline" Collapsed="true">
+    <Position X="12" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gBAAAAAAIAAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NaturalSpline.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.NotifyablePropertyClass" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NotifyablePropertyClass.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.PathwayParameters" Collapsed="true">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>LkB5kBBEQILCACCAAQEAzAIGnEERIAjKpOBkBmjR0Aw=</HashCode>
+      <FileName>PathwayParameters.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.PathwayParametersC3" Collapsed="true">
+    <Position X="5.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PathwayParamtersC3.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.PathwayParametersC4" Collapsed="true">
+    <Position X="7.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PathwayParamtersC4.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.PhotosynthesisModel" Collapsed="true">
+    <Position X="1.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UABAsAABAIAxJAAAgIQBAAQQQVDoQigBgISQokCUBRI=</HashCode>
+      <FileName>PhotosynthesisModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.PhotosynthesisModelC3" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>PhotosynthesisModelC3.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.PhotosynthesisModelC4" Collapsed="true">
+    <Position X="2.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAI=</HashCode>
+      <FileName>PhotosynthesisModelC4.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.ShadedCanopy" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAACABQAAAAAAAAAAAAAAACEAAgAAAAAQCA=</HashCode>
+      <FileName>ShadedCanopy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.SunlitCanopy" Collapsed="true">
+    <Position X="2.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAACIBQAACAAAAAAAAAAAACEgAgAAAAAQCA=</HashCode>
+      <FileName>SunlitCanopy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.SunlitShadedCanopy" Collapsed="true">
+    <Position X="1.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gBAAkArGBBICghEE5kMFdJJDQhlJIA2OAIwFcExb3Rc=</HashCode>
+      <FileName>SunlitShadedCanopy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.TempFunctionExp" Collapsed="true">
+    <Position X="10.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TempFunctionExp.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.TemperatureFunction" Collapsed="true">
+    <Position X="17.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TempFunctionExp.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.TempFunctionNormal" Collapsed="true">
+    <Position X="12" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TempFunctionNormal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LayerCanopyPhotosynthesis.TrapezoidLayer" Collapsed="true">
+    <Position X="13.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>TrapezoidLayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="C3MethodExtensions.C3MethodExtensions" Collapsed="true">
+    <Position X="15.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAABAAAAAAAAAAAAAAAAABAAAEAAAAAAAA=</HashCode>
+      <FileName>C3MethodExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="C4MethodExtensions.C4MethodExtensions" Collapsed="true">
+    <Position X="17.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAABAAAAAAAAAAAAAAAAABAAAEAAAAAAAA=</HashCode>
+      <FileName>C4MethodExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.LookupTable" Collapsed="true">
+    <Position X="17.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAACAAAAAAAACAAAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LookupTable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilities.TableFunction" Collapsed="true">
+    <Position X="15.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAABAAAAAAAgAAAAEAAAAgAAAAAQA=</HashCode>
+      <FileName>TableFunction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PSAppServerCoreNet.Classes.ReflectionHelper" Collapsed="true">
+    <Position X="13.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAEAAAAAAAIABAAAAAIAABABAAAAAAAIAgAAA=</HashCode>
+      <FileName>ReflectionHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="LayerCanopyPhotosynthesis.IApsimC3PhotoLink" Collapsed="true">
+    <Position X="10.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ApsimC3PhotoLink.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="LayerCanopyPhotosynthesis.IApsimC4PhotoLink" Collapsed="true">
+    <Position X="12" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ApsimC4PhotoLink.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="LayerCanopyPhotosynthesis.AngleType" Collapsed="true">
+    <Position X="10.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Angle.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LayerCanopyPhotosynthesis.SSType" Collapsed="true">
+    <Position X="12" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>SunlitShadedCanopy.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LayerCanopyPhotosynthesis.TranspirationMode" Collapsed="true">
+    <Position X="13.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABA=</HashCode>
+      <FileName>SunlitShadedCanopy.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

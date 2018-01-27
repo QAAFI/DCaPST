@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace LayerCanopyPhotosynthesis
 {
 
+    
     // Interface declaration.
     [System.Runtime.InteropServices.Guid("8f9e78bf-de86-4151-868b-db5c23608eba")]
     [System.Runtime.InteropServices.ComVisible(true)]
@@ -22,10 +23,37 @@ namespace LayerCanopyPhotosynthesis
     [System.Runtime.InteropServices.ComVisible(true)]
     public class ApsimC4PhotoLink : IApsimC4PhotoLink
     {
+        LayerCanopyPhotosynthesis.PhotosynthesisModelC4 PM;
         public void Setup(string[] paramNames, double[] paramValues)
         {
-            LayerCanopyPhotosynthesis.PhotosynthesisModelC4 PM = new LayerCanopyPhotosynthesis.PhotosynthesisModelC4();
-            PM.Canopy.CPath.CiCaRatio = paramValues[4];
+            Dictionary<string, double> parameters = new Dictionary<string, double>();
+            for (int i = 0; i < paramNames.Count(); i++)
+            {
+                parameters.Add(paramNames[i], paramValues[i]);
+            }
+
+            PM = new LayerCanopyPhotosynthesis.PhotosynthesisModelC4();
+            PM.Initialised = false;
+            PM.photoPathway = LayerCanopyPhotosynthesis.PhotosynthesisModel.PhotoPathway.C4;
+
+            PM.conductanceModel = LayerCanopyPhotosynthesis.PhotosynthesisModel.ConductanceModel.SIMPLE;
+            PM.electronTransportModel = LayerCanopyPhotosynthesis.PhotosynthesisModel.ElectronTransportModel.EMPIRICAL;
+
+            PM.Canopy.NLayers = 1;
+
+            PM.Canopy.CPath.CiCaRatio = parameters["CiCaRatio"];
+            PM.Canopy.LeafAngle = parameters["LeafAngle"];
+            PM.Canopy.CPath.SLNRatioTop = parameters["SLNRatioTop"];
+            PM.Canopy.CPath.StructuralN = parameters["structuralN"];
+
+            double psiFact = parameters["psiFactor"];
+            PM.Canopy.CPath.PsiVc = parameters["psiVc"] * psiFact;
+            PM.Canopy.CPath.PsiJ = parameters["psiJ"] * psiFact;
+            PM.Canopy.CPath.PsiRd = parameters["psiRd"] * psiFact;
+            PM.Canopy.CPath.PsiVp = parameters["psiVp"] * psiFact;
+
+
+
         }
         public void Calc() { } //deliberately empty 
         public double[] Calc(string[] paramNames, double[] paramValues, double DOY, double latitude, double maxT, double minT, double radn,
@@ -37,14 +65,10 @@ namespace LayerCanopyPhotosynthesis
                 parameters.Add(paramNames[i], paramValues[i]);
             }
 
-            LayerCanopyPhotosynthesis.PhotosynthesisModelC4 PM = new LayerCanopyPhotosynthesis.PhotosynthesisModelC4();
-            PM.Initialised = false;
-            PM.photoPathway = LayerCanopyPhotosynthesis.PhotosynthesisModel.PhotoPathway.C4;
+      //      PM = new LayerCanopyPhotosynthesis.PhotosynthesisModelC4();
+            
+            PM.Canopy.CPath.CiCaRatio = parameters["CiCaRatio"];
 
-            PM.conductanceModel = LayerCanopyPhotosynthesis.PhotosynthesisModel.ConductanceModel.SIMPLE;
-            PM.electronTransportModel = LayerCanopyPhotosynthesis.PhotosynthesisModel.ElectronTransportModel.EMPIRICAL;
-
-            PM.Canopy.NLayers = 1;
 
             PM.EnvModel.LatitudeD = latitude;
             PM.EnvModel.DOY = (int)DOY;
@@ -54,23 +78,11 @@ namespace LayerCanopyPhotosynthesis
             PM.EnvModel.ATM = 1.013;
 
             PM.Canopy.LAI = lai;
-            PM.Canopy.LeafAngle = parameters["LeafAngle"];
             PM.Canopy.LeafWidth = 0.05;
             PM.Canopy.U0 = 1;
             PM.Canopy.Ku = 0.5;
 
-            PM.Canopy.CPath.CiCaRatio = parameters["CiCaRatio"];
-
             PM.Canopy.CPath.SLNAv = SLN;
-            PM.Canopy.CPath.SLNRatioTop = parameters["SLNRatioTop"];
-            PM.Canopy.CPath.StructuralN = parameters["structuralN"];
-
-            double psiFact = parameters["psiFactor"];
-            PM.Canopy.CPath.PsiVc = parameters["psiVc"] * psiFact;
-            PM.Canopy.CPath.PsiJ = parameters["psiJ"] * psiFact;
-            PM.Canopy.CPath.PsiRd = parameters["psiRd"] * psiFact;
-            PM.Canopy.CPath.PsiVp = parameters["psiVp"] * psiFact;
-
             PM.Canopy.Rcp = 1200;
             PM.Canopy.G = 0.066;
             PM.Canopy.Sigma = 5.668E-08;
