@@ -12,9 +12,8 @@ namespace LayerCanopyPhotosynthesis
     [System.Runtime.InteropServices.ComVisible(true)]
     public interface IApsimC4PhotoLink
     {
-        double[] Calc(string[] paramNames, double[] paramValues, double DOY, double latitude, double maxT, double minT, double radn, double lai, double SLN, double soilWaterAvail,
-            double B, double RootShootRatio, double LeafAngle, double SLNRatioTop, double psiVc, double psiJ, double psiRd, double psiVp,
-            double psiFactor, double Ca, double CiCaRatio, double gbs, double gm25, double Vpr, double structuralN);
+        double[] Calc(string[] paramNames, double[] paramValues, double DOY, double latitude, double maxT, double minT, double radn, 
+            double lai, double SLN, double soilWaterAvail, double RootShootRatio);
         void Setup(string[] paramNames, double[] paramValues);
     };
     
@@ -29,9 +28,8 @@ namespace LayerCanopyPhotosynthesis
             PM.Canopy.CPath.CiCaRatio = paramValues[4];
         }
         public void Calc() { } //deliberately empty 
-        public double[] Calc(string[] paramNames, double[] paramValues, double DOY, double latitude, double maxT, double minT, double radn, double lai, double SLN, double soilWaterAvail,
-            double RootShootRatio, double B, double LeafAngle, double SLNRatioTop, double psiVc, double psiJ, double psiRd, double psiVp, 
-            double psiFactor, double Ca, double CiCaRatio, double gbs, double gm25, double Vpr, double structuralN) //0 = simple conductance
+      public  double[] Calc(string[] paramNames, double[] paramValues, double DOY, double latitude, double maxT, double minT, double radn,
+            double lai, double SLN, double soilWaterAvail, double RootShootRatio)
         {
             Dictionary<string, double> parameters = new Dictionary<string, double>();
             for(int i=0;i<paramNames.Count();i++)
@@ -56,7 +54,7 @@ namespace LayerCanopyPhotosynthesis
             PM.EnvModel.ATM = 1.013;
 
             PM.Canopy.LAI = lai;
-            PM.Canopy.LeafAngle = LeafAngle;
+            PM.Canopy.LeafAngle = parameters["LeafAngle"];
             PM.Canopy.LeafWidth = 0.05;
             PM.Canopy.U0 = 1;
             PM.Canopy.Ku = 0.5;
@@ -215,6 +213,7 @@ namespace LayerCanopyPhotosynthesis
             }
             double[] results = new double[4];
 
+            double B = parameters["B"];
             results[0] = (sunlitAssimilations.Sum() + shadedAssimilations.Sum()) * 3600 / 1000000 * 44 * B * 100 / ((1 + RootShootRatio) * 100);
             results[1] = hourlyWaterDemandsmm.Sum();
             results[2] = hourlyWaterSuppliesmm.Sum();
