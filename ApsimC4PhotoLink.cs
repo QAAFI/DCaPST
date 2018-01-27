@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace LayerCanopyPhotosynthesis
 {
-    
+
     // Interface declaration.
     [System.Runtime.InteropServices.Guid("8f9e78bf-de86-4151-868b-db5c23608eba")]
     [System.Runtime.InteropServices.ComVisible(true)]
     public interface IApsimC4PhotoLink
     {
-        double[] Calc(string[] paramNames, double[] paramValues, double DOY, double latitude, double maxT, double minT, double radn, 
+        double[] Calc(string[] paramNames, double[] paramValues, double DOY, double latitude, double maxT, double minT, double radn,
             double lai, double SLN, double soilWaterAvail, double RootShootRatio);
         void Setup(string[] paramNames, double[] paramValues);
     };
-    
+
     // Interface implementation.
     [System.Runtime.InteropServices.Guid("5657ad55-ddca-4d7e-a2bc-1b0d119a85e2")]
     [System.Runtime.InteropServices.ComVisible(true)]
@@ -28,11 +28,11 @@ namespace LayerCanopyPhotosynthesis
             PM.Canopy.CPath.CiCaRatio = paramValues[4];
         }
         public void Calc() { } //deliberately empty 
-      public  double[] Calc(string[] paramNames, double[] paramValues, double DOY, double latitude, double maxT, double minT, double radn,
-            double lai, double SLN, double soilWaterAvail, double RootShootRatio)
+        public double[] Calc(string[] paramNames, double[] paramValues, double DOY, double latitude, double maxT, double minT, double radn,
+              double lai, double SLN, double soilWaterAvail, double RootShootRatio)
         {
             Dictionary<string, double> parameters = new Dictionary<string, double>();
-            for(int i=0;i<paramNames.Count();i++)
+            for (int i = 0; i < paramNames.Count(); i++)
             {
                 parameters.Add(paramNames[i], paramValues[i]);
             }
@@ -65,7 +65,7 @@ namespace LayerCanopyPhotosynthesis
             PM.Canopy.CPath.SLNRatioTop = parameters["SLNRatioTop"];
             PM.Canopy.CPath.StructuralN = parameters["structuralN"];
 
-            double psiFact  = parameters["psiFactor"];
+            double psiFact = parameters["psiFactor"];
             PM.Canopy.CPath.PsiVc = parameters["psiVc"] * psiFact;
             PM.Canopy.CPath.PsiJ = parameters["psiJ"] * psiFact;
             PM.Canopy.CPath.PsiRd = parameters["psiRd"] * psiFact;
@@ -84,7 +84,7 @@ namespace LayerCanopyPhotosynthesis
             PM.Canopy.Gbs_CO2 = 0.003;
             PM.Canopy.Alpha = 0.1;
             PM.Canopy.X = 0.4;
-            
+
             PM.Canopy.DiffuseExtCoeff = 0.8;
             PM.Canopy.LeafScatteringCoeff = 0.2;
             PM.Canopy.DiffuseReflectionCoeff = 0.057;
@@ -139,7 +139,7 @@ namespace LayerCanopyPhotosynthesis
                 //This run is to get potential water use
 
                 if (time > PM.EnvModel.Sunrise && time < PM.EnvModel.Sunset)
-                {  
+                {
                     PM.Run(time, soilWaterAvail);
                     sunlitWaterDemands.Add(Math.Min(Math.Min(PM.SunlitAC1.Elambda_[0], PM.sunlitAC2.Elambda_[0]), PM.SunlitAJ.Elambda_[0]));
                     shadedWaterDemands.Add(Math.Min(Math.Min(PM.ShadedAC1.Elambda_[0], PM.shadedAC2.Elambda_[0]), PM.ShadedAJ.Elambda_[0]));
