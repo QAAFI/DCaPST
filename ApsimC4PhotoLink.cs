@@ -13,7 +13,7 @@ namespace LayerCanopyPhotosynthesis
     [System.Runtime.InteropServices.ComVisible(true)]
     public interface IApsimC4PhotoLink
     {
-        double[] Calc(string[] paramNames, double[] paramValues, double DOY, double latitude, double maxT, double minT, double radn,
+        double[] Calc(double DOY, double latitude, double maxT, double minT, double radn,
             double lai, double SLN, double soilWaterAvail, double RootShootRatio);
         void Setup(string[] paramNames, double[] paramValues);
     };
@@ -52,24 +52,28 @@ namespace LayerCanopyPhotosynthesis
             PM.Canopy.CPath.PsiRd = parameters["psiRd"] * psiFact;
             PM.Canopy.CPath.PsiVp = parameters["psiVp"] * psiFact;
 
+            PM.Canopy.Ca = parameters["Ca"];
+
+            PM.Canopy.Gbs_CO2 = parameters["gbs"];
+            PM.Canopy.CPath.Gm_P25 = parameters["gm25"];
+            PM.Canopy.Vpr_l = parameters["Vpr"];
+
+            PM.B = parameters["B"];
+
+            PM.Canopy.Gbs_CO2 = parameters["gbs"];
+
 
 
         }
         public void Calc() { } //deliberately empty 
-        public double[] Calc(string[] paramNames, double[] paramValues, double DOY, double latitude, double maxT, double minT, double radn,
+        public double[] Calc( double DOY, double latitude, double maxT, double minT, double radn,
               double lai, double SLN, double soilWaterAvail, double RootShootRatio)
         {
-            Dictionary<string, double> parameters = new Dictionary<string, double>();
-            for (int i = 0; i < paramNames.Count(); i++)
-            {
-                parameters.Add(paramNames[i], paramValues[i]);
-            }
+           
 
       //      PM = new LayerCanopyPhotosynthesis.PhotosynthesisModelC4();
             
-            PM.Canopy.CPath.CiCaRatio = parameters["CiCaRatio"];
-
-
+ 
             PM.EnvModel.LatitudeD = latitude;
             PM.EnvModel.DOY = (int)DOY;
             PM.EnvModel.MaxT = maxT;
@@ -91,9 +95,7 @@ namespace LayerCanopyPhotosynthesis
             PM.Canopy.θ = 0.7;
             PM.Canopy.F = 0.15;
             PM.Canopy.OxygenPartialPressure = 210000;
-            PM.Canopy.Ca = parameters["Ca"];
 
-            PM.Canopy.Gbs_CO2 = 0.003;
             PM.Canopy.Alpha = 0.1;
             PM.Canopy.X = 0.4;
 
@@ -129,10 +131,6 @@ namespace LayerCanopyPhotosynthesis
             PM.Canopy.CPath.Gm_TOpt = 34.309;
             PM.Canopy.CPath.Gm_Omega = 20.791;
 
-            PM.Canopy.Gbs_CO2 = parameters["gbs"];
-            PM.Canopy.CPath.Gm_P25 = parameters["gm25"];
-            PM.Canopy.Vpr_l = parameters["Vpr"];
-
             PM.EnvModel.Initilised = true;
             PM.EnvModel.Run();
 
@@ -145,6 +143,8 @@ namespace LayerCanopyPhotosynthesis
             List<double> sunlitAssimilations = new List<double>();
             List<double> shadedAssimilations = new List<double>();
             List<double> interceptedRadn = new List<double>();
+
+            double d = PM.Canopy.CPath.CiCaRatio;
 
             for (int time = 6; time <= 18; time++)
             {
@@ -225,8 +225,7 @@ namespace LayerCanopyPhotosynthesis
             }
             double[] results = new double[4];
 
-            double B = parameters["B"];
-            results[0] = (sunlitAssimilations.Sum() + shadedAssimilations.Sum()) * 3600 / 1000000 * 44 * B * 100 / ((1 + RootShootRatio) * 100);
+            results[0] = (sunlitAssimilations.Sum() + shadedAssimilations.Sum()) * 3600 / 1000000 * 44 * PM.B * 100 / ((1 + RootShootRatio) * 100);
             results[1] = hourlyWaterDemandsmm.Sum();
             results[2] = hourlyWaterSuppliesmm.Sum();
             results[3] = interceptedRadn.Sum();

@@ -135,6 +135,8 @@ namespace LayerCanopyPhotosynthesis
         [ModelVar("ThUS8", "Above ground Radiation Use Efficiency for the day", "RUE", "Shoot,DAY", "g/MJ", "", "g biomass")]
         public double RUE { get; set; }
 
+        public double B { get; set; }
+
         #region Model switches and delegates
         private PhotoPathway _photoPathway = PhotoPathway.C3;
         [ModelPar("0gDem", "Photosynthetic pathway", "", "", "")]
