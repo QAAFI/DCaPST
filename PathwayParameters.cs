@@ -36,78 +36,81 @@ namespace LayerCanopyPhotosynthesis
         public double X { get; set; } = 0.4;
 
         #region KineticParams
-        // Kc μbar	
-        [ModelPar("Kc_P25", "", "", "", "")]
-        public double Kc_P25 { get; set; } = 272.38;
-        [ModelPar("Kc_c", "", "K", "c", "μbar")]
-        public double Kc_c { get; set; } = 32.689;
-        [ModelPar("Kc_b", "", "", "", "")]
-        public double Kc_b { get; set; } = 9741.400;
+        //// Kc μbar	
+        //[ModelPar("Kc_P25", "", "", "", "")]
+        //public double Kc_P25 { get; set; } = 272.38;
+        //[ModelPar("Kc_c", "", "K", "c", "μbar")]
+        //public double Kc_c { get; set; } = 32.689;
+        //[ModelPar("Kc_b", "", "", "", "")]
+        //public double Kc_b { get; set; } = 9741.400;
 
-        // Kp μbar	-- C4
-        [ModelPar("Kp_P25", "", "", "", "")]
-        public double Kp_P25 { get; set; } = 139;
-        [ModelPar("Kp_c", "", "K", "p", "μbar")]
-        public double Kp_c { get; set; } = 14.644;
-        [ModelPar("Kp_b", "", "", "", "")]
-        public double Kp_b { get; set; } = 4366.129;
+        //// Kp μbar	-- C4
+        //[ModelPar("Kp_P25", "", "", "", "")]
+        //public double Kp_P25 { get; set; } = 139;
+        //[ModelPar("Kp_c", "", "K", "p", "μbar")]
+        //public double Kp_c { get; set; } = 14.644;
+        //[ModelPar("Kp_b", "", "", "", "")]
+        //public double Kp_b { get; set; } = 4366.129;
 
-        //Ko μbar	
-        [ModelPar("Ko_P25", "", "", "", "")]
-        public double Ko_P25 { get; set; } = 165820;
-        [ModelPar("Ko_c", "", "K", "o", "μbar")]
-        public double Ko_c { get; set; } = 9.574;
-        [ModelPar("Ko_b", "", "", "", "")]
-        public double Ko_b { get; set; } = 2853.019;
+        ////Ko μbar	
+        //[ModelPar("Ko_P25", "", "", "", "")]
+        //public double Ko_P25 { get; set; } = 165820;
+        //[ModelPar("Ko_c", "", "K", "o", "μbar")]
+        //public double Ko_c { get; set; } = 9.574;
+        //[ModelPar("Ko_b", "", "", "", "")]
+        //public double Ko_b { get; set; } = 2853.019;
 
-        //Vcmax/Vomax	-	
-        [ModelPar("VcMax.VoMax_P25", "", "", "", "")]
-        public double VcMax_VoMax_P25 { get; set; } = 4.580;
-        [ModelPar("VcMax.VoMax_c", "", "Vc_max/Vo_max", "", "")]
-        public double VcMax_VoMax_c { get; set; } = 13.241;
-        [ModelPar("VcMax.VoMax_b", "", "", "", "")]
-        public double VcMax_VoMax_b { get; set; } = 3945.722;
-        //Vomax/Vcmax	-	
-        //   -	-	-
-        //Vcmax μmol/m2/s*	
-        [ModelPar("VcMax_c", "", "V", "c_max", "μmol/m2/s")]
-        public double VcMax_c { get; set; } = 26.355;
-        [ModelPar("VcMax_b", "", "", "", "")]
-        public double VcMax_b { get; set; } = 7857.830;
+        ////Vcmax/Vomax	-	
+        //[ModelPar("VcMax.VoMax_P25", "", "", "", "")]
+        //public double VcMax_VoMax_P25 { get; set; } = 4.580;
+        //[ModelPar("VcMax.VoMax_c", "", "Vc_max/Vo_max", "", "")]
+        //public double VcMax_VoMax_c { get; set; } = 13.241;
+        //[ModelPar("VcMax.VoMax_b", "", "", "", "")]
+        //public double VcMax_VoMax_b { get; set; } = 3945.722;
+        ////Vomax/Vcmax	-	
+        ////   -	-	-
+        ////Vcmax μmol/m2/s*	
+        //[ModelPar("VcMax_c", "", "V", "c_max", "μmol/m2/s")]
+        //public double VcMax_c { get; set; } = 26.355;
+        //[ModelPar("VcMax_b", "", "", "", "")]
+        //public double VcMax_b { get; set; } = 7857.830;
 
-        //Vpmax μmol/m2/s*	
-        [ModelPar("VpMax_c", "", "V", "p_max", "μmol/m2/s", "", "", true)]
-        public double VpMax_c { get; set; } = 26.355;
-        [ModelPar("VpMax_b", "", "", "", "", "", "", true)]
-        public double VpMax_b { get; set; } = 7857.830;
+        ////Vpmax μmol/m2/s*	
+        //[ModelPar("VpMax_c", "", "V", "p_max", "μmol/m2/s", "", "", true)]
+        //public double VpMax_c { get; set; } = 26.355;
+        //[ModelPar("VpMax_b", "", "", "", "", "", "", true)]
+        //public double VpMax_b { get; set; } = 7857.830;
 
-        //Rd μmol/m2/s*	
-        [ModelPar("Rd_c", "", "R", "d", "μmol/m2/s")]
-        public double Rd_c { get; set; } = 18.715;
-        [ModelPar("Rd_b", "", "", "", "")]
-        public double Rd_b { get; set; } = 5579.745;
+        ////Rd μmol/m2/s*	
+        //[ModelPar("Rd_c", "", "R", "d", "μmol/m2/s")]
+        //public double Rd_c { get; set; } = 18.715;
+        //[ModelPar("Rd_b", "", "", "", "")]
+        //public double Rd_b { get; set; } = 5579.745;
 
-        //Jmax(Barley, Farquhar 1980)    μmol/m2/s*	
-        [ModelPar("JMax_TOpt", "", "", "", "")]
-        public double JMax_TOpt { get; set; } = 28.796;
-        [ModelPar("JMax_Omega", "", "J", "max", "μmol/m2/s")]
-        public double JMax_Omega { get; set; } = 15.536;
+        ////Jmax(Barley, Farquhar 1980)    μmol/m2/s*	
+        //[ModelPar("JMax_TOpt", "", "", "", "")]
+        //public double JMax_TOpt { get; set; } = 28.796;
+        //[ModelPar("JMax_Omega", "", "J", "max", "μmol/m2/s")]
+        //public double JMax_Omega { get; set; } = 15.536;
 
-        //gm(Arabidopsis, Bernacchi 2002)    μmol/m2/s/bar	
-        [ModelPar("gm_P25", "", "", "", "")]
-        public double Gm_P25 { get; set; } = 0.55;
-        [ModelPar("gm_TOpt", "", "", "", "")]
-        public double Gm_TOpt { get; set; } = 34.309;
-        [ModelPar("gm_Omega", "", "g", "m", "mol/m2/s/bar")]
-        public double Gm_Omega { get; set; } = 20.791;
+        ////gm(Arabidopsis, Bernacchi 2002)    μmol/m2/s/bar	
+        //[ModelPar("gm_P25", "", "", "", "")]
+        //public double Gm_P25 { get; set; } = 0.55;
+        //[ModelPar("gm_TOpt", "", "", "", "")]
+        //public double Gm_TOpt { get; set; } = 34.309;
+        //[ModelPar("gm_Omega", "", "g", "m", "mol/m2/s/bar")]
+        //public double Gm_Omega { get; set; } = 20.791;
 
         [ModelPar("THGeL", "Quantum efficiency of PSII e- folow on PSII-absorbed light basis at the strictly limiting light level", "ɸ", "2(LL)", "")]
         public double F2 = 0.75;
         [ModelPar("6RyTa", "Quantum efficiency of PSI e- flow at the strictly limiting light level", "ɸ", "1(LL)", "")]
         public double F1 = 0.95;
+        [ModelPar("rRJ12", "extra energy (ATP) cost required from processes other than the C3 cycle", "Fi", "(LL)", "")]
+        public double Fi = 2;
+
 
         #region Curvilinear Temperature Model
-        
+
         // Kc μbar	Curvilinear Temperature Model
         [ModelPar("KcP25", "", "", "", "")]
         public double KcP25 { get; set; } = 267.9295;

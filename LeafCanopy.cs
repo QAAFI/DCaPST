@@ -452,13 +452,13 @@ namespace LayerCanopyPhotosynthesis
         public double[] AbsorbedRadiationPAR { get; set; }
 
         [ModelPar("", "", "'", "", "", "")]
-        public double Rcp { get; set; }
+        public double Rcp { get; set; } = 1200;
 
         [ModelPar("", "", "'", "", "", "")]
-        public double Sigma { get; set; }
+        public double Sigma { get; set; } = 5.668E-08;
 
         [ModelPar("", "", "'", "", "", "")]
-        public double Lambda { get; set; }
+        public double Lambda { get; set; } = 2447000;
 
         [ModelVar("", "", "'", "", "", "")]
         public double S { get; set; }
@@ -753,14 +753,8 @@ namespace LayerCanopyPhotosynthesis
         [ModelVar("HY9Qj", "Average canopy N", "Nc_av", "", "mmol N m-2 ground")]
         public double NcAv { get; set; }
 
-
-        protected double _f = 0.15;
         [ModelPar("ZW890", "Empirical spectral correction factor", "f", "", "")]
-        public double F
-        {
-            get { return _f; }
-            set { _f = value; }
-        }
+        public double F { get; set; } = 0.15;
 
         [ModelVar("nGIyH", "Leaf nitrogen distribution", "Nl", "", "g N m-2 leaf")]
         public double[] LeafNs { get; set; }
@@ -877,53 +871,23 @@ namespace LayerCanopyPhotosynthesis
 
 
         #region InstantaneousPhotosynthesis
-        protected double _k2 = 0.284;
         [ModelPar("AweVY", "", "k2(LL)", "", "")]
-        public double K2
-        {
-            get { return _k2; }
-            set { _k2 = value; }
-        }
+        public double K2 { get; set; } = 0.284;
 
-        protected double _θ = 0.7;
         [ModelPar("OlCWb", "Convexity factor for response of J to PAR", "θ", "", "")]
-        public double θ
-        {
-            get { return _θ; }
-            set { _θ = value; }
-        }
+        public double Theta { get; set; } = 0.7;
 
-        protected double _oxygenPartialPressure = 210000;
         [ModelPar("4N7O4", "Oxygen partial pressure inside leaves", "O", "l", "μbar")]
-        public double OxygenPartialPressure
-        {
-            get { return _oxygenPartialPressure; }
-            set { _oxygenPartialPressure = value; }
-        }
+        public double OxygenPartialPressure { get; set; } = 210000;
 
-        protected double _respirationRubiscoRatio = 0;
         [ModelPar("ojS8u", "Ratio of leaf respiration to PS Rubisco capacity", "Rd/Vcmax", "", "-")]
-        public double RespirationRubiscoRatio
-        {
-            get { return _respirationRubiscoRatio; }
-            set { _respirationRubiscoRatio = value; }
-        }
+        public double RespirationRubiscoRatio { get; set; } = 0;
 
-        protected double _Ca = 380;
         [ModelPar("aGpUj", "Ambient air CO2 partial pressure", "C", "a", "μbar")]
-        public double Ca
-        {
-            get { return _Ca; }
-            set { _Ca = value; }
-        }
+        public double Ca { get; set; } = 380;
 
-        public double _CcInit = 100;
         [ModelPar("wUyRh", "Chloroplast CO2 partial pressure initial guess", "CcInit", "", "μbar")]
-        public double CcInit
-        {
-            get { return _CcInit; }
-            set { _CcInit = value; }
-        }
+        public double CcInit { get; set; } = 100;
 
         [ModelVar("ATmtA", "Instantaneous net canopy Assimilation", "Ac (gross)", "", "μmol CO2 m-2 ground s-1")]
         public double[] InstantaneousAssimilation { get; set; }
@@ -936,35 +900,15 @@ namespace LayerCanopyPhotosynthesis
         [ModelVar("SA871", "Ac gross", "Ac", "", "g CO2 m-2 ground s-1")]
         public double[] Acgross { get; set; }
 
-        protected double _hexoseToCO2 = 0.681818182;
         [ModelPar("lkgr9", "", "", "", "")]
-        public double HexoseToCO2
-        {
-            get { return _hexoseToCO2; }
-            set { _hexoseToCO2 = value; }
-        }
-
-        protected double _biomassToHexose = 0.75;
+        public double HexoseToCO2 { get; set; }= 0.681818182;
+        
         [ModelPar("TCFyz", "Biomass to hexose ratio", "", "Biomass:hexose", "g biomass/g hexose")]
-        public double BiomassToHexose
-        {
-            get { return _biomassToHexose; }
-            set
-            {
-                _biomassToHexose = value; //notifyChanged(); 
-            }
-        }
-
-        protected double _maintenanceRespiration = 0.075;
+        public double BiomassToHexose { get; set; } = 0.75;
+        
         [ModelPar("ynLXn", "Maintenance and growth respiration to hexose ratio", "", "Respiration:hexose", "g hexose/g CO2")]
-        public double MaintenanceRespiration
-        {
-            get { return _maintenanceRespiration; }
-            set
-            {
-                _maintenanceRespiration = value; //notifyChanged(); 
-            }
-        }
+        public double MaintenanceRespiration { get; set; } = 0.075;
+
         [ModelVar("vUYQG", "Total biomass accumulation", "BiomassC", "", "g biomass m-2 ground hr-1")]
         public double TotalBiomassC { get; set; }
 
@@ -1041,72 +985,29 @@ namespace LayerCanopyPhotosynthesis
         #endregion
 
         #region Leaf temperature from Penman-Monteith combination equation (isothermal form)
-        protected double _energyConvRatio = 0.208;
         [ModelPar("XVJhn", "Energy conversion ratio", "", "", "J s-1 m-2 : mmol m-2 s-1")]
-        public double EnergyConvRatio
-        {
-            get { return _energyConvRatio; }
-            set { _energyConvRatio = value; }
-        }
+        public double EnergyConvRatio { get; set; } = 0.208;
 
-        protected double _Bz = 5.67038E-08;
         [ModelPar("zJyMY", "Stefan-Boltzmann constant", "Bz", "", "J s-1 K-4")]
-        public double Bz
-        {
-            get { return _Bz; }
-            set { _Bz = value; }
-        }
-        protected double _l = 2.26;
+        public double Bz { get; set; } = 5.67038E-08;
+
         [ModelPar("baxMC", "Latent heat of vaporization of water vapour", "l", "", "MJ kg-1")]
-        public double L
-        {
-            get { return _l; }
-            set { _l = value; }
-        }
+        public double L { get; set; } = 2.26;
 
-        protected double _mwRatio = 0.622;
         [ModelPar("6mb4O", "Mwratio", "", "", "")]
-        public double MwRatio
-        {
-            get { return _mwRatio; }
-            set { _mwRatio = value; }
-        }
+        public double MwRatio { get; set; } = 0.622;
 
-        protected double _p = 101.325;
         [ModelPar("tpm6l", "Atmospheric pressure", "p", "", "kPa")]
-        public double P
-        {
-            get { return _p; }
-            set { _p = value; }
-        }
+        public double P { get; set; } = 101.325;
 
-        protected double _Height = 1.5;
         [ModelPar("sc9d8", "Crop height", "H", "", "m")]
-        public double Height
-        {
-            get { return _Height; }
-            set { _Height = value; }
-        }
+        public double Height { get; set; } = 1.5;
 
-        protected double _u0 = 2;
         [ModelPar("iggg1", "Wind speed at canopy top", "u", "0", "m/s")]
-        public double U0
-        {
-            get { return _u0; }
-            set
-            {
-                _u0 = value;
-                //notifyChanged();
-            }
-        }
+        public double U0 { get; set; } = 2;
 
-        protected double _ku = 0.5;
         [ModelPar("Sj4Gm", "Extinction coefficient for wind speed", "ku", "", "")]
-        public double Ku
-        {
-            get { return _ku; }
-            set { _ku = value; }
-        }
+        public double Ku { get; set; } = 0.5;
 
         protected double _leafWidth = 0.1;
         [ModelPar("8cdc4", "Leaf width", "w", "l", "m")]
@@ -1126,7 +1027,6 @@ namespace LayerCanopyPhotosynthesis
         [ModelVar("DulsD", "Leaf width", "wl", "", "m", "l")]
         public double[] LeafWidths { get; set; }
 
-        protected double _airDensity;
         [ModelVar("D4mwj", "Air density	rair (weight)", "", "", "kg m-3")]
         public double AirDensity { get; set; }
         //{
@@ -1134,21 +1034,11 @@ namespace LayerCanopyPhotosynthesis
         //    set { _airDensity = value; }
         //}
 
-        protected double _cp = 1000;
         [ModelPar("7i0In", "Specific heat of air", "cp", "", "J kg-1 K-1")]
-        public double Cp
-        {
-            get { return _cp; }
-            set { _cp = value; }
-        }
+        public double Cp { get; set; } = 1000;
 
-        protected double _Vair = 1.6;
         [ModelPar("H7wDs", "Vapour pressure of air", "Vair", "", "kPa")]
-        public double Vair
-        {
-            get { return _Vair; }
-            set { _Vair = value; }
-        }
+        public double Vair { get; set; } = 1.6;
 
         [ModelVar("yp5fX", "", "fvap", "", "")]
         public double FVap { get; set; }
@@ -1167,7 +1057,7 @@ namespace LayerCanopyPhotosynthesis
         [ModelVar("c0pfL", "Leaf-to-air vapour pressure difference", "Da", "", "kPa")]
         public double Da { get; set; }
         [ModelVar("WYVVq", "Psychrometric constant", "g", "", "kPa K-1")]
-        public double G { get; set; }
+        public double G { get; set; } = 0.066;
         [ModelVar("M0Rdv", "Half the reciprocal of Sc/o", "", "γ*", "")]
         public double G_ { get; set; }
 
@@ -1265,75 +1155,20 @@ namespace LayerCanopyPhotosynthesis
         //-----------C4 Section ----------------------------------------------------------
         //////////////////////////////////////////////////////////////////////////////////
 
-        protected double _alpha = 0.1;
         [ModelPar("L8PzL", "Fraction of O2 evolution occurring in the bundle sheath", "α", "", "")]
-        public double Alpha
-        {
-            get
-            {
-                return _alpha;
-            }
-            set
-            {
-                _alpha = value;
-            }
-        }
-
-        protected double _gbs_CO2 = 0.003;
+        public double Alpha { get; set; } = 0.1;
+       
         [ModelPar("pE0qz", "Conductance to CO2 leakage from the bundle sheath to mesophyll", "g", "bs_CO2", "mol/m2/s", "", "mol of H20, m2 leaf", true)]
-        public double Gbs_CO2
-        {
-            get
-            {
-                return _gbs_CO2;
-            }
-            set
-            {
-                _gbs_CO2 = value;
-            }
-        }
-
-        protected double _fQ = 1;
+        public double Gbs_CO2 { get; set; } = 0.003;
+       
         [ModelPar("iJHqO", "Fraction of electron transport operating in the Q-cycle", "f", "q", "")]
-        public double FQ
-        {
-            get
-            {
-                return _fQ;
-            }
-            set
-            {
-                _fQ = value;
-            }
-        }
+        public double FQ { get; set; } = 1;
 
-        protected double _h = 3;
         [ModelPar("EdOLY", "Number of protons, generated by the electron transport chain, required to produce one ATP", "h", "", "")]
-        public double H
-        {
-            get
-            {
-                return _h;
-            }
-            set
-            {
-                _h = value;
-            }
-        }
+        public double H { get; set; } = 3;
 
-        protected double _x = 0.4;
         [ModelPar("fChzp", "Fraction of electrons partitioned to the C4 cycle", "x", "", "")]
-        public double X
-        {
-            get
-            {
-                return _x;
-            }
-            set
-            {
-                _x = value;
-            }
-        }
+        public double X { get; set; } = 0.4;
 
         //[ModelVar("3sYmP", "Mesophyll oxygen partial pressure", "Om", "", "μbar")]  //Om==Oi
         //public double Om { get; set; }

@@ -53,7 +53,7 @@ namespace C4MethodExtensions
             canopy.Ja = (1 - canopy.F) / 2;
 
             s.J[layer] = (canopy.Ja * s.AbsorbedIrradiance[layer] + s.JMaxT[layer] - Math.Pow(Math.Pow(canopy.Ja * s.AbsorbedIrradiance[layer] + s.JMaxT[layer], 2) -
-            4 * canopy.θ * s.JMaxT[layer] * canopy.Ja * s.AbsorbedIrradiance[layer], 0.5)) / (2 * canopy.θ);
+            4 * canopy.Theta * s.JMaxT[layer] * canopy.Ja * s.AbsorbedIrradiance[layer], 0.5)) / (2 * canopy.Theta);
 
             //s.Kc[layer] = TempFunctionExp.Val(s.LeafTemp__[layer], canopy.CPath.Kc_P25, canopy.CPath.Kc_c, canopy.CPath.Kc_b);
             //s.Ko[layer] = TempFunctionExp.Val(s.LeafTemp__[layer], canopy.CPath.Ko_P25, canopy.CPath.Ko_c, canopy.CPath.Ko_b);
@@ -250,7 +250,9 @@ namespace C4MethodExtensions
             double x_2 = 7.0 / 3.0 * s.G_[layer];
             double x_3 = 0;
             double x_4 = 0;
-            double x_5 = canopy.CPath.X * s.J[layer] / 2.0;
+            //double x_5 = canopy.CPath.X * s.J[layer] / 2.0;
+            double x_5 = canopy.CPath.X * s.J[layer] / canopy.CPath.Fi;
+
 
             if (mode == TranspirationMode.unlimited)
             {

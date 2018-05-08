@@ -111,6 +111,9 @@ namespace LayerCanopyPhotosynthesis
             }
         }
 
+        [ModelPar("Dmrd4", "Fraction of PAR energy to that of the total solar", "Lat", "", "°")]
+        public double RPAR { get; set; } = 0.5;
+
         [ModelPar("AlMfK", "Day of year", "Day", "", "")]
         public double DOY
         {
@@ -264,7 +267,7 @@ namespace LayerCanopyPhotosynthesis
         [ModelPar("goJzH", "Daily solar radiation reaching Earth's surface", "S", "g", "MJ/m2/day", "", "m2 of ground")]
         public double Radn
         {
-            get { return Sg; }   
+            get { return Sg; }
             set
             {
                 Sg = value;
@@ -406,7 +409,7 @@ namespace LayerCanopyPhotosynthesis
         public double Sunset { get; set; }
 
         private bool _initilised = false;
-        public bool Initilised
+        public bool Initialised
         {
             get
             {
@@ -564,8 +567,8 @@ namespace LayerCanopyPhotosynthesis
             {
                 time.Add(i);
 
-                idiff_par.Add(Idiffs.Value(i) * 0.5 * 4.25 * 1E6);
-                idir_par.Add(Idirs.Value(i) * 0.5 * 4.56 * 1E6);
+                idiff_par.Add(Idiffs.Value(i) * RPAR * 4.25 * 1E6);
+                idir_par.Add(Idirs.Value(i) * (1 - RPAR) * 4.56 * 1E6);
 
                 io_par.Add(idiff_par[i] + idir_par[i]);
             }
@@ -665,7 +668,7 @@ namespace LayerCanopyPhotosynthesis
 
             return (SolarConstant / Math.Pow(RadiusVector, 2) * Math.Cos(ZenithAngle.Rad) / 1000000);
         }
-        
+
         //---------------------------------------------------------------------------
         void CalcIncidentRadns()
         {

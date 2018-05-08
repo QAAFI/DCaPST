@@ -55,7 +55,7 @@ namespace LayerCanopyPhotosynthesis
             PM.Canopy.Ca = parameters["Ca"];
 
             PM.Canopy.Gbs_CO2 = parameters["gbs"];
-            PM.Canopy.CPath.Gm_P25 = parameters["gm25"];
+           // PM.Canopy.CPath.Gm_P25 = parameters["gm25"];
             PM.Canopy.Vpr_l = parameters["Vpr"];
 
             PM.B = parameters["B"];
@@ -92,7 +92,7 @@ namespace LayerCanopyPhotosynthesis
             PM.Canopy.Sigma = 5.668E-08;
             PM.Canopy.Lambda = 2447000;
 
-            PM.Canopy.θ = 0.7;
+            PM.Canopy.Theta = 0.7;
             PM.Canopy.F = 0.15;
             PM.Canopy.OxygenPartialPressure = 210000;
 
@@ -107,31 +107,31 @@ namespace LayerCanopyPhotosynthesis
             PM.Canopy.LeafScatteringCoeffNIR = 0.8;
             PM.Canopy.DiffuseReflectionCoeffNIR = 0.389;
 
-            PM.Canopy.CPath.Kc_P25 = 1210;
-            PM.Canopy.CPath.Kc_c = 25.899;
-            PM.Canopy.CPath.Kc_b = 7721.915;
-            PM.Canopy.CPath.Ko_P25 = 292000;
-            PM.Canopy.CPath.Ko_c = 4.236;
-            PM.Canopy.CPath.Ko_b = 1262.93;
-            PM.Canopy.CPath.VcMax_VoMax_P25 = 5.401;
-            PM.Canopy.CPath.VcMax_VoMax_c = 9.126;
-            PM.Canopy.CPath.VcMax_VoMax_b = 2719.478;
-            PM.Canopy.CPath.VcMax_c = 31.467;
-            PM.Canopy.CPath.VcMax_b = 9381.766;
-            PM.Canopy.CPath.Rd_c = 0;
-            PM.Canopy.CPath.Rd_b = 0;
-            PM.Canopy.CPath.Kp_P25 = 139;
-            PM.Canopy.CPath.Kp_c = 14.644;
-            PM.Canopy.CPath.Kp_b = 4366.129;
-            PM.Canopy.CPath.VpMax_c = 38.244;
-            PM.Canopy.CPath.VpMax_b = 11402.45;
+            //PM.Canopy.CPath.Kc_P25 = 1210;
+            //PM.Canopy.CPath.Kc_c = 25.899;
+            //PM.Canopy.CPath.Kc_b = 7721.915;
+            //PM.Canopy.CPath.Ko_P25 = 292000;
+            //PM.Canopy.CPath.Ko_c = 4.236;
+            //PM.Canopy.CPath.Ko_b = 1262.93;
+            //PM.Canopy.CPath.VcMax_VoMax_P25 = 5.401;
+            //PM.Canopy.CPath.VcMax_VoMax_c = 9.126;
+            //PM.Canopy.CPath.VcMax_VoMax_b = 2719.478;
+            //PM.Canopy.CPath.VcMax_c = 31.467;
+            //PM.Canopy.CPath.VcMax_b = 9381.766;
+            //PM.Canopy.CPath.Rd_c = 0;
+            //PM.Canopy.CPath.Rd_b = 0;
+            //PM.Canopy.CPath.Kp_P25 = 139;
+            //PM.Canopy.CPath.Kp_c = 14.644;
+            //PM.Canopy.CPath.Kp_b = 4366.129;
+            //PM.Canopy.CPath.VpMax_c = 38.244;
+            //PM.Canopy.CPath.VpMax_b = 11402.45;
 
-            PM.Canopy.CPath.JMax_TOpt = 32.633;
-            PM.Canopy.CPath.JMax_Omega = 15.27;
-            PM.Canopy.CPath.Gm_TOpt = 34.309;
-            PM.Canopy.CPath.Gm_Omega = 20.791;
+            //PM.Canopy.CPath.JMax_TOpt = 32.633;
+            //PM.Canopy.CPath.JMax_Omega = 15.27;
+            //PM.Canopy.CPath.Gm_TOpt = 34.309;
+            //PM.Canopy.CPath.Gm_Omega = 20.791;
 
-            PM.EnvModel.Initilised = true;
+            PM.EnvModel.Initialised = true;
             PM.EnvModel.Run();
 
             PM.Initialised = true;

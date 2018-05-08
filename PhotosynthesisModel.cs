@@ -137,6 +137,8 @@ namespace LayerCanopyPhotosynthesis
 
         public double B { get; set; }
 
+        public double PsiFactor { get; set; } = 1;
+
         #region Model switches and delegates
         private PhotoPathway _photoPathway = PhotoPathway.C3;
         [ModelPar("0gDem", "Photosynthetic pathway", "", "", "")]
@@ -288,6 +290,8 @@ namespace LayerCanopyPhotosynthesis
             }
         }
 
+        public virtual double[] RunApsim(int DOY, double latitude, double maxT, double minT, double radn, double lai, double SLN, double soilWaterAvail, double RootShootRatio) { return null; }
+        
         //---------------------------------------------------------------------------
         public virtual void Run(bool sendNotification, double swAvail = 0, double maxHourlyT = -1, double sunlitFraction = 0, double shadedFraction = 0)
         {
