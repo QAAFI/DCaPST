@@ -250,8 +250,8 @@ namespace LayerCanopyPhotosynthesis
 
             VcMax25 = new double[nLayers];
             VcMaxT = new double[nLayers];
-            J2Max25 = new double[nLayers];
-            J2MaxT = new double[nLayers];
+            //J2Max25 = new double[nLayers];
+            //J2MaxT = new double[nLayers];
             JMaxT = new double[nLayers];
             JMax25 = new double[nLayers];
             VpMax25 = new double[nLayers];

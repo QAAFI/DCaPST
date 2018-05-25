@@ -49,9 +49,9 @@ namespace C3MethodExtensions
             //s.JMaxT[layer] = TempFunctionNormal.Val(s.LeafTemp__[layer], s.JMax25[layer], canopy.CPath.JMax_TOpt, canopy.CPath.JMax_Omega);
             ////s.VpMaxT[layer] = TempFunctionExp.val(s.leafTemp__[layer], s.VpMax25[layer], canopy.CPath.VpMax_c, canopy.CPath.VpMax_b);
 
-            s.VcMaxT[layer] = TemperatureFunction.Val(s.LeafTemp__[layer], s.VcMax25[layer], canopy.CPath.VcMaxC, canopy.CPath.VcTMax, canopy.CPath.VcTMin, canopy.CPath.VcTOpt, canopy.CPath.beta);
-            s.RdT[layer] = TemperatureFunction.Val(s.LeafTemp__[layer], s.Rd25[layer], canopy.CPath.RdC, canopy.CPath.RdTMax, canopy.CPath.RdTMin, canopy.CPath.RdTOpt, canopy.CPath.beta);
-            s.JMaxT[layer] = TemperatureFunction.Val(s.LeafTemp__[layer], s.JMax25[layer], canopy.CPath.JMaxC, canopy.CPath.JTMax, canopy.CPath.JTMin, canopy.CPath.JTOpt, canopy.CPath.beta);
+            s.VcMaxT[layer] = TemperatureFunction.Val2(s.LeafTemp__[layer], s.VcMax25[layer]/*, canopy.CPath.VcMaxC, canopy.CPath.VcTMax*/, canopy.CPath.VcTMin/*, canopy.CPath.VcTOpt, canopy.CPath.beta*/);
+            s.RdT[layer] = TemperatureFunction.Val2(s.LeafTemp__[layer], s.Rd25[layer]/*, canopy.CPath.RdC, canopy.CPath.RdTMax*/, canopy.CPath.RdTMin/*, canopy.CPath.RdTOpt, canopy.CPath.beta*/);
+            s.JMaxT[layer] = TemperatureFunction.Val(s.LeafTemp__[layer], s.JMax25[layer], canopy.CPath.JMaxC, canopy.CPath.JTMax, canopy.CPath.JTMin, canopy.CPath.JTOpt, canopy.CPath.JBeta);
 
 
 
@@ -66,9 +66,9 @@ namespace C3MethodExtensions
             //s.Ko[layer] = TempFunctionExp.Val(s.LeafTemp__[layer], canopy.CPath.Ko_P25, canopy.CPath.Ko_c, canopy.CPath.Ko_b);
             //s.VcVo[layer] = TempFunctionExp.Val(s.LeafTemp__[layer], canopy.CPath.VcMax_VoMax_P25, canopy.CPath.VcMax_VoMax_c, canopy.CPath.VcMax_VoMax_b);
 
-            s.Kc[layer] = TemperatureFunction.Val(s.LeafTemp__[layer], canopy.CPath.KcP25, canopy.CPath.KcC, canopy.CPath.KcTMax, canopy.CPath.KcTMin, canopy.CPath.KcTOpt, canopy.CPath.beta);
-            s.Ko[layer] = TemperatureFunction.Val(s.LeafTemp__[layer], canopy.CPath.KoP25, canopy.CPath.KoC, canopy.CPath.KoTMax, canopy.CPath.KoTMin, canopy.CPath.KoTOpt, canopy.CPath.beta);
-            s.VcVo[layer] = TemperatureFunction.Val(s.LeafTemp__[layer], canopy.CPath.VcMax_VoMaxP25, canopy.CPath.VcMax_VoMaxC, canopy.CPath.VcMax_VoMaxTMax, canopy.CPath.VcMax_VoMaxTMin, canopy.CPath.VcMax_VoMaxTOpt, canopy.CPath.beta);
+            s.Kc[layer] = TemperatureFunction.Val2(s.LeafTemp__[layer], canopy.CPath.KcP25/*, canopy.CPath.KcC, canopy.CPath.KcTMax*/, canopy.CPath.KcTMin/*, canopy.CPath.KcTOpt, canopy.CPath.beta*/);
+            s.Ko[layer] = TemperatureFunction.Val2(s.LeafTemp__[layer], canopy.CPath.KoP25/*, canopy.CPath.KoC, canopy.CPath.KoTMax*/, canopy.CPath.KoTMin/*, canopy.CPath.KoTOpt, canopy.CPath.beta*/);
+            s.VcVo[layer] = TemperatureFunction.Val2(s.LeafTemp__[layer], canopy.CPath.VcMax_VoMaxP25/*, canopy.CPath.VcMax_VoMaxC, canopy.CPath.VcMax_VoMaxTMax*/, canopy.CPath.VcMax_VoMaxTMin/*, canopy.CPath.VcMax_VoMaxTOpt, canopy.CPath.beta*/);
 
 
             s.ScO[layer] = s.Ko[layer] / s.Kc[layer] * s.VcVo[layer];
@@ -80,7 +80,7 @@ namespace C3MethodExtensions
             canopy.Sco = s.ScO[layer]; //For reporting ??? 
 
 //            s.gm_CO2T[layer] = s.LAIS[layer] * TempFunctionNormal.Val(s.LeafTemp__[layer], canopy.CPath.Gm_P25, canopy.CPath.Gm_TOpt, canopy.CPath.Gm_Omega);
-            s.gm_CO2T[layer] = s.LAIS[layer] * TemperatureFunction.Val(s.LeafTemp__[layer], canopy.CPath.GmP25, canopy.CPath.GmC, canopy.CPath.GmTMax , canopy.CPath.GmTMin , canopy.CPath.GmTOpt, canopy.CPath.beta);
+            s.gm_CO2T[layer] = s.LAIS[layer] * TemperatureFunction.Val(s.LeafTemp__[layer], canopy.CPath.GmP25, canopy.CPath.GmC, canopy.CPath.GmTMax , canopy.CPath.GmTMin , canopy.CPath.GmTOpt, canopy.CPath.GmBeta);
 
 
             if (mode == TranspirationMode.unlimited)
@@ -147,7 +147,7 @@ namespace C3MethodExtensions
                 s.GsCO2[layer] = s.Gsw[layer] / 1.6;
 
             //    s.gm_CO2T[layer] = s.LAIS[layer] * TempFunctionNormal.Val(s.LeafTemp__[layer], canopy.CPath.Gm_P25, canopy.CPath.Gm_TOpt, canopy.CPath.Gm_Omega);
-                s.gm_CO2T[layer] = s.LAIS[layer] * TemperatureFunction.Val(s.LeafTemp__[layer], canopy.CPath.GmP25, canopy.CPath.GmC, canopy.CPath.GmTMax, canopy.CPath.GmTMin, canopy.CPath.GmTOpt, canopy.CPath.beta);
+                s.gm_CO2T[layer] = s.LAIS[layer] * TemperatureFunction.Val(s.LeafTemp__[layer], canopy.CPath.GmP25, canopy.CPath.GmC, canopy.CPath.GmTMax, canopy.CPath.GmTMin, canopy.CPath.GmTOpt, canopy.CPath.GmBeta);
 
                 //Caculate A's
                 if (s.type == SSType.AC1)

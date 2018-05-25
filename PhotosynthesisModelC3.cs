@@ -32,6 +32,21 @@ namespace LayerCanopyPhotosynthesis
             ShadedAC1 = new ShadedCanopy(Canopy.NLayers, SSType.AC1);
             ShadedAJ = new ShadedCanopy(Canopy.NLayers, SSType.AJ);
 
+            double temp = EnvModel.GetTemp(Time);
+
+            if (temp > Canopy.CPath.JTMax || temp < Canopy.CPath.JTMin || temp > Canopy.CPath.GmTMax || temp < Canopy.CPath.GmTMin)
+            {
+                ZeroVariables();
+                return;
+            }
+
+            if (EnvModel.Ios.Value(this.Time) <= (0 + double.Epsilon))
+            {
+                ZeroVariables();
+                return;
+            }
+
+
             SunlitAC1.CalcLAI(this.Canopy, ShadedAC1);
             SunlitAJ.CalcLAI(this.Canopy, ShadedAJ);
             ShadedAC1.CalcLAI(this.Canopy, SunlitAC1);
@@ -76,14 +91,7 @@ namespace LayerCanopyPhotosynthesis
 
                 if (Count > 50 && !caughtError)
                 {
-                    SunlitAC1.A[0] = 0;
-                    SunlitAJ.A[0] = 0;
-                    ShadedAC1.A[0] = 0;
-                    ShadedAJ.A[0] = 0;
-                    SunlitAC1.Elambda_[0] = 0;
-                    SunlitAJ.Elambda_[0] = 0;
-                    ShadedAC1.Elambda_[0] = 0;
-                    ShadedAJ.Elambda_[0] = 0;
+                    ZeroVariables();
 
                     //writeScenario(swAvail);
                     caughtError = true;
@@ -99,6 +107,18 @@ namespace LayerCanopyPhotosynthesis
                 NotifyFinish();
             }
            // writeScenario(swAvail);
+        }
+
+        public void ZeroVariables()
+        {
+            SunlitAC1.A[0] = 0;
+            SunlitAJ.A[0] = 0;
+            ShadedAC1.A[0] = 0;
+            ShadedAJ.A[0] = 0;
+            SunlitAC1.Elambda_[0] = 0;
+            SunlitAJ.Elambda_[0] = 0;
+            ShadedAC1.Elambda_[0] = 0;
+            ShadedAJ.Elambda_[0] = 0;
         }
 
         public void WriteScenario(double swAvail)
@@ -271,8 +291,8 @@ namespace LayerCanopyPhotosynthesis
             }
             double[] results = new double[4];
 
-            //results[0] = (sunlitAssimilations.Sum() + shadedAssimilations.Sum()) * 3600 / 1000000 * 44 * B * 100 / ((1 + RootShootRatio) * 100);
-            results[0] = (sunlitAssimilations.Sum() + shadedAssimilations.Sum()) * 3600 / 1000000 * 44 * B * 100 / ((1) * 100);
+            results[0] = (sunlitAssimilations.Sum() + shadedAssimilations.Sum()) * 3600 / 1000000 * 44 * B * 100 / ((1 + RootShootRatio) * 100);
+            //results[0] = (sunlitAssimilations.Sum() + shadedAssimilations.Sum()) * 3600 / 1000000 * 44 * B * 100 / ((1) * 100);
             results[1] = hourlyWaterDemandsmm.Sum();
             results[2] = hourlyWaterSuppliesmm.Sum();
             results[3] = interceptedRadn.Sum();

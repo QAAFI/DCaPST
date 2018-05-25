@@ -182,10 +182,10 @@ namespace LayerCanopyPhotosynthesis
         {
             for (int i = 0; i < _nLayers; i++)
             {
-                J2Max25[i] = canopy.LAI * canopy.CPath.PsiJ2 * (canopy.LeafNTopCanopy - canopy.CPath.StructuralN) *
-                    ((i == 0 ? 1 : Math.Exp(-(canopy.BeamExtCoeffs[i] + canopy.NAllocationCoeff / canopy.LAI) * canopy.LAIAccums[i - 1])) -
-                    Math.Exp(-(canopy.BeamExtCoeffs[i] + canopy.NAllocationCoeff / canopy.LAI) * canopy.LAIAccums[i])) /
-                    (canopy.NAllocationCoeff + canopy.BeamExtCoeffs[i] * canopy.LAI);
+                //J2Max25[i] = canopy.LAI * canopy.CPath.PsiJ2 * (canopy.LeafNTopCanopy - canopy.CPath.StructuralN) *
+                //    ((i == 0 ? 1 : Math.Exp(-(canopy.BeamExtCoeffs[i] + canopy.NAllocationCoeff / canopy.LAI) * canopy.LAIAccums[i - 1])) -
+                //    Math.Exp(-(canopy.BeamExtCoeffs[i] + canopy.NAllocationCoeff / canopy.LAI) * canopy.LAIAccums[i])) /
+                //    (canopy.NAllocationCoeff + canopy.BeamExtCoeffs[i] * canopy.LAI);
 
                 JMax25[i] = canopy.LAI * canopy.CPath.PsiJ * (canopy.LeafNTopCanopy - canopy.CPath.StructuralN) *
                     ((i == 0 ? 1 : Math.Exp(-(canopy.BeamExtCoeffs[i] + canopy.NAllocationCoeff / canopy.LAI) * canopy.LAIAccums[i - 1])) -

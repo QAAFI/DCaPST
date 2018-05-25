@@ -33,13 +33,26 @@ namespace LayerCanopyPhotosynthesis
             EnvModel.Run(this.Time);
             Canopy.CalcCanopyStructure(this.EnvModel.SunAngle.Rad);
 
-
             SunlitAC1 = new SunlitCanopy(Canopy.NLayers, SSType.AC1);
             sunlitAC2 = new SunlitCanopy(Canopy.NLayers, SSType.AC2);
             SunlitAJ = new SunlitCanopy(Canopy.NLayers, SSType.AJ);
             ShadedAC1 = new ShadedCanopy(Canopy.NLayers, SSType.AC1);
             shadedAC2 = new ShadedCanopy(Canopy.NLayers, SSType.AC2);
             ShadedAJ = new ShadedCanopy(Canopy.NLayers, SSType.AJ);
+
+            double temp = EnvModel.GetTemp(Time);
+
+            if (temp > Canopy.CPath.JTMax || temp < Canopy.CPath.JTMin || temp > Canopy.CPath.GmTMax || temp < Canopy.CPath.GmTMin)
+            {
+                ZeroVariables();
+                return;
+            }
+
+            if (EnvModel.Ios.Value(this.Time) <= (0 + double.Epsilon))
+            {
+                ZeroVariables();
+                return;
+            }
 
             SunlitAC1.CalcLAI(this.Canopy, ShadedAC1);
             sunlitAC2.CalcLAI(this.Canopy, shadedAC2);
@@ -111,18 +124,7 @@ namespace LayerCanopyPhotosynthesis
 
                 if (Count > 100)
                 {
-                    SunlitAC1.A[0] = 0;
-                    sunlitAC2.A[0] = 0;
-                    SunlitAJ.A[0] = 0;
-                    ShadedAC1.A[0] = 0;
-                    shadedAC2.A[0] = 0;
-                    ShadedAJ.A[0] = 0;
-                    SunlitAC1.Elambda_[0] = 0;
-                    sunlitAC2.Elambda_[0] = 0;
-                    SunlitAJ.Elambda_[0] = 0;
-                    ShadedAC1.Elambda_[0] = 0;
-                    shadedAC2.Elambda_[0] = 0;
-                    ShadedAJ.Elambda_[0] = 0;
+                    ZeroVariables();
 
                     return;
                 }
@@ -164,6 +166,22 @@ namespace LayerCanopyPhotosynthesis
             {
                 NotifyFinish();
             }
+        }
+
+        public void ZeroVariables()
+        {
+            SunlitAC1.A[0] = 0;
+            sunlitAC2.A[0] = 0;
+            SunlitAJ.A[0] = 0;
+            ShadedAC1.A[0] = 0;
+            shadedAC2.A[0] = 0;
+            ShadedAJ.A[0] = 0;
+            SunlitAC1.Elambda_[0] = 0;
+            sunlitAC2.Elambda_[0] = 0;
+            SunlitAJ.Elambda_[0] = 0;
+            ShadedAC1.Elambda_[0] = 0;
+            shadedAC2.Elambda_[0] = 0;
+            ShadedAJ.Elambda_[0] = 0;
         }
 
         public override double[] RunApsim(int DOY, double latitude, double maxT, double minT, double radn, double lai, double SLN, double soilWaterAvail, double RootShootRatio)
