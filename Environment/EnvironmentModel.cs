@@ -21,7 +21,7 @@ namespace LayerCanopyPhotosynthesis
         protected double _xLag = 1.8;
         protected double _yLag = 2.2;
         protected double _zLag = 1;
-        protected double _ATM = 1.013;
+        protected double _ATM = 1.01325;
 
         //protected HourlyMet hm;
 
@@ -110,6 +110,9 @@ namespace LayerCanopyPhotosynthesis
                 }
             }
         }
+
+        [ModelPar("AhhfK", "Absolute Temperature", "", "°C", "")]
+        public double AbsoluteTemperature = 273;
 
         [ModelPar("Dmrd4", "Fraction of PAR energy to that of the total solar", "Lat", "", "°")]
         public double RPAR { get; set; } = 0.5;

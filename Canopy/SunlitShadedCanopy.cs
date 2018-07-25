@@ -123,6 +123,10 @@ namespace LayerCanopyPhotosynthesis
         public double X_4 { get; set; }
         [ModelVar("", "", "", "", "", "")]
         public double X_5 { get; set; }
+        [ModelVar("34Dses", "Water Use", "", "E", "mm/hr", "")]
+        public double[] WaterUse { get; set; }
+        [ModelVar("htr6De", "Water Use", "", "E", "mols/s", "")]
+        public double[] WaterUseMolsSecond { get; set; }
 
         public double[] Cb { get; set; }
 
@@ -343,6 +347,9 @@ namespace LayerCanopyPhotosynthesis
             Gsh = new double[nLayers];
 
             Cb = new double[nLayers];
+
+            WaterUse = new double[nLayers];
+            WaterUseMolsSecond = new double[nLayers];
         }
 
         //---------------------------------------------------------------------------------------------------------
@@ -381,7 +388,7 @@ namespace LayerCanopyPhotosynthesis
                 //gbh[i] = 0.01 * Math.Pow((canopy.us[i] / canopy.leafWidth), 0.5) *
                 //    (1 - Math.Exp(-1 * (0.5 * canopy.ku + canopy.kb) * canopy.LAI)) / (0.5 * canopy.ku + canopy.kb);
 
-                Gbw[i] = Gbh[i] / 0.93;
+                Gbw[i] = Gbh[i] / 0.92; //This 0.92 changed from 0.93 29/06
 
                 Rbh[i] = 1 / Gbh[i];
 
@@ -390,7 +397,6 @@ namespace LayerCanopyPhotosynthesis
                 Gbw_m[i] = PM.EnvModel.ATM * PM.Canopy.Rair * Gbw[i];
 
                 GbCO2[i] = Gbw_m[i] / 1.37;
-
             }
         }
         //---------------------------------------------------------------------------------------------------------
@@ -399,25 +405,100 @@ namespace LayerCanopyPhotosynthesis
         /// </summary>
         /// <param name="PM"></param>
         /// <param name="canopy"></param>
-        public virtual void CalcWaterUse(PhotosynthesisModel PM, LeafCanopy canopy)
+        public virtual void DoWaterInteraction(PhotosynthesisModel PM, LeafCanopy canopy, TranspirationMode mode)
         {
             for (int i = 0; i < canopy.NLayers; i++)
             {
-                GsCO2[i] = A[i] / (((1 - canopy.CPath.CiCaRatio) - A[i] * Math.Pow(GbCO2[i] * canopy.Ca, -1)) * canopy.Ca);
+                Rn[i] = AbsorbedIrradiancePAR[i] + AbsorbedIrradianceNIR[i];
 
-                Gsw[i] = GsCO2[i] * 1.6;
+                double BnUp = 8 * canopy.Sigma * Math.Pow((PM.EnvModel.GetTemp(PM.Time) + PM.EnvModel.AbsoluteTemperature), 3) * (LeafTemp__[i] - PM.EnvModel.GetTemp(PM.Time));  //This should be: HEnergyBalance - * (LeafTemp__[i]-PM.EnvModel.GetTemp(PM.Time));
+                double VPTLeaf = 0.61365 * Math.Exp(17.502 * LeafTemp__[i] / (240.97 + LeafTemp__[i]));
+                double VPTAir = 0.61365 * Math.Exp(17.502 * PM.EnvModel.GetTemp(PM.Time) / (240.97 + PM.EnvModel.GetTemp(PM.Time)));
+                double VPTAir_1 = 0.61365 * Math.Exp(17.502 * (PM.EnvModel.GetTemp(PM.Time) + 1) / (240.97 + (PM.EnvModel.GetTemp(PM.Time) + 1)));
+                double VPTMin = 0.61365 * Math.Exp(17.502 * PM.EnvModel.MinT / (240.97 + PM.EnvModel.MinT));
 
-                Rsw[i] = canopy.Rair / Gsw[i] * PM.EnvModel.ATM;
+                double s = VPTAir_1 - VPTAir;
+                VPD_la[i] = VPTLeaf - VPTMin;
 
-                VPD_la[i] = PM.EnvModel.CalcSVP(LeafTemp__[i]) - PM.EnvModel.CalcSVP(PM.EnvModel.MinT);
+                double Wl = VPTLeaf / (PM.EnvModel.ATM * 100) * 1000;
+                double Wa = VPTMin / (PM.EnvModel.ATM * 100) * 1000;
 
-                double totalAbsorbed = AbsorbedIrradiancePAR[i] + AbsorbedIrradianceNIR[i];
+                if (mode == TranspirationMode.unlimited)
+                {
 
-                Rn[i] = totalAbsorbed - 2 * (canopy.Sigma * Math.Pow(273 + LeafTemp__[i], 4) - canopy.Sigma * Math.Pow(273 + PM.EnvModel.GetTemp(PM.Time), 4));
+                    double a_var_gsCO2 = 1 / GbCO2[i];
+                    double d_var_gsCO2 = (Wl - Wa) / (1000 - (Wl + Wa) / 2) * (canopy.Ca + Ci[i]) / 2;
+                    double e_var_gsCO2 = A[i];
+                    double f_var_gsCO2 = canopy.Ca - Ci[i];
+                    double m_var_gsCO2 = 1.37; //Constant
+                    double n_var_gsCO2 = 1.6;  //Constant
+                    double a_lump_gsCO2 = e_var_gsCO2 * a_var_gsCO2 * m_var_gsCO2 + e_var_gsCO2 * a_var_gsCO2 * n_var_gsCO2 + d_var_gsCO2 * m_var_gsCO2 * n_var_gsCO2 - f_var_gsCO2 * m_var_gsCO2;
+                    double b_lump_gsCO2 = e_var_gsCO2 * m_var_gsCO2 * (e_var_gsCO2 * Math.Pow(a_var_gsCO2, 2) * n_var_gsCO2 + a_var_gsCO2 * d_var_gsCO2 * m_var_gsCO2 * n_var_gsCO2 - a_var_gsCO2 * f_var_gsCO2 * n_var_gsCO2);
+                    double c_lump_gsCO2 = -a_lump_gsCO2;
+                    double d_lump_gsCO2 = m_var_gsCO2 * A[i];
 
-                Elambda_[i] = (canopy.S * Rn[i] + VPD_la[i] * canopy.Rcp / Rbh[i]) / 
-                    (canopy.S + canopy.G * (Rsw[i] + Rbw[i]) / Rbh[i]);
+                    GsCO2[i] = 2 * d_lump_gsCO2 / (Math.Pow((Math.Pow(a_lump_gsCO2, 2) - 4 * b_lump_gsCO2), 0.5) - a_lump_gsCO2);
+                    double Gtw = 1 / (1 / (1.37 * GbCO2[i]) + 1 / (1.6 * GsCO2[i])); //Are these the same constansts shown above
+                    double GtCO2 = 1 / (1 / GbCO2[i] + 1 / GsCO2[i]);
 
+                    //DO NOT DELETE - FILLED ARE OF SPREADSHEET
+                    //double EMolsPerSecond = Gtw * (Wl - Wa) / (1000 - (Wl + Wa) / 2);
+                    //double EMmPerHour = EMolsPerSecond * 18 / 1000 * 3600;
+
+                    //double LambdaEEnergyBalance = 44100 * EMolsPerSecond; //44100 should be a parameter..discuss with AW
+                    //double HEnergyBalance = 8 * canopy.Sigma * Math.Pow((PM.EnvModel.GetTemp(PM.Time) + PM.EnvModel.AbsoluteTemperature), 3);
+
+                    //TDelta[i] = (Rn[i] - LambdaEEnergyBalance) / (HEnergyBalance + canopy.Rcp / Rbh[i]);
+
+                    double rtw = canopy.Rair / Gtw * PM.EnvModel.ATM;
+
+                    double a_lump_lambdaE = s * (Rn[i] - BnUp) + VPD_la[i] * canopy.Rcp / Rbh[i];
+                    double b_lump_lambdaE = s + canopy.G * (rtw) / Rbh[i];
+                    double lambdaE = a_lump_lambdaE / b_lump_lambdaE;
+                    double EKgPerSecond = lambdaE / canopy.Lambda;
+                    WaterUseMolsSecond[i] = EKgPerSecond / 18 * 1000;
+                    WaterUse[i] = EKgPerSecond * 3600;
+
+                    double a_lump_deltaT = canopy.G * (Rn[i] - BnUp) * rtw / canopy.Rcp - VPD_la[i];
+                    double d_lump_deltaT = s + canopy.G * rtw / Rbh[i];
+                    TDelta[i] = a_lump_deltaT / d_lump_deltaT;
+
+                    VPD_la[i] = 0.61365 * Math.Exp(17.502 * LeafTemp__[i] / (240.97 + LeafTemp__[i])) - 0.61365 * Math.Exp(17.502 * PM.EnvModel.MinT / (240.97 + PM.EnvModel.MinT));
+
+                    LeafTemp[i] = PM.EnvModel.GetTemp(PM.Time) + TDelta[i];
+                }
+
+                else
+                {
+                    WaterUseMolsSecond[i] = WaterUse[i] / 18 * 1000 / 3600;
+                    double EKgPerSecond = WaterUseMolsSecond[i] * 18 / 1000;
+
+                    double rtw = (s * (Rn[i] - BnUp) + VPD_la[i] * canopy.Rcp / Rbh[i] - canopy.Lambda * EKgPerSecond * s) * Rbh[i] / (canopy.Lambda * EKgPerSecond * canopy.G);
+                    Rsw[i] = rtw - Rbw[i];
+
+                    GsCO2[i] = canopy.Rair * PM.EnvModel.ATM / Rsw[i] / 1.6;
+
+                    double GtCO2 = 1 / (1 / GbCO2[i] + 1 / GsCO2[i]);
+
+                    double a_lump_deltaT = canopy.G * (Rn[i] - BnUp) * rtw / canopy.Rcp - VPD_la[i];
+                    double d_lump_deltaT = s + canopy.G * rtw / Rbh[i];
+
+                    TDelta[i] = a_lump_deltaT / d_lump_deltaT;
+
+                    //DO NOT DELETE - FILLED ARE OF SPREADSHEET
+                    //double LambdaEEnergyBalance = 44100 * EMolsPerSecond; //44100 should be a parameter..discuss with AW
+                    //double HEnergyBalance = 8 * canopy.Sigma * Math.Pow((PM.EnvModel.GetTemp(PM.Time) + PM.EnvModel.AbsoluteTemperature), 3);
+
+                    //double Tdelta = (Rn[i] - LambdaEEnergyBalance) / (HEnergyBalance + canopy.Rcp / Rbh[i]); //This is not used anywhere
+
+                    //double Gtw = EMolsPerSecond * (1000 - (Wl + Wa) / 2) / (Wl - Wa);
+
+                    //GsCO2[i] = 1 / ((1 / Gtw - 1 / (1.37 * GbCO2[i])) * 1.6);
+
+                    //GtCO2 = 1 / (1 / GbCO2[i] + 1 / GsCO2[i]);
+
+                    LeafTemp[i] = PM.EnvModel.GetTemp(PM.Time) + TDelta[i];
+                }
             }
         }
         //---------------------------------------------------------------------------------------------------------

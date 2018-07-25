@@ -218,7 +218,7 @@ namespace LayerCanopyPhotosynthesis
         //[System.Xml.Serialization.XmlIgnore]
         public ElectronTransportModelNotifier electronTransportModelChanged;
 
-        private ConductanceModel _conductanceModel = ConductanceModel.DETAILED;
+        private ConductanceModel _conductanceModel = ConductanceModel.SIMPLE;
         //[ModelPar("pvSkJ", "Photosynthetic pathway", "P", "")]
         public ConductanceModel conductanceModel
         {

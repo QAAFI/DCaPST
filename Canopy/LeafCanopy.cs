@@ -455,7 +455,7 @@ namespace LayerCanopyPhotosynthesis
         public double Rcp { get; set; } = 1200;
 
         [ModelPar("", "", "'", "", "", "")]
-        public double Sigma { get; set; } = 5.668E-08;
+        public double Sigma { get; set; } = 5.67E-08;//5.668E-08;
 
         [ModelPar("", "", "'", "", "", "")]
         public double Lambda { get; set; } = 2447000;

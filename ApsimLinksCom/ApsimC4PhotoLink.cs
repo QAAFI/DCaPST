@@ -79,7 +79,7 @@ namespace LayerCanopyPhotosynthesis
             PM.EnvModel.MaxT = maxT;
             PM.EnvModel.MinT = minT;
             PM.EnvModel.Radn = radn;  // Check that this changes ratio
-            PM.EnvModel.ATM = 1.013;
+            PM.EnvModel.ATM = 1.01325;
 
             PM.Canopy.LAI = lai;
             PM.Canopy.LeafWidth = 0.05;

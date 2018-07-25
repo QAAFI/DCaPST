@@ -23,11 +23,10 @@ namespace C3MethodExtensions
         /// <returns></returns>
         public static bool CalcPhotosynthesis(this SunlitShadedCanopy s, PhotosynthesisModel PM, bool useAirTemp, int layer, double leafTemperature,
             TranspirationMode mode, double maxHourlyT, double Tfraction)
-        { 
+        {
+            double p, q;
 
             LeafCanopy canopy = PM.Canopy;
-
-            //calcPhotosynthesis(PM, layer);
 
             s.Oi[layer] = canopy.OxygenPartialPressure;
 
@@ -44,31 +43,18 @@ namespace C3MethodExtensions
 
             s.CalcConductanceResistance(PM, canopy);
 
-            //s.VcMaxT[layer] = TempFunctionExp.Val(s.LeafTemp__[layer], s.VcMax25[layer], canopy.CPath.VcMax_c, canopy.CPath.VcMax_b);
-            //s.RdT[layer] = TempFunctionExp.Val(s.LeafTemp__[layer], s.Rd25[layer], canopy.CPath.Rd_c, canopy.CPath.Rd_b);
-            //s.JMaxT[layer] = TempFunctionNormal.Val(s.LeafTemp__[layer], s.JMax25[layer], canopy.CPath.JMax_TOpt, canopy.CPath.JMax_Omega);
-            ////s.VpMaxT[layer] = TempFunctionExp.val(s.leafTemp__[layer], s.VpMax25[layer], canopy.CPath.VpMax_c, canopy.CPath.VpMax_b);
-
-            s.VcMaxT[layer] = TemperatureFunction.Val2(s.LeafTemp__[layer], s.VcMax25[layer]/*, canopy.CPath.VcMaxC, canopy.CPath.VcTMax*/, canopy.CPath.VcTMin/*, canopy.CPath.VcTOpt, canopy.CPath.beta*/);
-            s.RdT[layer] = TemperatureFunction.Val2(s.LeafTemp__[layer], s.Rd25[layer]/*, canopy.CPath.RdC, canopy.CPath.RdTMax*/, canopy.CPath.RdTMin/*, canopy.CPath.RdTOpt, canopy.CPath.beta*/);
+            s.VcMaxT[layer] = TemperatureFunction.Val2(s.LeafTemp__[layer], s.VcMax25[layer], canopy.CPath.VcTMin);
+            s.RdT[layer] = TemperatureFunction.Val2(s.LeafTemp__[layer], s.Rd25[layer], canopy.CPath.RdTMin);
             s.JMaxT[layer] = TemperatureFunction.Val(s.LeafTemp__[layer], s.JMax25[layer], canopy.CPath.JMaxC, canopy.CPath.JTMax, canopy.CPath.JTMin, canopy.CPath.JTOpt, canopy.CPath.JBeta);
-
-
-
-            // s.Vpr[layer] = canopy.Vpr_l * s.LAIS[layer];///
 
             canopy.Ja = (1 - canopy.F) / 2;
 
             s.J[layer] = (canopy.Ja * s.AbsorbedIrradiance[layer] + s.JMaxT[layer] - Math.Pow(Math.Pow(canopy.Ja * s.AbsorbedIrradiance[layer] + s.JMaxT[layer], 2) -
             4 * canopy.Theta * s.JMaxT[layer] * canopy.Ja * s.AbsorbedIrradiance[layer], 0.5)) / (2 * canopy.Theta);
 
-            //s.Kc[layer] = TempFunctionExp.Val(s.LeafTemp__[layer], canopy.CPath.Kc_P25, canopy.CPath.Kc_c, canopy.CPath.Kc_b);
-            //s.Ko[layer] = TempFunctionExp.Val(s.LeafTemp__[layer], canopy.CPath.Ko_P25, canopy.CPath.Ko_c, canopy.CPath.Ko_b);
-            //s.VcVo[layer] = TempFunctionExp.Val(s.LeafTemp__[layer], canopy.CPath.VcMax_VoMax_P25, canopy.CPath.VcMax_VoMax_c, canopy.CPath.VcMax_VoMax_b);
-
-            s.Kc[layer] = TemperatureFunction.Val2(s.LeafTemp__[layer], canopy.CPath.KcP25/*, canopy.CPath.KcC, canopy.CPath.KcTMax*/, canopy.CPath.KcTMin/*, canopy.CPath.KcTOpt, canopy.CPath.beta*/);
-            s.Ko[layer] = TemperatureFunction.Val2(s.LeafTemp__[layer], canopy.CPath.KoP25/*, canopy.CPath.KoC, canopy.CPath.KoTMax*/, canopy.CPath.KoTMin/*, canopy.CPath.KoTOpt, canopy.CPath.beta*/);
-            s.VcVo[layer] = TemperatureFunction.Val2(s.LeafTemp__[layer], canopy.CPath.VcMax_VoMaxP25/*, canopy.CPath.VcMax_VoMaxC, canopy.CPath.VcMax_VoMaxTMax*/, canopy.CPath.VcMax_VoMaxTMin/*, canopy.CPath.VcMax_VoMaxTOpt, canopy.CPath.beta*/);
+            s.Kc[layer] = TemperatureFunction.Val2(s.LeafTemp__[layer], canopy.CPath.KcP25, canopy.CPath.KcTMin);
+            s.Ko[layer] = TemperatureFunction.Val2(s.LeafTemp__[layer], canopy.CPath.KoP25, canopy.CPath.KoTMin);
+            s.VcVo[layer] = TemperatureFunction.Val2(s.LeafTemp__[layer], canopy.CPath.VcMax_VoMaxP25, canopy.CPath.VcMax_VoMaxTMin);
 
 
             s.ScO[layer] = s.Ko[layer] / s.Kc[layer] * s.VcVo[layer];
@@ -77,22 +63,27 @@ namespace C3MethodExtensions
 
             s.r_[layer] = s.G_[layer] * s.Oc[layer];
 
-            canopy.Sco = s.ScO[layer]; //For reporting ??? 
+            canopy.Sco = s.ScO[layer]; 
 
-//            s.gm_CO2T[layer] = s.LAIS[layer] * TempFunctionNormal.Val(s.LeafTemp__[layer], canopy.CPath.Gm_P25, canopy.CPath.Gm_TOpt, canopy.CPath.Gm_Omega);
             s.gm_CO2T[layer] = s.LAIS[layer] * TemperatureFunction.Val(s.LeafTemp__[layer], canopy.CPath.GmP25, canopy.CPath.GmC, canopy.CPath.GmTMax , canopy.CPath.GmTMin , canopy.CPath.GmTOpt, canopy.CPath.GmBeta);
 
 
             if (mode == TranspirationMode.unlimited)
             {
+                s.Ci[layer] = canopy.CPath.CiCaRatio * canopy.Ca;
+
+                p = s.Ci[layer];
+
+                q = 1 / s.gm_CO2T[layer];
+
                 //Caculate A's
                 if (s.type == SSType.AC1)
                 {
-                    s.A[layer] = CalcAc(s, canopy, layer, TranspirationMode.unlimited);
+                    s.A[layer] = CalcAc(s, canopy, layer, TranspirationMode.unlimited, p, q);
                 }
                 else if (s.type == SSType.AJ)
                 {
-                    s.A[layer] = CalcAj(s, canopy, layer, TranspirationMode.unlimited);
+                    s.A[layer] = CalcAj(s, canopy, layer, TranspirationMode.unlimited, p, q);
                 }
 
                 if (s.A[layer] < 0 || double.IsNaN(s.A[layer]))
@@ -104,11 +95,7 @@ namespace C3MethodExtensions
                 {
                     s.Ci[layer] = canopy.Ca - s.A[layer] / s.Gb_CO2[layer] - s.A[layer] / s.gs_CO2[layer];
                 }
-                else
-                {
-                    s.Ci[layer] = canopy.CPath.CiCaRatio * canopy.Ca;
-                }
-
+                
                 s.Cc[layer] = s.Ci[layer] - s.A[layer] / s.gm_CO2T[layer];
 
                 if (s.Cc[layer] < 0 || double.IsNaN(s.Cc[layer]))
@@ -118,50 +105,38 @@ namespace C3MethodExtensions
 
                 s.CiCaRatio[layer] = s.Ci[layer] / canopy.Ca;
 
-                s.CalcWaterUse(PM, canopy);
+                s.DoWaterInteraction(PM, canopy, mode);
 
-                s.TDelta[layer] = s.Rbh[layer] * (s.Rn[layer] - s.Elambda_[layer]) / canopy.Rcp;
-
-                s.LeafTemp[layer] = PM.EnvModel.GetTemp(PM.Time) + s.TDelta[layer];
             }
 
             else if (mode == TranspirationMode.limited)
             {
-                double supplymmhr = maxHourlyT * Tfraction;
+                s.WaterUse[layer] = maxHourlyT * Tfraction;
 
-                s.Elambda[layer] = supplymmhr / (0.001 * 3600) * canopy.Lambda / 1000;
+                s.Elambda[layer] = s.WaterUse[layer] / (0.001 * 3600) * canopy.Lambda / 1000;
 
-                double totalAbsorbed = s.AbsorbedIrradiancePAR[layer] + s.AbsorbedIrradianceNIR[layer];
-                s.Rn[layer] = totalAbsorbed - 2 * (canopy.Sigma * Math.Pow(273 + s.LeafTemp__[layer], 4) - canopy.Sigma * Math.Pow(273 + PM.EnvModel.GetTemp(PM.Time), 4));
+                s.DoWaterInteraction(PM, canopy, mode);
 
-                s.LeafTemp[layer] = s.Rbh[layer] * (s.Rn[layer] - s.Elambda[layer]) / canopy.Rcp + PM.EnvModel.GetTemp(PM.Time);
-
-                s.VPD_la[layer] = PM.EnvModel.CalcSVP(s.LeafTemp__[layer]) - PM.EnvModel.CalcSVP(PM.EnvModel.MinT);
-
-                s.Rsw[layer] = ((canopy.S * s.Rn[layer] + s.VPD_la[layer] * canopy.Rcp / s.Rbh[layer]) / s.Elambda[layer] - canopy.S) *
-                    s.Rbh[layer] / canopy.G - s.Rbw[layer];
-
-                s.Gsw[layer] = canopy.Rair / s.Rsw[layer] * PM.EnvModel.ATM;
-
-
-                s.GsCO2[layer] = s.Gsw[layer] / 1.6;
-
-            //    s.gm_CO2T[layer] = s.LAIS[layer] * TempFunctionNormal.Val(s.LeafTemp__[layer], canopy.CPath.Gm_P25, canopy.CPath.Gm_TOpt, canopy.CPath.Gm_Omega);
                 s.gm_CO2T[layer] = s.LAIS[layer] * TemperatureFunction.Val(s.LeafTemp__[layer], canopy.CPath.GmP25, canopy.CPath.GmC, canopy.CPath.GmTMax, canopy.CPath.GmTMin, canopy.CPath.GmTOpt, canopy.CPath.GmBeta);
+
+                double Gt = 1 / (1 / s.GbCO2[layer] + 1 / s.GsCO2[layer]);
+
+                p = canopy.Ca - s.WaterUseMolsSecond[layer] * canopy.Ca / (Gt + s.WaterUseMolsSecond[layer] / 2);
+                q = 1 / (Gt + s.WaterUseMolsSecond[layer] / 2) + 1 / s.gm_CO2T[layer];
 
                 //Caculate A's
                 if (s.type == SSType.AC1)
                 {
-                    s.A[layer] = CalcAc(s, canopy, layer, TranspirationMode.limited);
+                    s.A[layer] = CalcAc(s, canopy, layer, TranspirationMode.limited, p, q);
                 }
                 else if (s.type == SSType.AJ)
                 {
-                    s.A[layer] = CalcAj(s, canopy, layer, TranspirationMode.limited);
+                    s.A[layer] = CalcAj(s, canopy, layer, TranspirationMode.limited, p, q);
                 }
 
                 s.Cb[layer] = canopy.Ca - s.A[layer] / s.GbCO2[layer];
 
-                s.Ci[layer] = s.Cb[layer] - s.A[layer] / s.GsCO2[layer];
+                s.Ci[layer] = ((Gt - s.WaterUseMolsSecond[layer] / 2) * canopy.Ca - s.A[layer]) / (Gt + s.WaterUseMolsSecond[layer] / 2);
 
             }
 
@@ -192,72 +167,55 @@ namespace C3MethodExtensions
         /// <param name="layer"></param>
         /// <param name="mode"></param>
         /// <returns></returns>
-        public static double CalcAj(SunlitShadedCanopy s, LeafCanopy canopy, int layer, TranspirationMode mode)
+        public static double CalcAj(SunlitShadedCanopy s, LeafCanopy canopy, int layer, TranspirationMode mode, double p, double q)
         {
-            double assimilation = 0;
-            double x_1 = s.J[layer] / 4;
-            double x_2 = 2 * s.r_[layer];
+            double x_1, x_2, x_3, x_4, x_5, x_6, x_7;
+            x_1 = s.J[layer] / 4;
+            x_2 = 2 * s.G_[layer];
+            x_3 = 0;
+            x_4 = 0;
+            x_5 = 0;
+            x_6 = 0;
+            x_7 = 0;
 
-            if (mode == TranspirationMode.unlimited)
-            {
-                assimilation = CalcAssimilation(s, x_1, x_2, layer, canopy);
-            }
-            else
-            {
-                assimilation = CalcAssimilationDiffusion(s, x_1, x_2, layer, canopy);
-            }
-
-            return assimilation;
+            return CalcAssimilation(s, x_1, x_2, x_3, x_4, x_5, x_6, x_7, p, q, layer, canopy); ;
         }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="x_1"></param>
         /// <param name="x_2"></param>
+        /// <param name="x_3"></param>
+        /// <param name="x_4"></param>
+        /// <param name="x_5"></param>
         /// <param name="layer"></param>
         /// <param name="canopy"></param>
         /// <returns></returns>
-        public static double CalcAssimilation(SunlitShadedCanopy s, double x_1, double x_2, int layer, LeafCanopy canopy)
+        public static double CalcAssimilation(SunlitShadedCanopy s, double x_1, double x_2, double x_3, double x_4, double x_5, double x_6, double x_7, double p, double q, int layer, LeafCanopy canopy)
         {
             double a, b, c, d;
 
             double g_m = s.gm_CO2T[layer];
+            double g_bs = 1;
+            double α = 0;
             double R_d = s.RdT[layer];
-            double C_a = canopy.Ca;
-            double Γ_ = s.r_[layer];
-            double x = canopy.CPath.CiCaRatio;
-            double C_i = C_a * canopy.CPath.CiCaRatio;
+            double γ_ = s.G_[layer];
+            double O_m = s.Om[layer];
+            double R_m = s.Rm[layer];
 
-            a = -C_i / C_a * C_a * g_m - g_m * x_2 + R_d - x_1;  // (A3)
-            b = -C_i / C_a * C_a * g_m * R_d + C_i / C_a * C_a * g_m * x_1 - g_m * R_d * x_2 - g_m * Γ_ * x_1;  //   (A4)
-            c = C_i / C_a * C_a * g_m + g_m * x_2 - R_d + x_1;   // (A5)
-            d = 1;
-
-            return s.SolveQuadratic(a, b, c, d); //Eq (A55)
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="x_1"></param>
-        /// <param name="x_2"></param>
-        /// <param name="layer"></param>
-        /// <param name="canopy"></param>
-        /// <returns></returns>
-        public static double CalcAssimilationDiffusion(SunlitShadedCanopy s, double x_1, double x_2, int layer, LeafCanopy canopy)
-        {
-            double a, b, c, d;
-
-            double g_m = s.gm_CO2T[layer];
-            double R_d = s.RdT[layer];
             double C_a = canopy.Ca;
             double g_s = s.GsCO2[layer];
             double g_b = s.GbCO2[layer];
-            double Γ_ = s.r_[layer];
 
-            a = -C_a * g_b * g_s * g_m + g_b * g_m * R_d - g_b * g_m * g_s * x_2 - g_b * g_m * x_1 + g_b * g_s * R_d - g_b * g_s * x_1 + g_m * g_s * R_d - g_m * g_s * x_1;
-            b = (g_b * g_m + g_b * g_s + g_s * g_m) * (-C_a * g_b * g_s * g_m * R_d + C_a * g_b * g_s * g_m * x_1 - g_b * g_s * g_m * R_d * x_2 - g_b * g_s * g_m * Γ_ * x_1);
-            c = C_a * g_b * g_s * g_m - g_b * g_m * R_d + g_b * g_m * g_s * x_2 + g_b * g_m * x_1 - g_b * g_s * R_d + g_b * g_s * x_1 - g_s * g_m * R_d + g_s * g_m * x_1;
-            d = g_b * g_m + g_b * g_s + g_s * g_m;
+
+            a = -1 * (p * g_bs + p * x_4 * x_6 + α / (0.047 * g_bs) * g_bs * x_2 * x_7 * R_d + α / (0.047 * g_bs) * g_bs * x_1 * x_7 * γ_ -
+                q * g_bs * R_d + q * g_bs * x_1 + g_bs * O_m * x_2 + g_bs * x_3 - x_6 * R_m - q * x_4 * x_6 * R_d - x_6 * R_d + q * x_1 * x_4 * x_6 +
+                x_1 * x_6 + x_5 * x_6);
+            d = -α / (0.047 * g_bs) * g_bs * x_2 * x_7 + q * g_bs + q * x_4 * x_6 + x_6;
+            b = -d * (p * g_bs * R_d - p * g_bs * x_1 + p * x_4 * x_6 * R_d - p * x_1 * x_4 * x_6 + g_bs * x_2 * O_m * R_d + g_bs * x_3 * R_d +
+              g_bs * x_1 * γ_ * O_m - x_6 * R_m * R_d + x_1 * x_6 * R_m + x_5 * x_6 * R_d - x_1 * x_5 * x_6);
+            c = -a;
 
             return s.SolveQuadratic(a, b, c, d); //Eq (A55)
         }
@@ -268,23 +226,18 @@ namespace C3MethodExtensions
         /// <param name="layer"></param>
         /// <param name="mode"></param>
         /// <returns></returns>
-        public static double CalcAc(SunlitShadedCanopy s, LeafCanopy canopy, int layer, TranspirationMode mode)
+        public static double CalcAc(SunlitShadedCanopy s, LeafCanopy canopy, int layer, TranspirationMode mode, double p, double q)
         {
-            double assimilation;
+            double x_1, x_2, x_3, x_4, x_5, x_6, x_7;
+            x_1 = s.VcMaxT[layer];
+            x_2 = 0;
+            x_3 = s.Kc[layer] * (1 + s.Oc[layer] / s.Ko[layer]);
+            x_4 = 0;
+            x_5 = 0;
+            x_6 = 0;
+            x_7 = 0;
 
-            double x_1 = s.VcMaxT[layer];
-            double x_2 = s.Kc[layer] * (1 + canopy.OxygenPartialPressure / s.Ko[layer]);
-
-            if (mode == TranspirationMode.unlimited)
-            {
-                assimilation = CalcAssimilation(s, x_1, x_2, layer, canopy);
-            }
-            else
-            {
-                assimilation = CalcAssimilationDiffusion(s, x_1, x_2, layer, canopy);
-            }
-
-            return assimilation;
+            return CalcAssimilation(s, x_1, x_2, x_3, x_4, x_5, x_6, x_7, p, q, layer, canopy);
         }
     }
 }

@@ -222,13 +222,18 @@ namespace LayerCanopyPhotosynthesis
                 if (time > EnvModel.Sunrise && time < EnvModel.Sunset)
                 {
                     Run(time, soilWaterAvail);
-                    sunlitWaterDemands.Add(Math.Min(Math.Min(SunlitAC1.Elambda_[0], sunlitAC2.Elambda_[0]), SunlitAJ.Elambda_[0]));
-                    shadedWaterDemands.Add(Math.Min(Math.Min(ShadedAC1.Elambda_[0], shadedAC2.Elambda_[0]), ShadedAJ.Elambda_[0]));
+                    //sunlitWaterDemands.Add(Math.Min(Math.Min(SunlitAC1.Elambda_[0], sunlitAC2.Elambda_[0]), SunlitAJ.Elambda_[0]));
+                    //shadedWaterDemands.Add(Math.Min(Math.Min(ShadedAC1.Elambda_[0], shadedAC2.Elambda_[0]), ShadedAJ.Elambda_[0]));
+
+                    sunlitWaterDemands.Add(Math.Min(Math.Min(SunlitAC1.WaterUse[0], sunlitAC2.WaterUse[0]), SunlitAJ.WaterUse[0]));
+                    shadedWaterDemands.Add(Math.Min(Math.Min(ShadedAC1.WaterUse[0], shadedAC2.WaterUse[0]), ShadedAJ.WaterUse[0]));
 
                     sunlitWaterDemands[sunlitWaterDemands.Count - 1] = Math.Max(sunlitWaterDemands.Last(), 0);
                     shadedWaterDemands[shadedWaterDemands.Count - 1] = Math.Max(shadedWaterDemands.Last(), 0);
 
-                    hourlyWaterDemandsmm.Add((sunlitWaterDemands.Last() + shadedWaterDemands.Last()) / Canopy.Lambda * 1000 * 0.001 * 3600);
+                    hourlyWaterDemandsmm.Add((sunlitWaterDemands.Last() + shadedWaterDemands.Last()));
+                    //hourlyWaterDemandsmm.Add((sunlitWaterDemands.Last() + shadedWaterDemands.Last()) / Canopy.Lambda * 1000 * 0.001 * 3600);
+
                     hourlyWaterSuppliesmm.Add(hourlyWaterDemandsmm.Last());
                 }
                 else
