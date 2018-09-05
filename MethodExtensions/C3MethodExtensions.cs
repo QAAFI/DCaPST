@@ -65,8 +65,7 @@ namespace C3MethodExtensions
 
             canopy.Sco = s.ScO[layer]; 
 
-            s.gm_CO2T[layer] = s.LAIS[layer] * TemperatureFunction.Val(s.LeafTemp__[layer], canopy.CPath.GmP25, canopy.CPath.GmC, canopy.CPath.GmTMax , canopy.CPath.GmTMin , canopy.CPath.GmTOpt, canopy.CPath.GmBeta);
-
+            s.gm_CO2T[layer] = s.LAIS[layer] * TemperatureFunction.Val(s.LeafTemp__[layer], canopy.Gm25[layer], canopy.CPath.GmC, canopy.CPath.GmTMax , canopy.CPath.GmTMin , canopy.CPath.GmTOpt, canopy.CPath.GmBeta);
 
             if (mode == TranspirationMode.unlimited)
             {
@@ -117,7 +116,7 @@ namespace C3MethodExtensions
 
                 s.DoWaterInteraction(PM, canopy, mode);
 
-                s.gm_CO2T[layer] = s.LAIS[layer] * TemperatureFunction.Val(s.LeafTemp__[layer], canopy.CPath.GmP25, canopy.CPath.GmC, canopy.CPath.GmTMax, canopy.CPath.GmTMin, canopy.CPath.GmTOpt, canopy.CPath.GmBeta);
+                s.gm_CO2T[layer] = s.LAIS[layer] * TemperatureFunction.Val(s.LeafTemp__[layer], canopy.Gm25[layer], canopy.CPath.GmC, canopy.CPath.GmTMax, canopy.CPath.GmTMin, canopy.CPath.GmTOpt, canopy.CPath.GmBeta);
 
                 double Gt = 1 / (1 / s.GbCO2[layer] + 1 / s.GsCO2[layer]);
 

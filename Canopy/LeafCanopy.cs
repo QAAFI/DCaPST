@@ -604,6 +604,8 @@ namespace LayerCanopyPhotosynthesis
             Rd25 = new double[_nLayers];
             VpMax25 = new double[_nLayers];
 
+            Gm25 = new double[_nLayers];
+
             LeafWidths = new double[_nLayers];
 
             Gbh = new double[_nLayers];
@@ -774,6 +776,9 @@ namespace LayerCanopyPhotosynthesis
         [ModelVar("WfOpd", "Maximum rate of P activity-limited carboxylation for the canopy @ 25", "V", "p_Max@25°", "μmol/m2/s", "", "", true)]
         public double[] VpMax25 { get; set; }
 
+        [ModelVar("W4emd", "Gm @ 25", "G", "m@25°", "μmol/m2/s", "", "", true)]
+        public double[] Gm25 { get; set; }
+
         protected double _θ2 = 0.7;
         [ModelPar("rClzy", "Convexity factor for response of J2 to absorbed PAR", "θ", "2", "")]
         public double θ2
@@ -864,6 +869,8 @@ namespace LayerCanopyPhotosynthesis
                 VpMax25[i] = LAI * CPath.PsiVp * (LeafNTopCanopy - PM.Canopy.CPath.StructuralN) * (
                     (i == 0 ? 1 : Math.Exp(-NAllocationCoeff * LAIAccums[i - 1] / LAI)) -
                     Math.Exp(-NAllocationCoeff * LAIAccums[i] / LAI)) / NAllocationCoeff;
+
+                Gm25[i] = CPath.PsiGm * (NcAv - PM.Canopy.CPath.StructuralN) + CPath.CGm;
             }
         }
 

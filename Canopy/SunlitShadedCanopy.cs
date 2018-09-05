@@ -134,8 +134,8 @@ namespace LayerCanopyPhotosynthesis
         [ModelVar("0svKg", "Rate of electron transport of sunlit and shade leaf fractions", "J", "", "μmol/m2/s", "l,t", "m2 ground")]
         public double[] J { get; set; }
         [ModelVar("pmvS3", "Rate of e- transport through PSII", "J2", "", "μmol/m2/s", "l,t")]
-        public double[] J2 { get; set; }
-        [ModelVar("Q7w4j", "CO2 compensation point in the absence of Rd for the sunlit and shade leaf fractions for layer l", "Γ*", "", "μbar", "l,t")]
+        //public double[] J2 { get; set; }
+        //[ModelVar("Q7w4j", "CO2 compensation point in the absence of Rd for the sunlit and shade leaf fractions for layer l", "Γ*", "", "μbar", "l,t")]
         public double[] r_ { get; set; }
         [ModelVar("LL1b6", "Relative CO2/O2 specificity factor for Rubisco", "S", "c/o", "bar/bar", "l,t")]
         public double[] ScO { get; set; }
@@ -261,7 +261,7 @@ namespace LayerCanopyPhotosynthesis
             VpMax25 = new double[nLayers];
             VpMaxT = new double[nLayers];
 
-            J2 = new double[nLayers];
+            //J2 = new double[nLayers];
             J = new double[nLayers];
             r_ = new double[nLayers];
             ScO = new double[nLayers];

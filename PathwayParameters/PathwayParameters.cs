@@ -32,6 +32,12 @@ namespace LayerCanopyPhotosynthesis
         public double PsiJ { get; set; } = 3.20;
         [ModelPar("pYisy", "Slope of the linear relationship between Vpmax_l and N(L) at 25°C with interception = 0", "psi", "Vp", "mmol/mol N/s", "", "", true)]
         public double PsiVp { get; set; } = 3.39;
+        [ModelPar("psyGM", "Slope of the linear relationship between GM and SLN at 25°C", "psi", "Gm", "mmol/mol N/s", "", "", true)]
+        public double PsiGm { get; set; } = 0.005296;
+
+        [ModelPar("cGmso", "Intercept of the relationship between GM and SLN at 25°C", "psi", "Gm", "mmol/mol N/s", "", "", true)]
+        public double CGm { get; set; } = 0;
+
         [ModelPar("tuksS", "Fraction of electron transport partitioned to mesophyll chlorplast", "x", "", "", "", "", true)]
         public double X { get; set; } = 0.4;
 
@@ -137,8 +143,8 @@ namespace LayerCanopyPhotosynthesis
         //public double RdTOpt { get; set; } = 43.5930;
 
         //gm(Arabidopsis, Bernacchi 2002)    μmol/m2/s/bar	
-        [ModelPar("gmP25", "", "", "", "")]
-        public double GmP25 { get; set; } = 0.55;
+        //[ModelPar("gmP25", "", "", "", "")]
+        //public double GmP25 { get; set; } = 0.55;
         [ModelPar("gmC", "", "R", "d", "μmol/m2/s")]
         public double GmC { get; set; } = 0.5626;
         [ModelPar("GmTmax", "", "", "", "")]

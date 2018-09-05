@@ -15,6 +15,7 @@ namespace LayerCanopyPhotosynthesis
             PsiJ = 2.3;
             PsiRd = 0;
             PsiVp = 0.9;
+            PsiGm = 0;
 
             F2 = 0.75;
             F1 = 0.95;
@@ -59,12 +60,14 @@ namespace LayerCanopyPhotosynthesis
             RdTMin = 46390;
 
             //gm(Arabidopsis, Bernacchi 2002)    µmol/m2/s/bar	
-            GmP25 = 0.55;
+            //GmP25 = 0.55;
             GmC = 0.445752468880047;
             GmTMax = 55;
             GmTMin = 0.0;
             GmTOpt = 42;
             GmBeta = 1;
+
+            CGm = 1.2;
 
 
             #endregion
