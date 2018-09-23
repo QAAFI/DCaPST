@@ -43,8 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Environment\Angle.cs" />
-    <Compile Include="ApsimLinksCom\ApsimC3PhotoLink.cs" />
-    <Compile Include="ApsimLinksCom\ApsimC4PhotoLink.cs" />
     <Compile Include="Environment\EnvironmentModel.cs" />
     <Compile Include="Layer\LayerModel.cs" />
     <Compile Include="Canopy\LeafCanopy.cs" />
