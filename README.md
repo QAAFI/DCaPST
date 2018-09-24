@@ -1,54 +1,60 @@
 # DCaPST Package 
-##*(Diurnal Canopy Photosynthesis-Stomatal Conductance Simulator )*
+## *(Diurnal Canopy Photosynthesis-Stomatal Conductance Simulator )*
 
 ## About DCaPST
 Diurnal C3 and C4 canopy photosynthesis-stomatal conductance modules (DCaPST) were developed and connected with the wheat and sorghum crop models of the Agricultural Production Systems sIMulator (APSIM v7.8). This connection was facilitated by partitioning the crop canopy into sunlit and shade leaf fractions. The cross-scale model involved (1) the crop models determining relevant crop attributes, such as leaf area index and specific leaf nitrogen (or leaf nitrogen content), and extent of soil water uptake for transpiration supply, and (2) leaf and canopy photosynthesis models determining potential daily canopy biomass increment and transpiration demand. The dynamic interplay of these components with the prevailing environment allowed the simulation of crop growth, development and yield through the crop life cycle.
 
 ## System Reqirements
 
->####*Minimum System Requirements*
-> 1 GHz CPU 
+#### *Minimum System Requirements*
+1 GHz CPU </br>
+512MB RAM
 
-> 512MB RAM
-
->#### *Recommended System Requirements*
->Quad Core 3GHz + CPU
-
->4GB RAM
+#### *Recommended System Requirements*
+Quad Core 3GHz + CPU<br/>
+4GB RAM
 
 
 ## Software Requirements
 
 This software runs on the Windows operating system.
 
->#### *Minimum Operating System*
->Windows XP
+#### *Minimum Operating System*
+Windows XP
 
->#### *Recommended Operating System*
->Windows 10
+#### *Recommended Operating System*
+Windows 10
 
 ## Installation Guide
-The DCaPST (Diurnal Canopy Photosynthesis-Stomatal Conductance Simulator) model works in conjunction with the The Agricultural Production Systems Simulator (APSIM : [www.apsim.info](http:www.apsim.info)), inparticular APSIM version 7.8. 
+The DCaPST (Diurnal Canopy Photosynthesis-Stomatal Conductance Simulator) model works in conjunction with the The Agricultural Production Systems Simulator (APSIM : [www.apsim.info](http:www.apsim.info)), in particular APSIM version 7.8. 
 
->#### *Instructions*
->To install this software and utilise the demonstratation files, the following procedure should be followed
+#### *Instructions*
+To install this software and utilise the demonstratation files, the following procedure should be followed
 
-* Register and download APSIM
+1. Register and download the APSIM (v7.8) installation software from the  [www.apsim.info](http:www.apsim.info) website.
 
- https://www.apsim.info/APSIM.Registration.Portal/Main.aspx </br>
-  Register V7.8
-  
+ Click [here](https://www.apsim.info/APSIM.Registration.Portal/Main.aspx) to go to the APSIM registration page </br>
+
+2. Download and Install DCaPST software. This software can be downloaded from [here](https://github.com/QAAFI/DCaPST/blob/master/DCaPSTInstall.msi). This installer will:
+
+ * Install the necessary libraries for APSIM v7.8 to send and recieve information from the DCaPST software
+ * Maintain the original versions of the libraries in a separate folder
+ * Install the sample simulation files. These files will be located in a folder called 'DCaPST Samples'    inside your *Documents* folder. These simulations are the same simualtions used to create the figures for the paper. 
+  * R scripts (located in the above folder) to recreate some of the figures from the paper.
 
 
-* Download and INstall patch
-
-
->#### *Typical install time*
-* Installing APSIM
-* INstallin the patch
-
+#### *Typical install time*
+#####Installing APSIM installer:
+ * Registration time : 2 minutes
+ * Download time: 2 minutes
+ * Install time : 2 minutes
+ 
+#####Installing the DCaPST patch:
+ * Download time: 1 minute
+ * Install time : < 1 minute
+ 
 ## Demo
-After the patch is installed a folder named 'PSManipulationDemo' will be available in the directory that you installed APSIM v7.8 into. This folder will contain a sample 'apsim' file called 'PS perturbation sims', this file is an input file to the APSIM user interface that can be launched via (start menu ) or double click file.
+After the installation instructions have been completed, the sample simulations will be available in folder called 'DCaPST Samples' inside your *Documents* folder. This folder will contain a sample 'apsim' file called 'PS perturbation sims.apsim', this file is an input file to the APSIM user interface that can be launched via (start menu ) or by double clicking the file. If you have multiple versions of APSIM installed on your computer, you may need to launch the APSIM 7.8 user interface from the 'Start menu', to ensure the correct version is loaded.
 
 Training modules for using the APSIM User interface can be found by clicking this link, [APSIM Training Modules](https://www.apsim.info/Documentation/TrainingManualsandResources/APSIMGeneralTrainingManual.aspx)
 
