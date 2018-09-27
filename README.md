@@ -31,25 +31,23 @@ The DCaPST (Diurnal Canopy Photosynthesis-Stomatal Conductance Simulator) model 
 #### *Instructions*
 To install this software and utilise the demonstratation files, the following procedure should be followed
 
-1. Register and download the APSIM (v7.8) installation software from the  [www.apsim.info](http:www.apsim.info) website.
-
+1. Register and download the APSIM (v7.8) installation software from the  [www.apsim.info](http:www.apsim.info) website.<br/><br/>
  Click [here](https://www.apsim.info/APSIM.Registration.Portal/Main.aspx) to go to the APSIM registration page </br>
 
 2. Download and Install DCaPST software. This software can be downloaded from [here](https://github.com/QAAFI/DCaPST/blob/master/DCaPSTInstall.msi). This installer will:
-
  * Install the necessary libraries for APSIM v7.8 to send and recieve information from the DCaPST software
  * Maintain the original versions of the libraries in a separate folder
  * Install the sample simulation files. These files will be located in a folder called 'DCaPST Samples'    inside your *Documents* folder. These simulations are the same simualtions used to create the figures for the paper. 
-  * R scripts (located in the above folder) to recreate some of the figures from the paper.
+ * R scripts (located in the above folder) to recreate some of the figures from the paper.
 
 
 #### *Typical install time*
-#####Installing APSIM installer:
+##### Installing APSIM installer:
  * Registration time : 2 minutes
  * Download time: 2 minutes
  * Install time : 2 minutes
  
-#####Installing the DCaPST patch:
+##### Installing the DCaPST patch:
  * Download time: 1 minute
  * Install time : < 1 minute
  
@@ -81,21 +79,21 @@ Expected run times are as follows:
 ### How to run the software on your data
 The sample simulations can be changed to use data based on location, soil and genetics.
 
-####Location
+#### Location
 To change the location, the met (meteorology) file can be changed. Prepared met files are available for download from [Queensland Government SILO Weather Station Data Download Mirror](https://legacy.longpaddock.qld.gov.au/silo/) or users can create their own following the procedures outlined [here](https://www.apsim.info/Documentation/Model,CropandSoil/InfrastuctureandManagementDocumentation/MET.aspx).
 
 Once a user has a prepared file the location can be changed by selecting the met file input tree node (see Figure 2) and seleting their new data file. *Note:* There are two places to change the met file. They are both lacated in the '*shared*' folder and are *shared* by the C4 (Sorghum) and C3 (Wheat simualtions), respectively.
 
 Figure 2:![alt text](https://github.com/QAAFI/DCaPST/blob/master/Screenshots/Screenshot2.png "Logo Title Text 2")
 
-####Soil
+#### Soil
 The soil can be modified according using the *shared* soil tree node (see Figure 3). The APSIM soil component is discussed in detail in the [APSIM Training Modules](https://www.apsim.info/Documentation/TrainingManualsandResources/APSIMGeneralTrainingManual.aspx).
 
 *Note:* There are 2 *shared* sections, one for the C4 and on for the C3 simulations. You may need to change the parameters in both places
 
 Figure 3:![alt text](https://github.com/QAAFI/DCaPST/blob/master/Screenshots/Screenshot3.png "Logo Title Text 3")
 
-####Genetics
+#### Genetics
 The genetics can be modified throught the The DCaPST manager script inside the simulations. As there are several simulations in this set, there are also several DCaPST manager scripts to change the genetics of the Photosynthetic mechanisms that are input to the DCaPST model. See Figure 4, which demonstrates where the different scripts are located.
 
 The manager script in the left pane of Figure 4, contained in the Manager folder allows users to adjust DCaPST parameters, which include parameters from the biochemical models of photosynthesis, CO2 conductance model, and canopy attributes. Their functions can be found in the Supplementary Information accompanying the main text. Location in the Supplementary Inforamtion is indicated in brackets (scroll to the tight of the script). Default value of the parameters used for simulations in the main text are given.
