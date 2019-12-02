@@ -86,13 +86,23 @@ namespace LayerCanopyPhotosynthesis
             }
         }
         //---------------------------------------------------------------------------------------------------------
-       
+
+        public void CalcGmRate25(LeafCanopy canopy, SunlitShadedCanopy sunlit, PhotosynthesisModel PM)
+        {
+            for (int i = 0; i < _nLayers; i++)
+            {
+                Gm25[i] = canopy.Gm25[i] - sunlit.Gm25[i];
+            }
+        }
+        //---------------------------------------------------------------------------------------------------------
+
         public override void CalcMaxRates(LeafCanopy canopy, SunlitShadedCanopy counterpart, PhotosynthesisModel PM)
         {
             CalcRubiscoActivity25(canopy, counterpart, PM);
             CalcElectronTransportRate25(canopy, counterpart, PM);
             CalcRdActivity25(canopy, counterpart, PM);
             CalcPRate25(canopy, counterpart, PM);
+            CalcGmRate25(canopy, counterpart, PM);
         }
     }
 }

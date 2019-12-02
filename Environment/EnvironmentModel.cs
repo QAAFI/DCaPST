@@ -571,7 +571,7 @@ namespace LayerCanopyPhotosynthesis
                 time.Add(i);
 
                 idiff_par.Add(Idiffs.Value(i) * RPAR * 4.25 * 1E6);
-                idir_par.Add(Idirs.Value(i) * (1 - RPAR) * 4.56 * 1E6);
+                idir_par.Add(Idirs.Value(i) * RPAR * 4.56 * 1E6);
 
                 io_par.Add(idiff_par[i] + idir_par[i]);
             }
@@ -586,7 +586,7 @@ namespace LayerCanopyPhotosynthesis
             CalcSolarGeometryTimestep(time);
             CalcIncidentRadiation(time);
 
-            //run();
+            // run();
             // notify();
         }
         //---------------------------------------------------------------------------
@@ -608,6 +608,10 @@ namespace LayerCanopyPhotosynthesis
         [ModelVar("oh5kh", "Total PAR at canopy top ", "I", "o", "μmol PAR/m2/s", "t", "m2 of ground")]
         public double TotalIncidentRadiation { get; set; }
 
+        public double  DirectRadiation { get; set; }
+
+        public double DiffuseRadiation { get; set; }
+
         [ModelVar("LuYdw", "Direct PAR at canopy top", "I", "dir", "μmol PAR/m2/s", "t", "m2 of ground")]
         public double DirectRadiationPAR { get; set; }
 
@@ -625,6 +629,10 @@ namespace LayerCanopyPhotosynthesis
         public void CalcIncidentRadiation(double hour)
         {
             TotalIncidentRadiation = Ios.Value(hour);
+
+            DirectRadiation = Idirs.Value(hour);
+            DiffuseRadiation = Idiffs.Value(hour);
+
             TotalRadiationPAR = Ios_PAR.Value(hour);
             DiffuseRadiationPAR = Idiffs_PAR.Value(hour);
             DirectRadiationPAR = Idirs_PAR.Value(hour);

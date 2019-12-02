@@ -7,7 +7,7 @@ namespace LayerCanopyPhotosynthesis
 {
     public class PhotosynthesisModel : NotifyablePropertyClass
     {
-        public enum PhotoPathway { C3, C4 };
+        public enum PhotoPathway { C3, C4, CCM };
         public enum NitrogenModel { APSIM, EXPONENTIAL };
         public enum ElectronTransportModel { EMPIRICAL, EXTENDED };
         public enum ConductanceModel { SIMPLE, DETAILED };
@@ -23,10 +23,10 @@ namespace LayerCanopyPhotosynthesis
         public SunlitShadedCanopy Sunlit { get; set; }
         public SunlitShadedCanopy Shaded { get; set; }
 
-        public SunlitCanopy SunlitAC1;
-        public SunlitCanopy SunlitAJ;
-        public ShadedCanopy ShadedAC1;
-        public ShadedCanopy ShadedAJ;
+        public SunlitCanopy SunlitAc1;
+        public SunlitCanopy SunlitAj;
+        public ShadedCanopy ShadedAc1;
+        public ShadedCanopy ShadedAj;
 
         public delegate void Notify();
         public delegate void NotifyBool(bool flag);
@@ -246,6 +246,8 @@ namespace LayerCanopyPhotosynthesis
         #endregion
 
         public int Count;
+
+        public double potentialAssimilation;
         //---------------------------------------------------------------------------
         public PhotosynthesisModel()
         {
@@ -290,7 +292,7 @@ namespace LayerCanopyPhotosynthesis
             }
         }
 
-        public virtual double[] RunApsim(int DOY, double latitude, double maxT, double minT, double radn, double lai, double SLN, double soilWaterAvail, double RootShootRatio) { return null; }
+        public virtual double[] RunApsim(int DOY, double latitude, double maxT, double minT, double radn, double lai, double SLN, double soilWaterAvail, double RootShootRatio, double MaxHourlyTRate = 100) { return null; }
         
         //---------------------------------------------------------------------------
         public virtual void Run(bool sendNotification, double swAvail = 0, double maxHourlyT = -1, double sunlitFraction = 0, double shadedFraction = 0)
@@ -298,5 +300,19 @@ namespace LayerCanopyPhotosynthesis
             
         }
         #endregion
+        public double CalcTestSoilWater(List<double> hourlyWaterSuppliesmm, double testValue)
+        {
+            List<double> testValues = new List<double>(hourlyWaterSuppliesmm);
+
+            for (int i = 0; i < testValues.Count; i++)
+            {
+                if (testValues[i] > testValue)
+                {
+                    testValues[i] = testValue;
+                }
+            }
+
+            return testValues.Sum();
+        }
     }
 }

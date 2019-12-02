@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace LayerCanopyPhotosynthesis
 {
-    public enum SSType { AC1, AC2, AJ };
+    public enum SSType { Ac1, Ac2, Aj };
 
     public enum TranspirationMode { limited, unlimited };
 
@@ -47,6 +47,10 @@ namespace LayerCanopyPhotosynthesis
         public double[] VcMax25 { get; set; }
         [ModelVar("nX8u7", "Vcmax for the sunlit and shade leaf fractions  @ T°", "V", "c_max", "μmol/m2/s", "l,t", "m2 ground")]
         public double[] VcMaxT { get; set; }
+        [ModelVar("GGrx7", "Gm @ 25°", "G", "m_25", "μmol/m2/s", "l,t", "m2 ground")]
+        public double[] Gm25 { get; set; }
+        [ModelVar("Fl7rY", "Gm @ T", "G", "m_t", "μmol/m2/s", "l,t", "m2 ground")]
+        public double[] GmT { get; set; }
         [ModelVar("y1rt7", "Maximum rate of P activity-limited carboxylation @ 25°", "V", "p_max", "μmol/m2/s", "l,t", "m2 ground")]
         public double[] VpMax25 { get; set; }
         [ModelVar("Bl7oY", "Maximum rate of Rubisco carboxylation", "V", "p_max", "μmol/m2/s", "l,t", "m2 ground")]
@@ -119,10 +123,46 @@ namespace LayerCanopyPhotosynthesis
         public double[] Gsh { get; set; }
         [ModelVar("", "", "", "", "", "")]
         public double XX { get; set; }
+        //Numeric soution variables
         [ModelVar("", "", "", "", "", "")]
-        public double X_4 { get; set; }
+        public double x_1 { get; set; }
         [ModelVar("", "", "", "", "", "")]
-        public double X_5 { get; set; }
+        public double x_2 { get; set; }
+        [ModelVar("", "", "", "", "", "")]
+        public double x_3 { get; set; }
+        [ModelVar("", "", "", "", "", "")]
+        public double x_4 { get; set; }
+        [ModelVar("", "", "", "", "", "")]
+        public double x_5 { get; set; }
+        [ModelVar("", "", "", "", "", "")]
+        public double x_6 { get; set; }
+        [ModelVar("", "", "", "", "", "")]
+        public double x_7 { get; set; }
+        [ModelVar("", "", "", "", "", "")]
+        public double x_8 { get; set; }
+        [ModelVar("", "", "", "", "", "")]
+        public double x_9 { get; set; }
+
+        [ModelVar("", "", "", "", "", "")]
+        public double p { get; set; }
+        [ModelVar("", "", "", "", "", "")]
+        public double q { get; set; }
+        [ModelVar("", "", "", "", "", "")]
+        public double m { get; set; }
+        [ModelVar("", "", "", "", "", "")]
+        public double t { get; set; }
+        [ModelVar("", "", "", "", "", "")]
+        public double b { get; set; }
+        [ModelVar("", "", "", "", "", "")]
+        public double j { get; set; }
+        [ModelVar("", "", "", "", "", "")]
+        public double e { get; set; } 
+        [ModelVar("", "", "", "", "", "")]
+        public double R { get; set; }
+
+
+
+
         [ModelVar("34Dses", "Water Use", "", "E", "mm/hr", "")]
         public double[] WaterUse { get; set; }
         [ModelVar("htr6De", "Water Use", "", "E", "mols/s", "")]
@@ -261,6 +301,9 @@ namespace LayerCanopyPhotosynthesis
             VpMax25 = new double[nLayers];
             VpMaxT = new double[nLayers];
 
+            Gm25 = new double[nLayers];
+            GmT = new double[nLayers];
+
             //J2 = new double[nLayers];
             J = new double[nLayers];
             r_ = new double[nLayers];
@@ -371,9 +414,9 @@ namespace LayerCanopyPhotosynthesis
         //---------------------------------------------------------------------------------------------------------
         public virtual void CalcMaxRates(LeafCanopy canopy, SunlitShadedCanopy counterpart, PhotosynthesisModel EM) { }
         //---------------------------------------------------------------------------------------------------------
-        public double SolveQuadratic(double a, double b, double c, double d)
+        public double SolveQuadratic(double a, double b, double d)
         {
-            return (-1 * Math.Pow((Math.Pow(a, 2) - 4 * b), 0.5) + c) / (2 * d);
+            return (-1 * Math.Pow((Math.Pow(a, 2) - 4 * b), 0.5) - a) / (2 * d);
         }
         ////---------------------------------------------------------------------------------------------------------
         /// <summary>
@@ -500,6 +543,20 @@ namespace LayerCanopyPhotosynthesis
                     LeafTemp[i] = PM.EnvModel.GetTemp(PM.Time) + TDelta[i];
                 }
             }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public double CalcAssimilation()
+        {
+            double _a, _b, _d;
+
+            _a = b * R * x_2 * x_9 - b * t * x_1 * x_9 - j * p + j * q * R - j * q * x_1 - e * j * x_2 - j * x_3 + m * x_8 - p * x_4 * x_8 + q * R * x_4 * x_8 - q * x_1 * x_4 * x_8 + R * x_6 * x_8 - x_1 * x_6 * x_8 - x_5 * x_8 + x_7 * x_8;
+            _d = -b * x_2 * x_9 + j * q + q * x_4 * x_8 + x_6 * x_8;
+            _b = _d * (-j * p * R + j * p * x_1 - e * j * R * x_2 - j * R * x_3 - e * j * t * x_1 + m * R * x_8 - m * x_1 * x_8 - p * R * x_4 * x_8 + p * x_1 * x_4 * x_8 - R * x_7 * x_8 + x_1 * x_5 * x_8 - x_1 * x_7 * x_8);
+
+            return SolveQuadratic(_a, _b, _d); //Eq (A55)
         }
         //---------------------------------------------------------------------------------------------------------
     }
