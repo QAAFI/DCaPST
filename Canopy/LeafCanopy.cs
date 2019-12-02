@@ -707,10 +707,11 @@ namespace LayerCanopyPhotosynthesis
                 AbsorbedRadiation[i] = (1 - BeamReflectionCoeffs[i]) * em.DirectRadiationPAR * ((i == 0 ? 1 : Math.Exp(-BeamScatteredBeams[i] * LAIAccums[i - 1])) - Math.Exp(-BeamScatteredBeams[i] * LAIAccums[i])) +
                     (1 - DiffuseReflectionCoeffs[i]) * em.DiffuseRadiationPAR * ((i == 0 ? 1 : Math.Exp(-DiffuseScatteredDiffuses[i] * LAIAccums[i - 1])) - Math.Exp(-DiffuseScatteredDiffuses[i] * LAIAccums[i]));
 
-                DirectPAR = em.DirectRadiationPAR / 0.5 / 4.56 / 1000000 * 0.5 * 1000000;
-                DiffusePAR = em.DiffuseRadiationPAR / 0.5 / 4.25 / 1000000 * 0.5 * 1000000;
-                DirectNIR = em.DirectRadiationPAR / 0.5 / 4.56 / 1000000 * 0.5 * 1000000;
-                DiffuseNIR = em.DiffuseRadiationPAR / 0.5 / 4.25 / 1000000 * 0.5 * 1000000;
+                // Calculate PAR and NIR in terms of energy
+                DirectPAR = em.DirectRadiation * 0.5 * 1000000;
+                DiffusePAR = em.DiffuseRadiation * 0.5 * 1000000;
+                DirectNIR = em.DirectRadiation * 0.5 * 1000000;
+                DiffuseNIR = em.DiffuseRadiation * 0.5 * 1000000;
 
 
                 AbsorbedRadiationPAR[i] = (1 - BeamReflectionCoeffs[i]) * DirectPAR * ((i == 0 ? 1 : Math.Exp(-BeamScatteredBeams[i] * LAIAccums[i - 1])) - Math.Exp(-BeamScatteredBeams[i] * LAIAccums[i])) +
