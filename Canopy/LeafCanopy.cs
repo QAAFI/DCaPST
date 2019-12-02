@@ -490,6 +490,8 @@ namespace LayerCanopyPhotosynthesis
         [ModelVar("", "", "'", "", "", "")]
         public double[] Gbh;
 
+        [ModelVar("aW5lJ", "Constant", "C", "", "", "")]
+        public double Constant { get; set; } = 0.047;
         //-----------------------------------------------------------------------
         public LeafCanopy(int numlayers, double lai)
         {
@@ -871,7 +873,10 @@ namespace LayerCanopyPhotosynthesis
                     (i == 0 ? 1 : Math.Exp(-NAllocationCoeff * LAIAccums[i - 1] / LAI)) -
                     Math.Exp(-NAllocationCoeff * LAIAccums[i] / LAI)) / NAllocationCoeff;
 
-                Gm25[i] = CPath.PsiGm * (NcAv - PM.Canopy.CPath.StructuralN) + CPath.CGm;
+                //Gm25[i] = CPath.PsiGm * (NcAv - PM.Canopy.CPath.StructuralN) + CPath.CGm;
+                Gm25[i] = LAI* CPath.PsiGm * (LeafNTopCanopy - PM.Canopy.CPath.StructuralN) * (
+                   (i == 0 ? 1 : Math.Exp(-NAllocationCoeff * LAIAccums[i - 1] / LAI)) -
+                   Math.Exp(-NAllocationCoeff * LAIAccums[i] / LAI)) / NAllocationCoeff;
             }
         }
 
@@ -900,6 +905,15 @@ namespace LayerCanopyPhotosynthesis
         [ModelVar("ATmtA", "Instantaneous net canopy Assimilation", "Ac (gross)", "", "μmol CO2 m-2 ground s-1")]
         public double[] InstantaneousAssimilation { get; set; }
 
+        /// <summary>
+        /// Factor relating linear e- flow to the ATP production portion of J
+        /// </summary>
+        public double z { get; set; }
+
+        /// <summary>
+        /// Fraction of the e- flow out of PSI that proceeds via cyclic e- flow
+        /// </summary>
+        public double fcyc { get; set; }
         #endregion
 
         #region Daily canopy biomass accumulation
@@ -1180,8 +1194,5 @@ namespace LayerCanopyPhotosynthesis
 
         //[ModelVar("3sYmP", "Mesophyll oxygen partial pressure", "Om", "", "μbar")]  //Om==Oi
         //public double Om { get; set; }
-
-        [ModelVar("ngpOW", "", "", "", "")]
-        public double Z { get; set; }
     }
 }
