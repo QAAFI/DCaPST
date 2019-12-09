@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <Folder Include="C3\" />
-    <Folder Include="C4\" />
     <Folder Include="CCM\" />
   </ItemGroup>
 
