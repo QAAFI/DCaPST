@@ -60,7 +60,7 @@ namespace LayerCanopyPhotosynthesis
         //[ModelPar("KcTmax", "", "", "", "")]
         //public double KcTMax { get; set; } = 60.0;
         [ModelPar("KcTmin", "", "", "", "")]
-        public double KcTMin { get; set; } = 0.0;
+        public double KcTEa { get; set; } = 0.0;
         //[ModelPar("KcTopt", "", "", "", "")]
         //public double KcTOpt { get; set; } = 50.0115;
 
@@ -72,7 +72,7 @@ namespace LayerCanopyPhotosynthesis
         //[ModelPar("KoTmax", "", "", "", "")]
         //public double KoTMax { get; set; } = 60.0;
         [ModelPar("KoTmin", "", "", "", "")]
-        public double KoTMin { get; set; } = 0.0;
+        public double KoTEa { get; set; } = 0.0;
         //[ModelPar("KoTopt", "", "", "", "")]
         //public double KoTOpt { get; set; } = 37.9682;
 
@@ -82,7 +82,7 @@ namespace LayerCanopyPhotosynthesis
         //[ModelPar("VcTmax", "", "", "", "")]
         //public double VcTMax { get; set; } = 60.0;
         [ModelPar("VcTmin", "", "", "", "")]
-        public double VcTMin { get; set; } = 0.0;
+        public double VcTEa { get; set; } = 0.0;
         //[ModelPar("VcTopt", "", "", "", "")]
         //public double VcTOpt { get; set; } = 48.2470;
 
@@ -106,7 +106,7 @@ namespace LayerCanopyPhotosynthesis
         //[ModelPar("VcMax.VoMaxTmax", "", "", "", "")]
         //public double VcMax_VoMaxTMax { get; set; } = 60.0;
         [ModelPar("VcMax.VoMaxTmin", "", "", "", "")]
-        public double VcMax_VoMaxTMin { get; set; } = 0.0;
+        public double VcMax_VoMaxTEa { get; set; } = 0.0;
         //[ModelPar("VcMax.VoMaxTopt", "", "", "", "")]
         //public double VcMax_VoMaxTOpt { get; set; } = 45.0364;
 
@@ -118,7 +118,7 @@ namespace LayerCanopyPhotosynthesis
         //[ModelPar("KpTmax", "", "", "", "")]
         //public double KpTMax { get; set; } = 60.0;
         [ModelPar("KpTmin", "", "", "", "")]
-        public double KpTMin { get; set; } = 0.0;
+        public double KpTEa { get; set; } = 0.0;
         //[ModelPar("KpTopt", "", "", "", "")]
         //public double KpTOpt { get; set; } = 41.4914;
 
@@ -128,7 +128,7 @@ namespace LayerCanopyPhotosynthesis
         //[ModelPar("VpMaxTmax", "", "", "", "")]
         //public double VpMaxTMax { get; set; } = 45.0;
         [ModelPar("VpMaxTmin", "", "", "", "")]
-        public double VpMaxTMin { get; set; } = 0.0;
+        public double VpMaxTEa { get; set; } = 0.0;
         //[ModelPar("VpMaxTopt", "", "", "", "")]
         //public double VpMaxTOpt { get; set; } = 35.8650;
 
@@ -138,7 +138,7 @@ namespace LayerCanopyPhotosynthesis
         //[ModelPar("RdTmax", "", "", "", "")]
         //public double RdTMax { get; set; } = 60.0;
         [ModelPar("RdTmin", "", "", "", "")]
-        public double RdTMin { get; set; } = 0.0;
+        public double RdTEa { get; set; } = 0.0;
         //[ModelPar("RdTopt", "", "", "", "")]
         //public double RdTOpt { get; set; } = 43.5930;
 

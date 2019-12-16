@@ -21,6 +21,7 @@ namespace LayerCanopyPhotosynthesis
         //---------------------------------------------------------------------------------------------------------
         public override void CalcIncidentRadiation(EnvironmentModel EM, LeafCanopy canopy, SunlitShadedCanopy shaded)
         {
+            // Probably redundant
             for (int i = 0; i < _nLayers; i++)
             {
                 IncidentIrradiance[i] = EM.DirectRadiationPAR * canopy.PropnInterceptedRadns[i] / LAIS[i] * LAIS[i] +
@@ -101,6 +102,8 @@ namespace LayerCanopyPhotosynthesis
             CalcElectronTransportRate25(canopy, counterpart, PM);
             CalcRdActivity25(canopy, counterpart, PM);
             CalcPRate25(canopy, counterpart, PM);
+            CalcGmRate25(canopy, counterpart, PM);
+
 
         }
         //---------------------------------------------------------------------------------------------------------
@@ -200,6 +203,18 @@ namespace LayerCanopyPhotosynthesis
             for (int i = 0; i < _nLayers; i++)
             {
                 VpMax25[i] = canopy.LAI * canopy.CPath.PsiVp * (canopy.LeafNTopCanopy - canopy.CPath.StructuralN) *
+                    ((i == 0 ? 1 : Math.Exp(-(canopy.BeamExtCoeffs[i] + canopy.NAllocationCoeff / canopy.LAI) * canopy.LAIAccums[i - 1])) -
+                    Math.Exp(-(canopy.BeamExtCoeffs[i] + canopy.NAllocationCoeff / canopy.LAI) * canopy.LAIAccums[i])) /
+                    (canopy.NAllocationCoeff + canopy.BeamExtCoeffs[i] * canopy.LAI);
+            }
+        }
+        //---------------------------------------------------------------------------------------------------------
+
+        public void CalcGmRate25(LeafCanopy canopy, SunlitShadedCanopy shaded, PhotosynthesisModel PM)
+        {
+            for (int i = 0; i < _nLayers; i++)
+            {
+                Gm25[i] = canopy.LAI * canopy.CPath.PsiGm * (canopy.LeafNTopCanopy - canopy.CPath.StructuralN) *
                     ((i == 0 ? 1 : Math.Exp(-(canopy.BeamExtCoeffs[i] + canopy.NAllocationCoeff / canopy.LAI) * canopy.LAIAccums[i - 1])) -
                     Math.Exp(-(canopy.BeamExtCoeffs[i] + canopy.NAllocationCoeff / canopy.LAI) * canopy.LAIAccums[i])) /
                     (canopy.NAllocationCoeff + canopy.BeamExtCoeffs[i] * canopy.LAI);
