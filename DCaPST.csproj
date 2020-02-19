@@ -7,7 +7,7 @@
     <ProjectGuid>{96037C21-E821-4CF8-98B5-C8BD2446F4E0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LayerCanopyPhotosynthesis</RootNamespace>
+    <RootNamespace>DCAPST</RootNamespace>
     <AssemblyName>DCaPST</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\ApsimClassic\Model\</OutputPath>
+    <OutputPath>.\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -61,37 +61,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Environment\Angle.cs" />
-    <Compile Include="Environment\EnvironmentModel.cs" />
-    <Compile Include="Layer\LayerModel.cs" />
-    <Compile Include="Canopy\LeafCanopy.cs" />
-    <Compile Include="MethodExtensions\CCMMethodExtensions.cs" />
-    <Compile Include="Output\LightVar.cs" />
-    <Compile Include="PathwayParameters\PathwayParametersC3.cs" />
-    <Compile Include="PathwayParameters\PathwayParametersC4.cs" />
-    <Compile Include="PathwayParameters\PathwayParametersCCM.cs" />
-    <Compile Include="PhotosynthesisModel\PhotosynthesisModelCCM.cs" />
-    <Compile Include="Tools\Lookup\LookupTable.cs" />
-    <Compile Include="TemperatureFunctions\ModArrhehenius.cs" />
-    <Compile Include="Input\ModelPar.cs" />
-    <Compile Include="Output\ModelVar.cs" />
-    <Compile Include="Layer\NaturalSpline.cs" />
-    <Compile Include="Input\NotifyablePropertyClass.cs" />
-    <Compile Include="PathwayParameters\PathwayParameters.cs" />
-    <Compile Include="PhotosynthesisModel\PhotosynthesisModelC3.cs" />
-    <Compile Include="PhotosynthesisModel\PhotosynthesisModel.cs" />
-    <Compile Include="PhotosynthesisModel\PhotosynthesisModelC4.cs" />
+    <Compile Include="Interfaces\Canopy\IPartialCanopy.cs" />
+    <Compile Include="Interfaces\Canopy\ITotalCanopy.cs" />
+    <Compile Include="Interfaces\IAssimilation.cs" />
+    <Compile Include="Interfaces\Parameters\ICanopyParameters.cs" />
+    <Compile Include="Interfaces\Parameters\IPathwayParameters.cs" />
+    <Compile Include="Interfaces\Models\ILeafWaterInteraction.cs" />
+    <Compile Include="Interfaces\Models\ITemperature.cs" />
+    <Compile Include="Interfaces\Models\ISolarGeometry.cs" />
+    <Compile Include="Interfaces\Models\IRadiation.cs" />
+    <Compile Include="Models\Assimilation\Assimilation.cs" />
+    <Compile Include="Models\Assimilation\CanopyTypes\AssimilationCCM.cs" />
+    <Compile Include="Models\Assimilation\CanopyTypes\AssimilationC4.cs" />
+    <Compile Include="Models\Assimilation\CanopyTypes\AssimilationC3.cs" />
+    <Compile Include="Models\Assimilation\AssimilationPathway.cs" />
+    <Compile Include="Models\Canopy\CanopyRadiation.cs" />
+    <Compile Include="Parameters\CanopyParameters.cs" />
+    <Compile Include="Models\Canopy\PartialCanopy.cs" />
+    <Compile Include="Models\Canopy\TotalCanopy.cs" />
+    <Compile Include="Models\Assimilation\AssimilationFunction.cs" />
+    <Compile Include="Utilities\Extensions.cs" />
+    <Compile Include="Models\Environment\TemperatureModel.cs" />
+    <Compile Include="Models\Environment\SolarRadiationModel.cs" />
+    <Compile Include="Models\Environment\SolarGeometryModel.cs" />
+    <Compile Include="Models\Environment\LeafWaterInteractionModel.cs" />
+    <Compile Include="Models\PhotosynthesisModel.cs" />
+    <Compile Include="Parameters\PathwayParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tools\Reflection\ReflectionHelper.cs" />
-    <Compile Include="Canopy\ShadedCanopy.cs" />
-    <Compile Include="Canopy\SunlitCanopy.cs" />
-    <Compile Include="MethodExtensions\C3MethodExtensions.cs" />
-    <Compile Include="MethodExtensions\C4MethodExtensions.cs" />
-    <Compile Include="Canopy\SunlitShadedCanopy.cs" />
-    <Compile Include="Tools\Lookup\TableFunction.cs" />
-    <Compile Include="TemperatureFunctions\TempFunctionExp.cs" />
-    <Compile Include="TemperatureFunctions\TempFunctionNormal.cs" />
-    <Compile Include="Layer\TrapezoidLayer.cs" />
+    <Compile Include="Utilities\LeafTemperatureResponseModel.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

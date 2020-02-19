@@ -2,48 +2,48 @@
 using DCAPST.Interfaces;
 using DCAPST;
 
-namespace Validation.C4
+namespace Validation.CCM
 {
     public static class Initialise
-    {
-        public static CanopyParameters NewSorghumParameters()
+    {        
+        public static CanopyParameters NewWheat()
         {
-            double PsiFactor = 0.4;
-            
+            double PsiFactor = 1.0;
+
             var j = new LeafTemperatureParameters()
             {
-                TMin = 0,
-                TOpt = 37.8649150880407,
-                TMax = 55,
-                C = 0.711229539802063,
-                Beta = 1
+                TMin = 0.0,
+                TOpt = 30.0,
+                TMax = 45.0,
+                C = 0.911017958600129,
+                Beta = 1.0
             };
 
             var g = new LeafTemperatureParameters()
             {
-                TMin = 0,
-                TOpt = 42,
-                TMax = 55,
-                C = 0.462820450976839,
-                Beta = 1,
+                TMin = 0.0,
+                TOpt = 29.2338417788683,
+                TMax = 45.0,
+                C = 0.875790608584141,
+                Beta = 1.0
             };
 
             var rubiscoCarboxylation = new TemperatureResponseValues()
             {
-                At25 = 1210,
-                Factor = 64200
+                At25 = 273.422964228666,
+                Factor = 93720.0
             };
 
             var rubiscoOxygenation = new TemperatureResponseValues()
             {
-                At25 = 292000,
-                Factor = 10500
+                At25 = 165824.064155384,
+                Factor = 33600.0
             };
 
             var rubiscoCarboxylationToOxygenation = new TemperatureResponseValues()
             {
-                At25 = 5.51328906454566,
-                Factor = 21265.4029552906
+                At25 = 4.59217066521612,
+                Factor = 35713.1987127717
             };
 
             var pepc = new TemperatureResponseValues()
@@ -54,7 +54,7 @@ namespace Validation.C4
 
             var rubiscoActivity = new TemperatureResponseValues()
             {
-                Factor = 78000
+                Factor = 65330.0
             };
 
             var respiration = new TemperatureResponseValues()
@@ -69,40 +69,42 @@ namespace Validation.C4
 
             var CPath = new PathwayParameters()
             {
-                PEPRegeneration = 120,
+                PEPRegeneration = 400,
                 SpectralCorrectionFactor = 0.15,
                 PS2ActivityFraction = 0.1,
-                BundleSheathConductance = 0.003,
-                
-                MaxRubiscoActivitySLNRatio = 0.465 * PsiFactor,
-                MaxElectronTransportSLNRatio = 2.7 * PsiFactor,
-                RespirationSLNRatio = 0.0 * PsiFactor,
-                MaxPEPcActivitySLNRatio = 1.55 * PsiFactor,
-                MesophyllCO2ConductanceSLNRatio = 0.0135 * PsiFactor,
+                BundleSheathConductance = 0.5,
 
-                ExtraATPCost = 2,
-                MesophyllElectronTransportFraction = 0.4,
-                IntercellularToAirCO2Ratio = 0.45,
+                MaxRubiscoActivitySLNRatio = 1.1 * PsiFactor,
+                MaxElectronTransportSLNRatio = 1.9484 * PsiFactor,
+                RespirationSLNRatio = 0.0 * PsiFactor,
+                MaxPEPcActivitySLNRatio = 0.373684157583268 * PsiFactor,
+                MesophyllCO2ConductanceSLNRatio = 0.00412 * PsiFactor,
+
+                ExtraATPCost = 0.75,
+                IntercellularToAirCO2Ratio = 0.7,
 
                 RubiscoCarboxylation = rubiscoCarboxylation,
-                RubiscoOxygenation = rubiscoOxygenation,                
+                RubiscoOxygenation = rubiscoOxygenation,
                 RubiscoCarboxylationToOxygenation = rubiscoCarboxylationToOxygenation,
+                RubiscoActivity = rubiscoActivity,                
                 PEPc = pepc,
-                RubiscoActivity = rubiscoActivity,
-                Respiration = respiration,
                 PEPcActivity = pepcActivity,
+                Respiration = respiration,
 
                 ElectronTransportRateParams = j,
-                MesophyllCO2ConductanceParams = g
-            };            
+                MesophyllCO2ConductanceParams = g                
+            };
+            CPath.MesophyllElectronTransportFraction = CPath.ExtraATPCost / (3.0 + CPath.ExtraATPCost);
+            CPath.FractionOfCyclicElectronFlow = 0.25 * CPath.ExtraATPCost;
+            CPath.ATPProductionElectronTransportFactor = (3.0 - CPath.FractionOfCyclicElectronFlow) / (4.0 * (1.0 - CPath.FractionOfCyclicElectronFlow));
 
             var canopy = new CanopyParameters()
             {
-                Type = CanopyType.C4,
+                Type = CanopyType.CCM,
 
                 Pathway = CPath,
 
-                AirCO2 = 363,
+                AirCO2 = 370,
                 CurvatureFactor = 0.7,
                 DiffusivitySolubilityRatio = 0.047,
                 AirO2 = 210000,
@@ -115,7 +117,7 @@ namespace Validation.C4
                 LeafAngle = 60,
                 LeafScatteringCoeff = 0.15,
                 LeafScatteringCoeffNIR = 0.8,
-                LeafWidth = 0.15,
+                LeafWidth = 0.05,
 
                 SLNRatioTop = 1.3,
                 MinimumN = 14,
