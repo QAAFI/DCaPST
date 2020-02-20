@@ -2,5 +2,6 @@
 .vs/
 bin/
 obj/
+packages/
 *.dll
 DCaPST.pdb
