@@ -6,7 +6,7 @@ using DCAPST.Interfaces;
 
 namespace DCAPST
 {
-    public class PhotosynthesisModel
+    public class PhotosynthesisModel : IPhotosynthesisModel
     {
         /// <summary>
         /// The solar geometry
