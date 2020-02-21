@@ -1,15 +1,40 @@
-﻿using DCAPST.Canopy;
-using DCAPST.Interfaces;
+﻿using DCAPST.Interfaces;
 using DCAPST;
 
 namespace Validation.C4
 {
     public static class Initialise
     {
-        public static CanopyParameters NewSorghumParameters()
+        public static void UseSorghumValues(this CanopyParameters c)
+        {
+            c.Type = CanopyType.C4;
+
+            c.AirCO2 = 363;
+            c.CurvatureFactor = 0.7;
+            c.DiffusivitySolubilityRatio = 0.047;
+            c.AirO2 = 210000;
+
+            c.DiffuseExtCoeff = 0.78;
+            c.DiffuseExtCoeffNIR = 0.8;
+            c.DiffuseReflectionCoeff = 0.036;
+            c.DiffuseReflectionCoeffNIR = 0.389;
+
+            c.LeafAngle = 60;
+            c.LeafScatteringCoeff = 0.15;
+            c.LeafScatteringCoeffNIR = 0.8;
+            c.LeafWidth = 0.15;
+
+            c.SLNRatioTop = 1.3;
+            c.MinimumN = 14;
+
+            c.Windspeed = 1.5;
+            c.WindSpeedExtinction = 1.5;
+        }
+
+        public static void UseSorghumValues(this PathwayParameters p)
         {
             double PsiFactor = 0.4;
-            
+
             var j = new LeafTemperatureParameters()
             {
                 TMin = 0,
@@ -67,64 +92,31 @@ namespace Validation.C4
                 Factor = 57043.2677590512
             };
 
-            var CPath = new PathwayParameters()
-            {
-                PEPRegeneration = 120,
-                SpectralCorrectionFactor = 0.15,
-                PS2ActivityFraction = 0.1,
-                BundleSheathConductance = 0.003,
-                
-                MaxRubiscoActivitySLNRatio = 0.465 * PsiFactor,
-                MaxElectronTransportSLNRatio = 2.7 * PsiFactor,
-                RespirationSLNRatio = 0.0 * PsiFactor,
-                MaxPEPcActivitySLNRatio = 1.55 * PsiFactor,
-                MesophyllCO2ConductanceSLNRatio = 0.0135 * PsiFactor,
+            p.PEPRegeneration = 120;
+            p.SpectralCorrectionFactor = 0.15;
+            p.PS2ActivityFraction = 0.1;
+            p.BundleSheathConductance = 0.003;
 
-                ExtraATPCost = 2,
-                MesophyllElectronTransportFraction = 0.4,
-                IntercellularToAirCO2Ratio = 0.45,
+            p.MaxRubiscoActivitySLNRatio = 0.465 * PsiFactor;
+            p.MaxElectronTransportSLNRatio = 2.7 * PsiFactor;
+            p.RespirationSLNRatio = 0.0 * PsiFactor;
+            p.MaxPEPcActivitySLNRatio = 1.55 * PsiFactor;
+            p.MesophyllCO2ConductanceSLNRatio = 0.0135 * PsiFactor;
 
-                RubiscoCarboxylation = rubiscoCarboxylation,
-                RubiscoOxygenation = rubiscoOxygenation,                
-                RubiscoCarboxylationToOxygenation = rubiscoCarboxylationToOxygenation,
-                PEPc = pepc,
-                RubiscoActivity = rubiscoActivity,
-                Respiration = respiration,
-                PEPcActivity = pepcActivity,
+            p.ExtraATPCost = 2;
+            p.MesophyllElectronTransportFraction = 0.4;
+            p.IntercellularToAirCO2Ratio = 0.45;
 
-                ElectronTransportRateParams = j,
-                MesophyllCO2ConductanceParams = g
-            };            
+            p.RubiscoCarboxylation = rubiscoCarboxylation;
+            p.RubiscoOxygenation = rubiscoOxygenation;
+            p.RubiscoCarboxylationToOxygenation = rubiscoCarboxylationToOxygenation;
+            p.PEPc = pepc;
+            p.RubiscoActivity = rubiscoActivity;
+            p.Respiration = respiration;
+            p.PEPcActivity = pepcActivity;
 
-            var canopy = new CanopyParameters()
-            {
-                Type = CanopyType.C4,
-
-                Pathway = CPath,
-
-                AirCO2 = 363,
-                CurvatureFactor = 0.7,
-                DiffusivitySolubilityRatio = 0.047,
-                AirO2 = 210000,
-
-                DiffuseExtCoeff = 0.78,
-                DiffuseExtCoeffNIR = 0.8,
-                DiffuseReflectionCoeff = 0.036,
-                DiffuseReflectionCoeffNIR = 0.389,
-
-                LeafAngle = 60,
-                LeafScatteringCoeff = 0.15,
-                LeafScatteringCoeffNIR = 0.8,
-                LeafWidth = 0.15,
-
-                SLNRatioTop = 1.3,
-                MinimumN = 14,
-
-                Windspeed = 1.5,
-                WindSpeedExtinction = 1.5
-            };
-
-            return canopy;
+            p.ElectronTransportRateParams = j;
+            p.MesophyllCO2ConductanceParams = g;
         }
     }
 }

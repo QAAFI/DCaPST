@@ -7,6 +7,8 @@
         /// </summary>
         ICanopyParameters Canopy { get; }
 
+        IPathwayParameters Pathway { get; }
+
         /// <summary>
         /// The rates of various parameters at 25 Celsius
         /// </summary>

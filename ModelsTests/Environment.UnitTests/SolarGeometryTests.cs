@@ -1,5 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
+
+using DCAPST;
 using DCAPST.Environment;
 
 namespace ModelsTests.Environment.UnitTests
@@ -12,13 +14,12 @@ namespace ModelsTests.Environment.UnitTests
         [SetUp]
         public void SetUp()
         {
-            solar = new SolarGeometryModel(144, 18.3);
-        }
-
-        [TestCaseSource(typeof(SolarGeometryTestData), "ConstructorTestCases")]
-        public void Constructor_IfInvalidArguments_ThrowsException(double day, double lat)
-        {
-            Assert.Throws<Exception>(() => new SolarGeometryModel(day, lat));
+            solar = new SolarGeometryModel()
+            {
+                DayOfYear = 144,
+                Latitude = 18.3.ToRadians()
+            };
+            solar.Initialise();
         }
 
         [Test]

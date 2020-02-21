@@ -22,6 +22,8 @@
         /// </summary>
         double SolarConstant { get; }
 
+        void Initialise();
+
         /// <summary>
         /// Calculates the angle of the sun in the sky at the given time
         /// </summary>

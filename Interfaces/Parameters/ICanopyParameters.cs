@@ -18,7 +18,7 @@
         /// <summary>
         /// Parameters used in modelling an assimilation pathway
         /// </summary>
-        IPathwayParameters Pathway { get; set; }
+        //IPathwayParameters Pathway { get; set; }
 
         /// <summary>
         /// Partial pressure of CO2 in air (microbar)

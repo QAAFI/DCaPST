@@ -1,4 +1,5 @@
 using System;
+using DCAPST.Canopy;
 using DCAPST.Interfaces;
 
 namespace DCAPST
@@ -33,7 +34,7 @@ namespace DCAPST
             this.partial = partial;
             rateAt25 = partial.At25C;
             canopy = partial.Canopy;
-            pathway = canopy.Pathway;
+            pathway = partial.Pathway;
         }
 
         /// <summary>

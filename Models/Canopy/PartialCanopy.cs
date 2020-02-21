@@ -10,12 +10,14 @@ namespace DCAPST.Canopy
         /// <summary>
         /// Parameters describing the canopy
         /// </summary>
-        public ICanopyParameters Canopy { get; set; }       
+        public ICanopyParameters Canopy { get; private set; }       
+
+        public IPathwayParameters Pathway { get; private set; }
 
         /// <summary>
         /// A group of parameters valued at the reference temperature of 25 Celsius
         /// </summary>
-        public ParameterRates At25C { get; private set; }
+        public ParameterRates At25C { get; private set; } = new ParameterRates();
 
         /// <summary>
         /// The leaf area index of this part of the canopy
@@ -42,10 +44,10 @@ namespace DCAPST.Canopy
         /// </summary>
         public double WaterUse { get; set; }
 
-        public PartialCanopy(ICanopyParameters canopy)
+        public PartialCanopy(ICanopyParameters canopy, IPathwayParameters pathway)
         {
             Canopy = canopy;
-            At25C = new ParameterRates();
+            Pathway = pathway;
         }
 
         /// <summary>

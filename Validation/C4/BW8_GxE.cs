@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
 using DCAPST;
@@ -10,7 +11,20 @@ namespace Validation.C4
     [TestFixture]
     public class BW8_GxE
     {
+        private IServiceProvider provider;
         private double delta = 0.0000000000001;
+
+        [SetUp]
+        public void SetUp()
+        {
+            provider = Services.Register();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            provider.Dispose();
+        }
 
         // T1_short
         [TestCase(305, 18, 30, 16, 20.7000007629395, 1, 1.22749041428519, 6.04185654865598, 0.584505334838906, 2.31409494593741, 0.950150208937644, 0.950150208937644, 7.63420358736702, 2.31409494593741)]
@@ -50,29 +64,38 @@ namespace Validation.C4
             double expectedBIOshootDAYPot
         )
         {
-            var CPath = Initialise.NewSorghumParameters() as ICanopyParameters;
+            var geometry = provider.GetService<ISolarGeometry>() as SolarGeometryModel;
+            geometry.Latitude = latitude.ToRadians();
+            geometry.DayOfYear = DOY;
 
-            ISolarGeometry Solar = new SolarGeometryModel(DOY, latitude);
-            ISolarRadiation Radiation = new SolarRadiationModel(Solar, radn) { RPAR = 0.5 };
-            ITemperature Temperature = new TemperatureModel(Solar, maxT, minT) { AtmosphericPressure = 1.01325 };
+            var radiation = provider.GetService<ISolarRadiation>() as SolarRadiationModel;
+            radiation.Daily = radn;
+            radiation.RPAR = 0.5;
 
-            var PM = new PhotosynthesisModel(Solar, Radiation, Temperature, CPath);
+            var temperature = provider.GetService<ITemperature>() as TemperatureModel;
+            temperature.MaxTemperature = maxT;
+            temperature.MinTemperature = minT;
+            temperature.AtmosphericPressure = 1.01325;
+
+            var pathway = provider.GetService<IPathwayParameters>() as PathwayParameters;
+            pathway.UseSorghumValues();
+
+            var canopy = provider.GetService<ICanopyParameters>() as CanopyParameters;
+            canopy.UseSorghumValues();
+
+            var PM = provider.GetService<IPhotosynthesisModel>() as PhotosynthesisModel;
+            PM.Initialise(canopy);
             //Model.B = 0.409;     //BiomassConversionCoefficient - CO2-to-biomass conversion efficiency
             //Model.Radiation.RPAR = 0.5;     //RPAR - Fraction of PAR energy to that of the total solar
             //Model.Temperature.AtmosphericPressure = 1.01325;   
 
-            var dcaps = PM.DailyRun(lai, SLN, SWAvailable, RootShootRatio);
-            double BIOshootDAY = dcaps[0];            
-            double EcanDemand = dcaps[1];
-            double EcanSupply = dcaps[2];
-            double RadIntDcaps = dcaps[3];
-            double BIOshootDAYPot = dcaps[4];
+            PM.DailyRun(lai, SLN, SWAvailable, RootShootRatio);
 
-            Assert.AreEqual(expectedBIOshootDAY, BIOshootDAY, delta);
-            Assert.AreEqual(expectedEcanDemand, EcanDemand, delta);
-            Assert.AreEqual(expectedEcanSupply, EcanSupply, delta);
-            Assert.AreEqual(expectedRadIntDcaps, RadIntDcaps, delta);
-            Assert.AreEqual(expectedBIOshootDAYPot, BIOshootDAYPot, delta);
+            Assert.AreEqual(expectedBIOshootDAY, PM.ActualBiomass, delta);
+            Assert.AreEqual(expectedEcanDemand, PM.WaterDemanded, delta);
+            Assert.AreEqual(expectedEcanSupply, PM.WaterSupplied, delta);
+            Assert.AreEqual(expectedRadIntDcaps, PM.InterceptedRadiation, delta);
+            Assert.AreEqual(expectedBIOshootDAYPot, PM.PotentialBiomass, delta);
         }
     }
 }

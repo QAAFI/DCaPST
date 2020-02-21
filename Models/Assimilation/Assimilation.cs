@@ -50,7 +50,7 @@ namespace DCAPST
         {
             this.partial = partial;
             canopy = partial.Canopy;
-            pway = partial.Canopy.Pathway;
+            pway = partial.Pathway;
 
             pathways = new List<AssimilationPathway>()
             {

@@ -53,14 +53,9 @@ namespace DCAPST.Environment
         /// </summary>
         public double AirMolarDensity => ((AtmosphericPressure * 100000) / (287 * (AirTemperature + 273))) * (1000 / 28.966);
 
-        public TemperatureModel(ISolarGeometry solar, double maxTemperature, double minTemperature)
+        public TemperatureModel(ISolarGeometry solar)
         {
-            this.solar = solar ?? throw new Exception("The solar geometry model cannot be null");
-
-            if (maxTemperature < minTemperature) throw new Exception("The maximum cannot be less than the minimum");
-
-            MaxTemperature = maxTemperature;
-            MinTemperature = minTemperature;
+            this.solar = solar;
         }
 
         /// <summary>

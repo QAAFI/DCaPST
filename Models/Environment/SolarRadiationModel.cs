@@ -11,7 +11,7 @@ namespace DCAPST.Environment
         /// <summary>
         /// Models the solar geometry
         /// </summary>
-        private readonly ISolarGeometry solar;
+        private ISolarGeometry solar;
 
         /// <summary>
         /// Fraction of incoming radiation that is diffuse
@@ -21,12 +21,11 @@ namespace DCAPST.Environment
         /// <summary>
         /// The radiation measured across a day
         /// </summary>
-        private readonly double daily;
+        public double Daily { get; set; }
 
-        public SolarRadiationModel(ISolarGeometry solar, double dailyRadiation)
+        public SolarRadiationModel(ISolarGeometry solar)
         {
-            this.solar = solar ?? throw new Exception();
-            daily = (dailyRadiation >= 0) ? dailyRadiation : throw new Exception();
+            this.solar = solar;
         }
 
         /// <summary>
@@ -91,7 +90,7 @@ namespace DCAPST.Environment
             var factor = Math.Sin(theta) * Math.PI / 2;
 
             // TODO: Adapt this to use the timestep model
-            var radiation = daily / (solar.DayLength * 3600);
+            var radiation = Daily / (solar.DayLength * 3600);
             var incident = radiation * factor;
 
             if (incident < 0) return 0;

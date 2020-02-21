@@ -9,15 +9,6 @@ namespace ModelsTests.Environment.UnitTests
 {
     public static class TemperatureTestData
     {
-        public static IEnumerable<TestCaseData> ConstructorTestCases
-        {
-            get
-            {
-                yield return new TestCaseData(null, 1, 0);
-                yield return new TestCaseData(new Mock<ISolarGeometry>().Object, 0, 1);
-            }
-        }
-
         public static IEnumerable<TestCaseData> InvalidTimeTestCases
         {
             get

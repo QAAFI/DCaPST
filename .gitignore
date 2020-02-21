@@ -4,4 +4,11 @@ bin/
 obj/
 packages/
 *.dll
+*.xml
 DCaPST.pdb
+System.Threading.Tasks.Extensions.xml
+System.Runtime.CompilerServices.Unsafe.xml
+Microsoft.Extensions.DependencyInjection.xml
+Microsoft.Bcl.AsyncInterfaces.xml
+DCaPST.dll.config
+Microsoft.Extensions.DependencyInjection.Abstractions.xml

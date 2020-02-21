@@ -9,12 +9,6 @@ namespace ModelsTests.Environment.UnitTests
     [TestFixture]
     public class TemperatureTests
     {
-        [TestCaseSource(typeof(TemperatureTestData), "ConstructorTestCases")]
-        public void Constructor_IfInvalidArguments_ThrowsException(ISolarGeometry solar, double max, double min)
-        {
-            Assert.Throws<Exception>(() => new TemperatureModel(solar, max, min));
-        }
-
         [TestCaseSource(typeof(TemperatureTestData), "InvalidTimeTestCases")]
         public void UpdateAirTemperature_IfInvalidTime_ThrowsException(double time)
         {
@@ -24,7 +18,11 @@ namespace ModelsTests.Environment.UnitTests
             mock.Setup(s => s.DayLength).Returns(12.958782491824698);
 
             // Act
-            var temp = new TemperatureModel(mock.Object, 28, 16);
+            var temp = new TemperatureModel(mock.Object)
+            {
+                MaxTemperature = 28,
+                MinTemperature = 16
+            };
 
             // Assert
             Assert.Throws<Exception>(() => temp.UpdateAirTemperature(time));
@@ -39,7 +37,12 @@ namespace ModelsTests.Environment.UnitTests
             mock.Setup(s => s.DayLength).Returns(12.958782491824698).Verifiable();
 
             // Act
-            var temp = new TemperatureModel(mock.Object, 28, 16);
+            var temp = new TemperatureModel(mock.Object)
+            {
+                MaxTemperature = 28,
+                MinTemperature = 16
+            };
+
             temp.UpdateAirTemperature(time);
             var actual = temp.AirTemperature;
 

@@ -7,18 +7,6 @@ namespace ModelsTests.Environment.UnitTests
 {
     public static class SolarGeometryTestData
     {
-        public static IEnumerable<TestCaseData> ConstructorTestCases
-        {
-            get
-            {
-                yield return new TestCaseData(-16, 45.0);
-                yield return new TestCaseData(0, 45.0);
-                yield return new TestCaseData(392, 45.0);
-                yield return new TestCaseData(50, 95.0);
-                yield return new TestCaseData(-50, -95.0);
-            }
-        }
-
         public static IEnumerable<TestCaseData> SunAngleTestCases
         {
             get

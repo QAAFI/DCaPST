@@ -11,7 +11,7 @@ namespace DCAPST.Environment
         /// <summary>
         /// Geographic latitude (radians)
         /// </summary>
-        public double Latitude { get; private set; }
+        public double Latitude { get; set; }
 
         /// <summary>
         /// The angle between the solar disk and the equatorial plane
@@ -31,7 +31,7 @@ namespace DCAPST.Environment
         /// <summary>
         /// Day of the year
         /// </summary>
-        public double DayOfYear { get; private set; }        
+        public double DayOfYear { get; set; }        
         
         /// <summary>
         /// Time the sun is in the sky (hours)
@@ -48,19 +48,16 @@ namespace DCAPST.Environment
         /// </summary>
         public double Sunset { get; private set; }        
 
+        public SolarGeometryModel()
+        { }
+
         /// <summary>
         /// Initialise the solar geometry model
         /// </summary>
         /// <param name="dayOfYear">Current solar day (1-365)</param>
         /// <param name="latitude">Geographic latitude (degrees)</param>
-        public SolarGeometryModel(double dayOfYear, double latitude)
+        public void Initialise()
         {
-            if (dayOfYear < 1 || 366 < dayOfYear) throw new Exception("Day of year must lie between 1 and 366");
-            if (latitude < -90.0 || 90.0 < latitude) throw new Exception("Latitude cannot exceed 90 degrees");
-
-            DayOfYear = dayOfYear;
-            Latitude = latitude.ToRadians();
-
             SolarDeclination = CalcSolarDeclination();
             SunsetAngle = CalcSunsetAngle();
             DayLength = 2 * SunsetAngle.ToDegrees() / 15;

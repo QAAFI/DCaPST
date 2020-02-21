@@ -8,6 +8,6 @@ namespace DCAPST.Interfaces
 {
     public interface IPhotosynthesisModel
     {
-        double[] DailyRun(double lai, double SLN, double soilWater, double RootShootRatio, double MaxHourlyTRate = 100);
+        void DailyRun(double lai, double SLN, double soilWater, double RootShootRatio, double MaxHourlyTRate = 100);
     }
 }

@@ -52,7 +52,7 @@ namespace DCAPST
 
         public AssimilationPathway(IPartialCanopy partial)
         {
-            MesophyllCO2 = partial.Canopy.AirCO2 * partial.Canopy.Pathway.IntercellularToAirCO2Ratio;
+            MesophyllCO2 = partial.Canopy.AirCO2 * partial.Pathway.IntercellularToAirCO2Ratio;
             ChloroplasticCO2 = MesophyllCO2 + 20;
             ChloroplasticO2 = 210000;
 

@@ -2,6 +2,7 @@
 using System.Linq;
 
 using DCAPST.Canopy;
+using DCAPST.Environment;
 using DCAPST.Interfaces;
 
 namespace DCAPST
@@ -11,43 +12,58 @@ namespace DCAPST
         /// <summary>
         /// The solar geometry
         /// </summary>
-        public ISolarGeometry Solar { get; set; }
-        
+        private ISolarGeometry Solar { get; set; }
+
         /// <summary>
         /// The solar radiation
         /// </summary>
-        public ISolarRadiation Radiation { get; set; }
-        
+        private ISolarRadiation Radiation { get; set; }
+
         /// <summary>
         /// The environmental temperature
         /// </summary>
-        public ITemperature Temperature { get; set; }
+        private ITemperature Temperature { get; set; }
         
         /// <summary>
         /// The canopy undergoing photosynthesis
         /// </summary>
-        public ITotalCanopy Canopy { get; set; }
+        private ITotalCanopy Canopy { get; set; }
+
+        private IPathwayParameters pathway;
 
         /// <summary>
         /// Biochemical Conversion & Maintenance Respiration
         /// </summary>
         public double B { get; set; } = 0.409;
 
+        public double PotentialBiomass { get; private set; }
+        public double ActualBiomass { get; private set; }
+        public double WaterDemanded { get; private set; }
+        public double WaterSupplied { get; private set; }
+        public double InterceptedRadiation { get; private set; }
+
         private readonly double start = 6.0;
         private readonly double end = 18.0;
         private readonly double timestep = 1.0;
-        private readonly int iterations;
+        private int iterations;
 
-        public PhotosynthesisModel(ISolarGeometry solar, ISolarRadiation radiation, ITemperature temperature, ICanopyParameters canopy)
+        public PhotosynthesisModel(
+            ISolarGeometry solar, 
+            ISolarRadiation radiation, 
+            ITemperature temperature, 
+            IPathwayParameters pathway,
+            ITotalCanopy canopy)
         {
             Solar = solar;
             Radiation = radiation;
             Temperature = temperature;
+            this.pathway = pathway;
+            Canopy = canopy;
+        }
 
-            int layers = 1;
-            if (layers <= 0) throw new Exception("There must be at least 1 layer");
-
-            Canopy = new TotalCanopy(canopy, layers);
+        public void Initialise(ICanopyParameters canopy)
+        {
+            Solar.Initialise();
 
             iterations = (int)Math.Floor(1.0 + ((end - start) / timestep));
         }
@@ -56,7 +72,7 @@ namespace DCAPST
         /// Calculates the potential and actual biomass growth of a canopy across the span of a day,
         /// as well as the water requirements for both cases.
         /// </summary>
-        public double[] DailyRun(
+        public void DailyRun(
             double lai,
             double SLN, 
             double soilWater, 
@@ -68,27 +84,24 @@ namespace DCAPST
             // POTENTIAL CALCULATIONS
             // Note: In the potential case, we assume unlimited water and therefore supply = demand
             CalculatePotential(out double intercepted, out double[] assimilations, out double[] sunlitDemand, out double[] shadedDemand);
-            var waterSupply = sunlitDemand.Zip(shadedDemand, (x, y) => x + y).ToArray();
+            var waterDemands = sunlitDemand.Zip(shadedDemand, (x, y) => x + y).ToArray();
             var potential = assimilations.Sum();
-            var totalDemand = waterSupply.Sum();
+            var totalDemand = waterDemands.Sum();
 
             // ACTUAL CALCULATIONS
             // Limit water to supply available from Apsim
-            double maxHourlyT = Math.Min(waterSupply.Max(), MaxHourlyTRate);
-            waterSupply = waterSupply.Select(w => w > maxHourlyT ? maxHourlyT : w).ToArray();
+            double maxHourlyT = Math.Min(waterDemands.Max(), MaxHourlyTRate);
+            waterDemands = waterDemands.Select(w => w > maxHourlyT ? maxHourlyT : w).ToArray();
 
-            var limitedSupply = CalculateWaterSupplyLimits(soilWater, maxHourlyT, waterSupply);
+            var limitedSupply = CalculateWaterSupplyLimits(soilWater, maxHourlyT, waterDemands);
 
             var actual = (soilWater > totalDemand) ? potential : CalculateActual(limitedSupply, sunlitDemand, shadedDemand);
 
-            double[] results = new double[5];
-            results[0] = actual * 3600 / 1000000 * 44 * B / (1 + RootShootRatio);
-            results[1] = totalDemand;
-            results[2] = (soilWater < totalDemand) ? limitedSupply.Sum() : waterSupply.Sum();
-            results[3] = intercepted;
-            results[4] = potential * 3600 / 1000000 * 44 * B / (1 + RootShootRatio);
-
-            return results;
+            ActualBiomass = actual * 3600 / 1000000 * 44 * B / (1 + RootShootRatio);
+            PotentialBiomass = potential * 3600 / 1000000 * 44 * B / (1 + RootShootRatio);
+            WaterDemanded = totalDemand;
+            WaterSupplied = (soilWater < totalDemand) ? limitedSupply.Sum() : waterDemands.Sum();
+            InterceptedRadiation = intercepted;            
         }
 
         /// <summary>
@@ -114,10 +127,10 @@ namespace DCAPST
 
             bool[] tempConditions = new bool[4]
             {
-                temp > CPath.Pathway.ElectronTransportRateParams.TMax,
-                temp < CPath.Pathway.ElectronTransportRateParams.TMin,
-                temp > CPath.Pathway.MesophyllCO2ConductanceParams.TMax,
-                temp < CPath.Pathway.MesophyllCO2ConductanceParams.TMin
+                temp > pathway.ElectronTransportRateParams.TMax,
+                temp < pathway.ElectronTransportRateParams.TMin,
+                temp > pathway.MesophyllCO2ConductanceParams.TMax,
+                temp < pathway.MesophyllCO2ConductanceParams.TMin
             };
 
             bool invalidTemp = tempConditions.Any(b => b == true);

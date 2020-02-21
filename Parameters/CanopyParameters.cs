@@ -1,6 +1,6 @@
 ﻿using DCAPST.Interfaces;
 
-namespace DCAPST.Canopy
+namespace DCAPST
 {
     /// <summary>
     /// Implements the canopy parameters
@@ -9,7 +9,7 @@ namespace DCAPST.Canopy
     {
         public CanopyType Type { get; set; }
 
-        public IPathwayParameters Pathway { get; set; }
+        //public IPathwayParameters Pathway { get; set; }
 
         public double AirO2 { get; set; }
         public double AirCO2 { get; set; }        
