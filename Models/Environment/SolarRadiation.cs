@@ -6,7 +6,7 @@ namespace DCAPST.Environment
     /// <summary>
     /// Models the different forms of environmental radiation
     /// </summary>
-    public class SolarRadiationModel : ISolarRadiation
+    public class SolarRadiation : ISolarRadiation
     {
         /// <summary>
         /// Models the solar geometry
@@ -23,7 +23,7 @@ namespace DCAPST.Environment
         /// </summary>
         public double Daily { get; set; }
 
-        public SolarRadiationModel(ISolarGeometry solar)
+        public SolarRadiation(ISolarGeometry solar)
         {
             this.solar = solar;
         }

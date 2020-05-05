@@ -27,7 +27,7 @@ namespace ModelsTests.Environment.UnitTests
         {
             // Arrange            
             var mock = SetupMockSolar(time, sunAngle);
-            var radiation = new SolarRadiationModel(mock.Object)
+            var radiation = new SolarRadiation(mock.Object)
             {
                 Daily = 16.5,
                 RPAR = 0.5
@@ -44,7 +44,7 @@ namespace ModelsTests.Environment.UnitTests
         {
             // Arrange
             var mock = SetupMockSolar(time, sunAngle);
-            var radiation = new SolarRadiationModel(mock.Object)
+            var radiation = new SolarRadiation(mock.Object)
             {
                 Daily = 16.5,
                 RPAR = 0.5
@@ -64,7 +64,7 @@ namespace ModelsTests.Environment.UnitTests
         {
             // Arrange
             var mock = SetupMockSolar(time, sunAngle);
-            var radiation = new SolarRadiationModel(mock.Object)
+            var radiation = new SolarRadiation(mock.Object)
             {
                 Daily = 16.5,
                 RPAR = 0.5
@@ -84,7 +84,7 @@ namespace ModelsTests.Environment.UnitTests
         {
             // Arrange
             var mock = SetupMockSolar(time, sunAngle);
-            var radiation = new SolarRadiationModel(mock.Object)
+            var radiation = new SolarRadiation(mock.Object)
             {
                 Daily = 16.5,
                 RPAR = 0.5
@@ -104,7 +104,7 @@ namespace ModelsTests.Environment.UnitTests
         {
             // Arrange
             var mock = SetupMockSolar(time, sunAngle);
-            var radiation = new SolarRadiationModel(mock.Object)
+            var radiation = new SolarRadiation(mock.Object)
             {
                 Daily = 16.5,
                 RPAR = 0.5
@@ -124,7 +124,7 @@ namespace ModelsTests.Environment.UnitTests
         {
             // Arrange
             var mock = SetupMockSolar(time, sunAngle);
-            var radiation = new SolarRadiationModel(mock.Object)
+            var radiation = new SolarRadiation(mock.Object)
             {
                 Daily = 16.5,
                 RPAR = 0.5

@@ -6,7 +6,7 @@ namespace DCAPST.Environment
     /// <summary>
     /// Models the position of the sun
     /// </summary>
-    public class SolarGeometryModel : ISolarGeometry
+    public class SolarGeometry : ISolarGeometry
     {
         /// <summary>
         /// Geographic latitude (radians)
@@ -48,7 +48,7 @@ namespace DCAPST.Environment
         /// </summary>
         public double Sunset { get; private set; }        
 
-        public SolarGeometryModel()
+        public SolarGeometry()
         { }
 
         /// <summary>

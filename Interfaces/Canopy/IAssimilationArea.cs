@@ -1,14 +1,9 @@
-﻿namespace DCAPST.Interfaces
+﻿using DCAPST.Canopy;
+
+namespace DCAPST.Interfaces
 {
-    public interface IPartialCanopy
+    public interface IAssimilationArea
     {
-        /// <summary>
-        /// A collection of predefined parameters used by the canopy
-        /// </summary>
-        ICanopyParameters Canopy { get; }
-
-        IPathwayParameters Pathway { get; }
-
         /// <summary>
         /// The rates of various parameters at 25 Celsius
         /// </summary>
@@ -42,7 +37,7 @@
         /// <summary>
         /// Runs the photosynthesis calculations for the canopy
         /// </summary>
-        void DoPhotosynthesis(ITemperature temperature, WaterParameters Params);
+        void DoPhotosynthesis(ITemperature temperature, Transpiration transpiration);
     }
 
     public class ParameterRates

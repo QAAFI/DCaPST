@@ -10,15 +10,16 @@ namespace DCAPST
 
     public class AssimilationPathway
     {
+        ICanopyParameters Canopy;
+
+        IPathwayParameters Pathway;        
+
         /// <summary>
         /// The current pathway type
         /// </summary>
         public PathwayType Type { get; set; }
 
-        /// <summary>
-        /// Models how the leaf responds to different temperatures
-        /// </summary>
-        public LeafTemperatureResponseModel Leaf { get; set; }
+        public double Temperature { get; set; }
 
         /// <summary>
         /// The rate at which CO2 is assimilated
@@ -50,13 +51,31 @@ namespace DCAPST
         /// </summary>
         public double ChloroplasticO2 { get; set; }
 
-        public AssimilationPathway(IPartialCanopy partial)
-        {
-            MesophyllCO2 = partial.Canopy.AirCO2 * partial.Pathway.IntercellularToAirCO2Ratio;
-            ChloroplasticCO2 = MesophyllCO2 + 20;
-            ChloroplasticO2 = 210000;
+        /// <summary>
+        /// Bundle sheath conductance
+        /// </summary>
+        public double Gbs { get; private set; }
 
-            Leaf = new LeafTemperatureResponseModel(partial);
+        /// <summary>
+        /// PEP regeneration
+        /// </summary>
+        public double Vpr { get; private set; }        
+
+        public AssimilationPathway(ICanopyParameters canopy, IPathwayParameters pathway)
+        {
+            Canopy = canopy;
+            Pathway = pathway;            
+        }
+
+        public void SetConditions(double temperature, double lai)
+        {
+            Temperature = temperature;
+            Gbs = Pathway.BundleSheathConductance * lai;
+            Vpr = Pathway.PEPRegeneration * lai;
+
+            MesophyllCO2 = Canopy.AirCO2 * Pathway.IntercellularToAirCO2Ratio;
+            ChloroplasticCO2 = MesophyllCO2;
+            ChloroplasticO2 = 210000;
         }
     }
 }

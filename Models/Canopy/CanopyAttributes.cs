@@ -6,7 +6,7 @@ namespace DCAPST.Canopy
     /// <summary>
     /// Models a complete canopy
     /// </summary>
-    public class TotalCanopy : ITotalCanopy
+    public class CanopyAttributes : ICanopyAttributes
     {
         /// <summary>
         /// The initial parameters of the canopy
@@ -18,12 +18,12 @@ namespace DCAPST.Canopy
         /// <summary>
         /// The part of the canopy in sunlight
         /// </summary>
-        public IPartialCanopy Sunlit { get; private set; }
+        public IAssimilationArea Sunlit { get; private set; }
 
         /// <summary>
         /// The part of the canopy in shade
         /// </summary>
-        public IPartialCanopy Shaded { get; private set; }
+        public IAssimilationArea Shaded { get; private set; }
 
         /// <summary>
         /// Models radiation absorbed by the canopy
@@ -70,11 +70,12 @@ namespace DCAPST.Canopy
         /// </summary>
         public int Layers { get; set; } = 1;
 
-        public TotalCanopy(
+        public CanopyAttributes(
             ICanopyParameters canopy,
             IPathwayParameters pathway,
-            IPartialCanopy sunlit,
-            IPartialCanopy shaded)
+            IAssimilationArea sunlit,
+            IAssimilationArea shaded
+        )
         {
             Canopy = canopy;
             this.pathway = pathway;
@@ -94,10 +95,13 @@ namespace DCAPST.Canopy
 
             LAI = lai;
 
-            var SLNTop = sln * Canopy.SLNRatioTop;
-            LeafNTopCanopy = SLNTop * 1000 / 14;
+            var kg_to_g = 1000;
+            var molarMassNitrogen = 14;
 
-            var NcAv = sln * 1000 / 14;
+            var SLNTop = sln * Canopy.SLNRatioTop;
+            LeafNTopCanopy = SLNTop * kg_to_g / molarMassNitrogen;
+
+            var NcAv = sln * kg_to_g / molarMassNitrogen;
             NAllocation = -1 * Math.Log((NcAv - Canopy.MinimumN) / (LeafNTopCanopy - Canopy.MinimumN)) * 2;           
 
             Absorbed = new CanopyRadiation(Layers, LAI)

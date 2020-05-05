@@ -55,15 +55,15 @@ namespace Validation.CCM
             double expectedBIOshootDAYPot
         )
         {
-            var geometry = provider.GetService<ISolarGeometry>() as SolarGeometryModel;
+            var geometry = provider.GetService<ISolarGeometry>() as SolarGeometry;
             geometry.Latitude = latitude.ToRadians();
             geometry.DayOfYear = DOY;
 
-            var radiation = provider.GetService<ISolarRadiation>() as SolarRadiationModel;
+            var radiation = provider.GetService<ISolarRadiation>() as SolarRadiation;
             radiation.Daily = radn;
             radiation.RPAR = 0.5;
 
-            var temperature = provider.GetService<ITemperature>() as TemperatureModel;
+            var temperature = provider.GetService<ITemperature>() as Temperature;
             temperature.MaxTemperature = maxT;
             temperature.MinTemperature = minT;  
             temperature.AtmosphericPressure = 1.01325;
@@ -74,11 +74,7 @@ namespace Validation.CCM
             var pathway = provider.GetService<IPathwayParameters>() as PathwayParameters;
             pathway.UseWheatValues();
 
-            var PM = provider.GetService<IPhotosynthesisModel>() as PhotosynthesisModel;
-            PM.Initialise(canopy);
-            //Model.B = 0.409;     //BiomassConversionCoefficient - CO2-to-biomass conversion efficiency
-            //Model.Radiation.RPAR = 0.5;     //RPAR - Fraction of PAR energy to that of the total solar
-            //Model.Temperature.AtmosphericPressure = 1.01325;   
+            var PM = provider.GetService<IPhotosynthesisModel>() as DCAPSTModel;
 
             PM.DailyRun(lai, SLN, SWAvailable, RootShootRatio);
 

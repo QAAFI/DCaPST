@@ -18,7 +18,7 @@ namespace ModelsTests.Environment.UnitTests
             mock.Setup(s => s.DayLength).Returns(12.958782491824698);
 
             // Act
-            var temp = new TemperatureModel(mock.Object)
+            var temp = new Temperature(mock.Object)
             {
                 MaxTemperature = 28,
                 MinTemperature = 16
@@ -37,7 +37,7 @@ namespace ModelsTests.Environment.UnitTests
             mock.Setup(s => s.DayLength).Returns(12.958782491824698).Verifiable();
 
             // Act
-            var temp = new TemperatureModel(mock.Object)
+            var temp = new Temperature(mock.Object)
             {
                 MaxTemperature = 28,
                 MinTemperature = 16

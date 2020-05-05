@@ -7,7 +7,7 @@ using DCAPST.Interfaces;
 
 namespace DCAPST
 {
-    public class PhotosynthesisModel : IPhotosynthesisModel
+    public class DCAPSTModel : IPhotosynthesisModel
     {
         /// <summary>
         /// The solar geometry
@@ -27,9 +27,11 @@ namespace DCAPST
         /// <summary>
         /// The canopy undergoing photosynthesis
         /// </summary>
-        private ITotalCanopy Canopy { get; set; }
+        private ICanopyAttributes Canopy { get; set; }
 
         private IPathwayParameters pathway;
+
+        Transpiration Params;
 
         /// <summary>
         /// Biochemical Conversion & Maintenance Respiration
@@ -45,27 +47,24 @@ namespace DCAPST
         private readonly double start = 6.0;
         private readonly double end = 18.0;
         private readonly double timestep = 1.0;
+
         private int iterations;
 
-        public PhotosynthesisModel(
+        public DCAPSTModel(
             ISolarGeometry solar, 
             ISolarRadiation radiation, 
             ITemperature temperature, 
             IPathwayParameters pathway,
-            ITotalCanopy canopy)
+            ICanopyAttributes canopy,
+            Transpiration trans
+        )
         {
             Solar = solar;
             Radiation = radiation;
             Temperature = temperature;
             this.pathway = pathway;
             Canopy = canopy;
-        }
-
-        public void Initialise(ICanopyParameters canopy)
-        {
-            Solar.Initialise();
-
-            iterations = (int)Math.Floor(1.0 + ((end - start) / timestep));
+            Params = trans;
         }
 
         /// <summary>
@@ -78,8 +77,12 @@ namespace DCAPST
             double soilWater, 
             double RootShootRatio, 
             double MaxHourlyTRate = 100)
-        {            
+        {
+            iterations = (int)Math.Floor(1.0 + ((end - start) / timestep));
+
+            Solar.Initialise();
             Canopy.InitialiseDay(lai, SLN);
+            Params.Initialise(iterations);
 
             // POTENTIAL CALCULATIONS
             // Note: In the potential case, we assume unlimited water and therefore supply = demand
@@ -97,8 +100,10 @@ namespace DCAPST
 
             var actual = (soilWater > totalDemand) ? potential : CalculateActual(limitedSupply, sunlitDemand, shadedDemand);
 
-            ActualBiomass = actual * 3600 / 1000000 * 44 * B / (1 + RootShootRatio);
-            PotentialBiomass = potential * 3600 / 1000000 * 44 * B / (1 + RootShootRatio);
+            var hrs_to_seconds = 3600;
+
+            ActualBiomass = actual * hrs_to_seconds / 1000000 * 44 * B / (1 + RootShootRatio);
+            PotentialBiomass = potential * hrs_to_seconds / 1000000 * 44 * B / (1 + RootShootRatio);
             WaterDemanded = totalDemand;
             WaterSupplied = (soilWater < totalDemand) ? limitedSupply.Sum() : waterDemands.Sum();
             InterceptedRadiation = intercepted;            
@@ -196,24 +201,24 @@ namespace DCAPST
         /// </summary>
         public void DoTimestepUpdate(double maxHourlyT = -1, double sunFraction = 0, double shadeFraction = 0)
         {
-            var Params = new WaterParameters
-            {
-                maxHourlyT = maxHourlyT,
-                limited = false
-            };
-            if (maxHourlyT != -1) Params.limited = true;
+            Params.MaxHourlyT = maxHourlyT;            
+            
+            if (maxHourlyT != -1) 
+                Params.Limited = true;
+            else
+                Params.Limited = false;
 
             Canopy.DoTimestepAdjustment(Radiation);
 
-            var heat = Canopy.CalcBoundaryHeatConductance();
+            var totalHeat= Canopy.CalcBoundaryHeatConductance();
             var sunlitHeat = Canopy.CalcSunlitBoundaryHeatConductance();
 
             Params.BoundaryHeatConductance = sunlitHeat;
-            Params.fraction = sunFraction;
+            Params.Fraction = sunFraction;
             Canopy.Sunlit.DoPhotosynthesis(Temperature, Params);
 
-            Params.BoundaryHeatConductance = heat - sunlitHeat;
-            Params.fraction = shadeFraction;
+            Params.BoundaryHeatConductance = totalHeat - sunlitHeat;
+            Params.Fraction = shadeFraction;
             Canopy.Shaded.DoPhotosynthesis(Temperature, Params);
         }
 
@@ -255,13 +260,5 @@ namespace DCAPST
             }
             return demand.Select(d => d > averageDemandRate ? averageDemandRate : d).ToArray();
         }
-    }
-
-    public struct WaterParameters
-    {
-        public bool limited;
-        public double BoundaryHeatConductance;
-        public double maxHourlyT;
-        public double fraction;
     }
 }

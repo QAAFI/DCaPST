@@ -6,7 +6,7 @@ namespace DCAPST.Environment
     /// <summary>
     /// Models the environmental temperature
     /// </summary>
-    public class TemperatureModel : ITemperature
+    public class Temperature : ITemperature
     {
         /// <summary>
         /// The solar geometry
@@ -29,17 +29,17 @@ namespace DCAPST.Environment
         public double MinTemperature { get; set; }
 
         /// <summary>
-        /// Accounts for the delay in temperature response to the sun
+        /// Maximum temperature lag coefficient
         /// </summary>
         public double XLag { get; set; } = 1.8;
 
         /// <summary>
-        /// Accounts for the delay in temperature response to the sun
+        /// Night time temperature lag coefficient
         /// </summary>
         public double YLag { get; set; } = 2.2;
 
         /// <summary>
-        /// Accounts for the delay in temperature response to the sun
+        /// Minimum temperature lag coefficient
         /// </summary>
         public double ZLag { get; set; } = 1;
 
@@ -51,9 +51,28 @@ namespace DCAPST.Environment
         /// <summary>
         /// Air density in mols
         /// </summary>
-        public double AirMolarDensity => ((AtmosphericPressure * 100000) / (287 * (AirTemperature + 273))) * (1000 / 28.966);
+        public double AirMolarDensity
+        {
+            get
+            {
+                var atm_to_Pa = 100000;
+                var pressure = AtmosphericPressure * atm_to_Pa;
 
-        public TemperatureModel(ISolarGeometry solar)
+                var molarMassAir = 28.966;
+
+                var kg_to_g = 1000;
+
+                var specificHeat = 287;
+                var absolute0C = 273;
+
+                var numerator = pressure * kg_to_g / molarMassAir;
+                var denominator = specificHeat * (AirTemperature + absolute0C);
+
+                return numerator / denominator;
+            }
+        }
+
+        public Temperature(ISolarGeometry solar)
         {
             this.solar = solar;
         }

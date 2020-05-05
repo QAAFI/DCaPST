@@ -9,15 +9,6 @@ namespace ModelsTests.Environment.UnitTests
 {
     public class WaterInteractionTests
     {
-        [TestCaseSource(typeof(WaterInteractionTestData), "ConstructorTestCases")]
-        public void Constructor_IfInvalidArguments_ThrowsException(ITemperature temperature,double leafTemp, double gbh)
-        {
-            Assert.Throws<Exception>(() => { 
-                var water = new LeafWaterInteractionModel(temperature);
-                water.SetConditions(leafTemp, gbh);
-            });
-        }
-
         [Test]
         public void UnlimitedRtw_WhenCalculated_ReturnsExpectedValue()
         {
@@ -37,8 +28,8 @@ namespace ModelsTests.Environment.UnitTests
             var expected = 1262.0178666386046;
 
             // Act
-            var water = new LeafWaterInteractionModel(temperature.Object);
-            water.SetConditions(leafTemp, gbh);
+            var water = new WaterInteraction(temperature.Object);
+            water.SetConditions(leafTemp, gbh, 0.0);
             var actual = water.UnlimitedWaterResistance(A, Ca, Ci);
 
             // Assert
@@ -63,9 +54,9 @@ namespace ModelsTests.Environment.UnitTests
             var expected = 340.83946167121144;
 
             // Act
-            var water = new LeafWaterInteractionModel(temperature.Object);
-            water.SetConditions(leafTemp, gbh);
-            var actual = water.LimitedWaterResistance(available, rn);
+            var water = new WaterInteraction(temperature.Object);
+            water.SetConditions(leafTemp, gbh, rn);
+            var actual = water.LimitedWaterResistance(available);
 
             // Assert
             Assert.AreEqual(expected, actual);
@@ -89,9 +80,9 @@ namespace ModelsTests.Environment.UnitTests
             var expected = 0.080424818708166368;
 
             // Act
-            var water = new LeafWaterInteractionModel(temperature.Object);
-            water.SetConditions(leafTemp, gbh);
-            var actual = water.HourlyWaterUse(rtw, rn);
+            var water = new WaterInteraction(temperature.Object);
+            water.SetConditions(leafTemp, gbh, rn);
+            var actual = water.HourlyWaterUse(rtw);
 
             // Assert
             Assert.AreEqual(expected, actual);
@@ -113,8 +104,8 @@ namespace ModelsTests.Environment.UnitTests
             var expected = 0.1437732786549164;
 
             // Act
-            var water = new LeafWaterInteractionModel(temperature.Object);
-            water.SetConditions(leafTemp, gbh);
+            var water = new WaterInteraction(temperature.Object);
+            water.SetConditions(leafTemp, gbh, 0.0);
             var actual = water.TotalCO2Conductance(rtw);
 
             // Assert
@@ -139,9 +130,9 @@ namespace ModelsTests.Environment.UnitTests
             var expected = 28.732384941224293;
 
             // Act
-            var water = new LeafWaterInteractionModel(temperature.Object);
-            water.SetConditions(leafTemp, gbh);
-            var actual = water.LeafTemperature(rtw, rn);
+            var water = new WaterInteraction(temperature.Object);
+            water.SetConditions(leafTemp, gbh, rn);
+            var actual = water.LeafTemperature(rtw);
 
             // Assert
             Assert.AreEqual(expected, actual);

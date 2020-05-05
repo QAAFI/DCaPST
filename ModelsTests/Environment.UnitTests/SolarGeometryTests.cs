@@ -9,12 +9,12 @@ namespace ModelsTests.Environment.UnitTests
     [TestFixture]
     public class SolarGeometryTests
     {
-        private SolarGeometryModel solar;
+        private SolarGeometry solar;
 
         [SetUp]
         public void SetUp()
         {
-            solar = new SolarGeometryModel()
+            solar = new SolarGeometry()
             {
                 DayOfYear = 144,
                 Latitude = 18.3.ToRadians()
