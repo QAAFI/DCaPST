@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using DCAPST.Canopy;
 using DCAPST.Environment;
@@ -11,7 +7,8 @@ using DCAPST.Interfaces;
 namespace DCAPST.Utilities
 {
     /// <summary>
-    /// This classic exists to simplify the interaction with Apsim Classic
+    /// Provides utility to simplify the interaction with Apsim Classic,
+    /// by reducing the complexity of each manager script
     /// </summary>
     public static class Classic
     {

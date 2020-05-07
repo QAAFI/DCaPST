@@ -10,16 +10,19 @@ namespace DCAPST
         public AssimilationC4(ICanopyParameters canopy, IPathwayParameters parameters) : base(canopy, parameters)
         { }
 
+        /// <inheritdoc/>
         public override void UpdateIntercellularCO2(AssimilationPathway pathway, double gt, double waterUseMolsSecond)
         {
             pathway.IntercellularCO2 = ((gt - waterUseMolsSecond / 2.0) * canopy.AirCO2 - pathway.CO2Rate) / (gt + waterUseMolsSecond / 2.0);
         }
 
+        /// <inheritdoc/>
         protected override void UpdateMesophyllCO2(AssimilationPathway pathway, TemperatureResponse leaf)
         {
             pathway.MesophyllCO2 = pathway.IntercellularCO2 - pathway.CO2Rate / leaf.GmT;
         }
 
+        /// <inheritdoc/>
         protected override AssimilationFunction GetAc1Function(AssimilationPathway pathway, TemperatureResponse leaf)
         {
             var x = new double[9];
@@ -49,6 +52,7 @@ namespace DCAPST
             return func;
         }
 
+        /// <inheritdoc/>
         protected override AssimilationFunction GetAc2Function(AssimilationPathway pathway, TemperatureResponse leaf)
         {
             var x = new double[9];
@@ -77,7 +81,8 @@ namespace DCAPST
 
             return func;
         }
-
+        
+        /// <inheritdoc/>
         protected override AssimilationFunction GetAjFunction(AssimilationPathway pathway, TemperatureResponse leaf)
         {
             var x = new double[9];

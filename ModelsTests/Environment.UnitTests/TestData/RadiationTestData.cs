@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
-using DCAPST.Interfaces;
-using Moq;
 
 namespace ModelsTests.Environment.UnitTests
 {

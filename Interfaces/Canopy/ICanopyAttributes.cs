@@ -2,6 +2,9 @@
 
 namespace DCAPST.Interfaces
 {
+    /// <summary>
+    /// Represents attributes of a plant canopy
+    /// </summary>
     public interface ICanopyAttributes
     {
         /// <summary>

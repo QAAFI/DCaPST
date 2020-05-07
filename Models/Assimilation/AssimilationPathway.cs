@@ -15,10 +15,23 @@ namespace DCAPST
         IPathwayParameters Pathway;        
 
         /// <summary>
+        /// The canopy parameters
+        /// </summary>
+        ICanopyParameters Canopy;
+
+        /// <summary>
+        /// The pathway parameters
+        /// </summary>
+        IPathwayParameters Pathway;        
+
+        /// <summary>
         /// The current pathway type
         /// </summary>
         public PathwayType Type { get; set; }
 
+        /// <summary>
+        /// The current temperature of the pathway
+        /// </summary>
         public double Temperature { get; set; }
 
         /// <summary>
@@ -67,6 +80,11 @@ namespace DCAPST
             Pathway = pathway;            
         }
 
+        /// <summary>
+        /// Establishes the current conditions of the pathway
+        /// </summary>
+        /// <param name="temperature">The current temperature</param>
+        /// <param name="lai">The current leaf area index</param>
         public void SetConditions(double temperature, double lai)
         {
             Temperature = temperature;
@@ -74,7 +92,7 @@ namespace DCAPST
             Vpr = Pathway.PEPRegeneration * lai;
 
             MesophyllCO2 = Canopy.AirCO2 * Pathway.IntercellularToAirCO2Ratio;
-            ChloroplasticCO2 = MesophyllCO2;
+            ChloroplasticCO2 = 1000;
             ChloroplasticO2 = 210000;
         }
     }

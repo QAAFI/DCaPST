@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using DCAPST.Environment;
-using DCAPST.Interfaces;
+﻿using DCAPST.Interfaces;
 
 namespace DCAPST
 {
@@ -37,6 +33,7 @@ namespace DCAPST
             else return GetAjFunction(pathway, leaf);
         }
 
+        /// <inheritdoc/>
         public void UpdatePartialPressures(AssimilationPathway pathway, TemperatureResponse leaf, AssimilationFunction function)
         {
             UpdateMesophyllCO2(pathway, leaf);
@@ -44,9 +41,7 @@ namespace DCAPST
             UpdateChloroplasticCO2(pathway, function);
         }
 
-        /// <summary>
-        /// Updates the intercellular CO2 parameter
-        /// </summary>
+        /// <inheritdoc/>
         public virtual void UpdateIntercellularCO2(AssimilationPathway pathway, double gt, double waterUseMolsSecond) 
         { /*C4 & CCM overwrite this.*/ }
 

@@ -16,8 +16,6 @@ namespace DCAPST
        
         public double ExtraATPCost { get; set; }
 
-        // MM: Michaelis Menten
-        // PEPc: Phosphoenolpyruvate carboxylase
         public TemperatureResponseValues RubiscoCarboxylation { get; set; }
         public TemperatureResponseValues RubiscoOxygenation { get; set; }
         public TemperatureResponseValues RubiscoCarboxylationToOxygenation { get; set; }
@@ -31,7 +29,6 @@ namespace DCAPST
         public LeafTemperatureParameters MesophyllCO2ConductanceParams { get; set; }
 
         public double SpectralCorrectionFactor { get; set; }
-        // PS2: Photosystem 2
         public double PS2ActivityFraction { get; set; }
         public double PEPRegeneration { get; set; }
         public double BundleSheathConductance { get; set; }       

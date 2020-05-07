@@ -2,6 +2,9 @@
 
 namespace DCAPST.Interfaces
 {
+    /// <summary>
+    /// Represents an area of a canopy that can undergo assimilation
+    /// </summary>
     public interface IAssimilationArea
     {
         /// <summary>
@@ -24,15 +27,12 @@ namespace DCAPST.Interfaces
         /// </summary>
         double PhotonCount { get; set; }
 
-        /// <summary>
-        /// Rate of biomass conversion
+        /// Retrieves the current data values of the area in a seperate object
         /// </summary>
-        double CO2AssimilationRate { get; set; }
-
-        /// <summary>
-        /// How much water the canopy consumes
-        /// </summary>
-        double WaterUse { get; set; }        
+        /// <remarks>
+        /// This is intended to enable the extraction / tracking of data if necessary
+        /// </remarks>
+        AreaValues GetAreaValues();
 
         /// <summary>
         /// Runs the photosynthesis calculations for the canopy

@@ -10,13 +10,15 @@ namespace DCAPST.Canopy
     /// </summary>
     public class AssimilationArea : IAssimilationArea
     {   
+        /// <summary>
+        /// The assimilation model
+        /// </summary>
         IAssimilation assimilation;
 
         /// <summary>
         /// A group of parameters valued at the reference temperature of 25 Celsius
         /// </summary>
         public ParameterRates At25C { get; private set; } = new ParameterRates();
-
 
         /// <summary>
         /// The leaf area index of this part of the canopy
@@ -36,12 +38,12 @@ namespace DCAPST.Canopy
         /// <summary>
         /// CO2 assimilation rate over a period of time
         /// </summary>
-        public double CO2AssimilationRate { get; set; }
+        protected double CO2AssimilationRate { get; set; }
         
         /// <summary>
         /// Water used during photosynthesis
         /// </summary>
-        public double WaterUse { get; set; }        
+        protected double WaterUse { get; set; }        
 
         /// <summary>
         /// The possible assimilation pathways
@@ -131,8 +133,60 @@ namespace DCAPST.Canopy
                 {
                     p.CO2Rate = 0;
                     p.WaterUse = 0;
-                }
+                }                
             }
+        }
+
+        /// <inheritdoc/>
+        public AreaValues GetAreaValues()
+        {
+            var alpha = new AreaValues();
+
+            foreach (var p in pathways)
+            {
+                if (p.Type == PathwayType.Ac1) alpha.Ac1 = p.CO2Rate;
+                else if (p.Type == PathwayType.Ac2) alpha.Ac2 = p.CO2Rate;
+                else alpha.Aj = p.CO2Rate;
+            }
+
+            alpha.A = CO2AssimilationRate;
+            alpha.E = WaterUse;
+
+            return alpha;
+        }
+    }
+
+    /// <summary>
+    /// An instance of values present within an assimilation area
+    /// </summary>
+    public class AreaValues
+    {
+        public double A { get; set; }
+
+        public double Ac1 { get; set; }
+
+        public double Ac2 { get; set; }
+
+        public double Aj { get; set; }
+
+        public double gsCO2 { get; set; }
+
+        public double E { get; set; }
+
+        public override string ToString()
+        {
+            // This intentionally excludes A
+            return $"{Ac1:F6},{Ac2:F6},{Aj:F6},{gsCO2:F6},{E:F6}";
+        }
+
+        /// <summary>
+        /// Generates a .csv format header line
+        /// </summary>
+        /// <param name="pre">A prefix for each column</param>
+        /// <param name="suf">A suffix for each column</param>
+        public string Header(string pre = "", string suf = "")
+        {
+            return $"{pre}_Ac1_{suf}, {pre}_Ac2_{suf}, {pre}_Aj_{suf}, {pre}_gsCO2_{suf}, {pre}_E_{suf}";
         }
     }
 }

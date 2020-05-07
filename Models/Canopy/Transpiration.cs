@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using DCAPST.Interfaces;
 
 namespace DCAPST.Canopy
@@ -11,9 +6,13 @@ namespace DCAPST.Canopy
     public class Transpiration
     {
         /// <summary>
-        /// Parameters describing the canopy
+        /// The canopy parameters
         /// </summary>
         public ICanopyParameters Canopy { get; private set; }
+
+        /// <summary>
+        /// The pathway parameters
+        /// </summary>
 
         public IPathwayParameters Pathway { get; private set; }
 
@@ -27,17 +26,25 @@ namespace DCAPST.Canopy
         /// </summary>
         public TemperatureResponse Leaf { get; set; }
 
+        /// <summary>
+        /// If the transpiration rate is limited
+        /// </summary>
         public bool Limited { get; set; }
 
+        /// <summary>
+        /// The boundary heat conductance
+        /// </summary>
         public double BoundaryHeatConductance { get; set; }
 
-        public double MaxHourlyT { get; set; }
+        /// <summary>
+        /// Maximum transpiration rate
+        /// </summary>
+        public double MaxRate { get; set; }
 
+        /// <summary>
+        /// Fraction of water allocated
+        /// </summary>
         public double Fraction { get; set; }
-
-        public double[] SunlitDemand { get; private set; }
-
-        public double[] ShadedDemand { get; private set; }
 
         /// <summary>
         /// Resistance to water
@@ -57,12 +64,9 @@ namespace DCAPST.Canopy
             Leaf = leaf;            
         }
 
-        public void Initialise(int iterations)
-        {
-            SunlitDemand = new double[iterations];
-            ShadedDemand = new double[iterations];
-        }
-
+        /// <summary>
+        /// Sets the current conditions for transpiration
+        /// </summary>
         public void SetConditions(ParameterRates At25C, double temperature, double photons, double radiation)
         {
             Leaf.SetConditions(At25C, temperature, photons);
@@ -79,7 +83,7 @@ namespace DCAPST.Canopy
                 var g_to_kg = 1000;
                 var hrs_to_seconds = 3600;
 
-                pathway.WaterUse = MaxHourlyT * Fraction;
+                pathway.WaterUse = MaxRate * Fraction;
                 var WaterUseMolsSecond = pathway.WaterUse / molarMassWater * g_to_kg / hrs_to_seconds;
 
                 Resistance = Water.LimitedWaterResistance(pathway.WaterUse);
@@ -108,9 +112,11 @@ namespace DCAPST.Canopy
             assimilation.UpdatePartialPressures(pathway, Leaf, func);
         }
 
+        /// <summary>
+        /// Updates the temperature of a pathway
+        /// </summary>
         public void UpdateTemperature(AssimilationPathway pathway)
         {
-            // New leaf temperature
             var leafTemp = Water.LeafTemperature(Resistance);
             pathway.Temperature = (leafTemp + pathway.Temperature) / 2.0;            
         }

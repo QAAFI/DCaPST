@@ -1,5 +1,8 @@
 ﻿namespace DCAPST.Interfaces
 {
+    /// <summary>
+    /// Represents a model that simulates a leaf-water interaction
+    /// </summary>
     public interface IWaterInteraction
     {
         /// <summary>

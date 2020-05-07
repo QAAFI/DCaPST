@@ -12,28 +12,37 @@ namespace DCAPST.Environment
         /// <summary>
         /// Boltzmann's constant
         /// </summary>
-        private double kb = 0.0000000567;
+        private readonly double kb = 0.0000000567;
 
         /// <summary>
         /// Volumetric heat capacity of air
         /// </summary>
-        private double sAir = 1200;
+        private readonly double sAir = 1200;
 
         /// <summary>
         /// Psychrometric constant
         /// </summary>
-        private double g = 0.066;
+        private readonly double g = 0.066;
 
-        private double latentHeatOfVapourisation = 2447000;
+        /// <summary>
+        /// Heat of vapourisation of water
+        /// </summary>
+        private readonly double latentHeatOfVapourisation = 2447000;
 
-        /// <summary>Boundary water diffusion factor</summary>
-        private double m = 1.37;
+        /// <summary>
+        /// Boundary water diffusion factor
+        /// </summary>
+        private readonly double m = 1.37;
 
-        /// <summary>Stomata water diffusion factor</summary>
-        private double n = 1.6;
+        /// <summary>
+        /// Stomata water diffusion factor
+        /// </summary>
+        private readonly double n = 1.6;
 
-        /// <summary>Hours to seconds unit conversion</summary>
-        private double hrs_to_seconds = 3600;
+        /// <summary>
+        /// Hours to seconds unit conversion
+        /// </summary>
+        private readonly double hrs_to_seconds = 3600;
 
         #endregion
 

@@ -10,27 +10,32 @@ namespace DCAPST
         public AssimilationCCM(ICanopyParameters canopy, IPathwayParameters parameters) : base(canopy, parameters)
         { }
 
+        /// <inheritdoc/>
         public override void UpdateIntercellularCO2(AssimilationPathway pathway, double gt, double waterUseMolsSecond)
         {
             pathway.IntercellularCO2 = ((gt - waterUseMolsSecond / 2.0) * canopy.AirCO2 - pathway.CO2Rate) / (gt + waterUseMolsSecond / 2.0);
         }
 
+        /// <inheritdoc/>
         protected override void UpdateMesophyllCO2(AssimilationPathway pathway, TemperatureResponse leaf)
         {
             pathway.MesophyllCO2 = pathway.IntercellularCO2 - pathway.CO2Rate / leaf.GmT;
         }
 
+        /// <inheritdoc/>
         protected override void UpdateChloroplasticO2(AssimilationPathway pathway)
         {
             pathway.ChloroplasticO2 = parameters.PS2ActivityFraction * pathway.CO2Rate / (canopy.DiffusivitySolubilityRatio * pathway.Gbs) + canopy.AirO2;
         }
 
+        /// <inheritdoc/>
         protected override void UpdateChloroplasticCO2(AssimilationPathway pathway, AssimilationFunction func)
         {
             var a = (pathway.MesophyllCO2 * func.X[3] + func.X[4] - func.X[5] * pathway.CO2Rate - func.MesophyllRespiration - func.X[6]);
             pathway.ChloroplasticCO2 = pathway.MesophyllCO2 + a * func.X[7] / pathway.Gbs;
         }
 
+        /// <inheritdoc/>
         protected override AssimilationFunction GetAc1Function(AssimilationPathway pathway, TemperatureResponse leaf)
         {
             var x = new double[9];
@@ -60,6 +65,7 @@ namespace DCAPST
             return func;
         }
 
+        /// <inheritdoc/>
         protected override AssimilationFunction GetAc2Function(AssimilationPathway pathway, TemperatureResponse leaf)
         {
             var x = new double[9];
@@ -89,6 +95,7 @@ namespace DCAPST
             return func;
         }
 
+        /// <inheritdoc/>
         protected override AssimilationFunction GetAjFunction(AssimilationPathway pathway, TemperatureResponse leaf)
         {
             var x = new double[9];

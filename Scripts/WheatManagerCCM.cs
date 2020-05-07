@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using ModelFramework;
 
 using DCAPST;
@@ -22,7 +23,6 @@ public class Script
    [Output] public double TE; 
    [Output] public double RadIntDcaps; 
    [Output] public double BIOshootDAYPot;
-   [Output] public double SoilWater;
    
    public CanopyParameters CP;
    public PathwayParameters PP;
@@ -37,11 +37,17 @@ public class Script
    // The alternative photosystem model
    string PsModelName1;
 
+   private FileStream stream;
+   private StreamWriter writer;
+
    // The following event handler will be called once at the beginning of the simulation
    [EventHandler] public void OnInitialised()
    {
-      /* IMPORTANT - Do NOT change the order of these values */
-
+      string path = "IntervalValues.csv";
+      stream = new FileStream(path, FileMode.Create);
+      writer = new StreamWriter(stream);
+      
+      /* Do NOT change the order of these values */
       CP = Classic.SetUpCanopy(
          CanopyType.CCM, // Canopy type
          370, // CO2 partial pressure
@@ -59,8 +65,7 @@ public class Script
          1.3, // SLN ratio at canopy top
          14, // Minimum structural nitrogen
          1.5, // Wind speed
-         1.5//nd speed profile distribution coefficient
-         );
+         1.5); // Wind speed profile distribution coefficient
 
       PP = Classic.SetUpPathway(
          0, // Electron transport minimum temperature
@@ -101,8 +106,7 @@ public class Script
          1 * PsiFactor, // Max PEPc activity to SLN ratio (Changed in CCM)*********************0.373684157583268
          0.00412 * PsiFactor, // Mesophyll CO2 conductance to SLN ratio
          0.75, // Extra ATP cost (Changed in CCM)*********************
-         0.7 //Intercellular CO2 to air CO2 ratio
-         );
+         0.7); // Intercellular CO2 to air CO2 ratio         
 
       //Set the LAI trigger
       MyPaddock.Set("DCaPSTTriggerLAI", LAITrigger);      
@@ -110,6 +114,7 @@ public class Script
    }
    
    // This routine is called when the plant model wants us to do the calculation
+   private bool empty = true; // tracks if the header has been printed for the interval value data   
    [EventHandler] public void Ondodcapst() 
    {
       int DOY = 0;
@@ -135,7 +140,25 @@ public class Script
             
       // Model the photosynthesis
       DCAPSTModel DM = Classic.SetUpModel(CP, PP, DOY, latitude, maxT, minT, radn);
+      
+      // Optional values 
+      DM.PrintIntervalValues = false; // Switch to print extra data (default = false)
+      DM.Biolimit = 0;     // Biological transpiration limit of the crop (0 disables mechanism)
+      DM.Reduction = 0;    // Excess water reduction fraction for bio-limited transpiration (0 disables mechanism)
+
+      // Run the simulation
       DM.DailyRun(lai, SLN, SWAvailable, RootShootRatio);
+      
+      if (DM.PrintIntervalValues)
+      {
+         if (empty)
+         {
+            writer.WriteLine(DM.PrintResultHeader());
+            empty = false;
+         }
+         
+         writer.WriteLine(DM.IntervalResults);
+      }
       
       // Outputs
       RootShoot = RootShootRatio;
@@ -147,7 +170,6 @@ public class Script
       RUE = (RadIntDcaps == 0 ? 0 : BIOshootDAY / RadIntDcaps);
       TE = (EcanSupply == 0 ? 0 : BIOshootDAY / EcanSupply);
       BIOshootDAYPot = dcapst[4] = DM.PotentialBiomass;
-      SoilWater = SWAvailable;
    }
       
    // Set its default value to garbage so that we find out quickly

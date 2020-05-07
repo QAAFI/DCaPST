@@ -1,7 +1,12 @@
 ﻿namespace DCAPST.Interfaces
 {
+    /// <summary>
+    /// Represents a model that simulates solar geometry on a given day
+    /// </summary>
     public interface ISolarGeometry
     {
+        double DayOfYear { get; }
+
         /// <summary>
         /// Time of sunrise
         /// </summary>

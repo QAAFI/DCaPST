@@ -13,6 +13,9 @@ namespace DCAPST.Canopy
         /// </summary>
         public ICanopyParameters Canopy { get; set; }
 
+        /// <summary>
+        /// The pathway parameters
+        /// </summary>
         private IPathwayParameters pathway;
 
         /// <summary>
@@ -199,7 +202,7 @@ namespace DCAPST.Canopy
         }
 
         /// <summary>
-        /// 
+        /// Models a maximum rate calculation
         /// </summary>
         private double CalcMaximumRate(double psi, double coefficient)
         {

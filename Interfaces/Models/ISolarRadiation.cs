@@ -1,5 +1,8 @@
 ﻿namespace DCAPST.Interfaces
 {
+    /// <summary>
+    /// Represents a model that simulates incoming solar radiation
+    /// </summary>
     public interface ISolarRadiation
     {
         /// <summary>

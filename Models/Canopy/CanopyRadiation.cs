@@ -151,6 +151,9 @@ namespace DCAPST.Canopy
             return 1.0 - Math.Exp(-DirectExtinction * AccumLAI_1);
         }
 
+        /// <summary>
+        /// Models a function which finds the difference between two exponentials
+        /// </summary>
         public double CalcExp(double x)
         {
             var a = Math.Exp(-x * AccumLAI_0);

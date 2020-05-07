@@ -9,8 +9,6 @@ namespace DCAPST
     {
         public CanopyType Type { get; set; }
 
-        //public IPathwayParameters Pathway { get; set; }
-
         public double AirO2 { get; set; }
         public double AirCO2 { get; set; }        
         public double LeafAngle { get; set; }

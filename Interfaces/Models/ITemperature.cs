@@ -1,5 +1,8 @@
 ﻿namespace DCAPST.Interfaces
 {
+    /// <summary>
+    /// Represents an object that models temperature across a day
+    /// </summary>
     public interface ITemperature
     {
         /// <summary>

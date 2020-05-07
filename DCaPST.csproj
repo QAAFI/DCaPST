@@ -79,9 +79,7 @@
     <Compile Include="Interfaces\Canopy\IAssimilationArea.cs" />
     <Compile Include="Interfaces\Canopy\ICanopyAttributes.cs" />
     <Compile Include="Interfaces\IAssimilation.cs" />
-    <Compile Include="Interfaces\IClock.cs" />
     <Compile Include="Interfaces\IPhotosynthesisModel.cs" />
-    <Compile Include="Interfaces\IWeather.cs" />
     <Compile Include="Interfaces\Parameters\ICanopyParameters.cs" />
     <Compile Include="Interfaces\Parameters\IPathwayParameters.cs" />
     <Compile Include="Interfaces\Models\IWaterInteraction.cs" />
