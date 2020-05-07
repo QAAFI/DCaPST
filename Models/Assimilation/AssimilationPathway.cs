@@ -9,11 +9,7 @@ namespace DCAPST
     public enum PathwayType { Ac1, Ac2, Aj }
 
     public class AssimilationPathway
-    {
-        ICanopyParameters Canopy;
-
-        IPathwayParameters Pathway;        
-
+    {    
         /// <summary>
         /// The canopy parameters
         /// </summary>
