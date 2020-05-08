@@ -1,15 +1,16 @@
-﻿using DCAPST.Interfaces;
+﻿using DCAPST.Canopy;
+using DCAPST.Interfaces;
 using DCAPST;
 
-namespace Validation.C4
+namespace Validation.CCM
 {
-    public static class Initialise
-    {
-        public static void UseSorghumValues(this CanopyParameters c)
+    public static class WheatCCM
+    {        
+        public static void SetCanopy(CanopyParameters c)
         {
-            c.Type = CanopyType.C4;
+            c.Type = CanopyType.CCM;
 
-            c.AirCO2 = 363;
+            c.AirCO2 = 370;
             c.CurvatureFactor = 0.7;
             c.DiffusivitySolubilityRatio = 0.047;
             c.AirO2 = 210000;
@@ -22,7 +23,7 @@ namespace Validation.C4
             c.LeafAngle = 60;
             c.LeafScatteringCoeff = 0.15;
             c.LeafScatteringCoeffNIR = 0.8;
-            c.LeafWidth = 0.15;
+            c.LeafWidth = 0.05;
 
             c.SLNRatioTop = 1.3;
             c.MinimumN = 14;
@@ -31,44 +32,44 @@ namespace Validation.C4
             c.WindSpeedExtinction = 1.5;
         }
 
-        public static void UseSorghumValues(this PathwayParameters p)
+        public static void SetPathway(PathwayParameters p)
         {
-            double PsiFactor = 0.4;
+            double PsiFactor = 1.0;
 
             var j = new LeafTemperatureParameters()
             {
-                TMin = 0,
-                TOpt = 37.8649150880407,
-                TMax = 55,
-                C = 0.711229539802063,
-                Beta = 1
+                TMin = 0.0,
+                TOpt = 30.0,
+                TMax = 45.0,
+                C = 0.911017958600129,
+                Beta = 1.0
             };
 
             var g = new LeafTemperatureParameters()
             {
-                TMin = 0,
-                TOpt = 42,
-                TMax = 55,
-                C = 0.462820450976839,
-                Beta = 1,
+                TMin = 0.0,
+                TOpt = 29.2338417788683,
+                TMax = 45.0,
+                C = 0.875790608584141,
+                Beta = 1.0
             };
 
             var rubiscoCarboxylation = new TemperatureResponseValues()
             {
-                At25 = 1210,
-                Factor = 64200
+                At25 = 17.52 * 273.422964228666,
+                Factor = 93720.0
             };
 
             var rubiscoOxygenation = new TemperatureResponseValues()
             {
-                At25 = 292000,
-                Factor = 10500
+                At25 = 1.34 * 165824.064155384,
+                Factor = 33600.0
             };
 
             var rubiscoCarboxylationToOxygenation = new TemperatureResponseValues()
             {
-                At25 = 5.51328906454566,
-                Factor = 21265.4029552906
+                At25 = 13.07 * 4.59217066521612,
+                Factor = 35713.1987127717
             };
 
             var pepc = new TemperatureResponseValues()
@@ -79,7 +80,7 @@ namespace Validation.C4
 
             var rubiscoActivity = new TemperatureResponseValues()
             {
-                Factor = 78000
+                Factor = 65330.0
             };
 
             var respiration = new TemperatureResponseValues()
@@ -92,31 +93,35 @@ namespace Validation.C4
                 Factor = 57043.2677590512
             };
 
-            p.PEPRegeneration = 120;
+            p.PEPRegeneration = 400;
             p.SpectralCorrectionFactor = 0.15;
             p.PS2ActivityFraction = 0.1;
             p.BundleSheathConductance = 0.003;
 
-            p.MaxRubiscoActivitySLNRatio = 0.465 * PsiFactor;
-            p.MaxElectronTransportSLNRatio = 2.7 * PsiFactor;
+            p.MaxRubiscoActivitySLNRatio = 1.1 * PsiFactor;
+            p.MaxElectronTransportSLNRatio = 1.9484 * PsiFactor;
             p.RespirationSLNRatio = 0.0 * PsiFactor;
-            p.MaxPEPcActivitySLNRatio = 1.55 * PsiFactor;
-            p.MesophyllCO2ConductanceSLNRatio = 0.0135 * PsiFactor;
+            p.MaxPEPcActivitySLNRatio = 1.0 * PsiFactor;
+            p.MesophyllCO2ConductanceSLNRatio = 0.00412 * PsiFactor;
 
-            p.ExtraATPCost = 2;
-            p.MesophyllElectronTransportFraction = 0.4;
-            p.IntercellularToAirCO2Ratio = 0.45;
+            p.ExtraATPCost = 0.75;
+            p.IntercellularToAirCO2Ratio = 0.7;
 
             p.RubiscoCarboxylation = rubiscoCarboxylation;
             p.RubiscoOxygenation = rubiscoOxygenation;
             p.RubiscoCarboxylationToOxygenation = rubiscoCarboxylationToOxygenation;
-            p.PEPc = pepc;
             p.RubiscoActivity = rubiscoActivity;
-            p.Respiration = respiration;
+            p.PEPc = pepc;
             p.PEPcActivity = pepcActivity;
+            p.Respiration = respiration;
 
             p.ElectronTransportRateParams = j;
             p.MesophyllCO2ConductanceParams = g;
+
+            p.MesophyllElectronTransportFraction = p.ExtraATPCost / (3.0 + p.ExtraATPCost);
+            p.FractionOfCyclicElectronFlow = 0.25 * p.ExtraATPCost;
+            p.ATPProductionElectronTransportFactor = (3.0 - p.FractionOfCyclicElectronFlow) / (4.0 * (1.0 - p.FractionOfCyclicElectronFlow));
+
         }
     }
 }

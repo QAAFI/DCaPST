@@ -2,13 +2,13 @@
 using DCAPST.Interfaces;
 using DCAPST;
 
-namespace Validation.CCM
+namespace Validation.C3
 {
-    public static class Initialise
+    public static class WheatC3
     {        
-        public static void UseWheatValues(this CanopyParameters c)
+        public static void SetCanopy(CanopyParameters c)
         {
-            c.Type = CanopyType.CCM;
+            c.Type = CanopyType.C3;
 
             c.AirCO2 = 370;
             c.CurvatureFactor = 0.7;
@@ -32,7 +32,7 @@ namespace Validation.CCM
             c.WindSpeedExtinction = 1.5;
         }
 
-        public static void UseWheatValues(this PathwayParameters p)
+        public static void SetPathway(PathwayParameters p)
         {
             double PsiFactor = 1.0;
 
@@ -72,10 +72,11 @@ namespace Validation.CCM
                 Factor = 35713.1987127717
             };
 
+            // Unused in C3
             var pepc = new TemperatureResponseValues()
             {
-                At25 = 75,
-                Factor = 36300
+                At25 = 0,
+                Factor = 0
             };
 
             var rubiscoActivity = new TemperatureResponseValues()
@@ -93,15 +94,15 @@ namespace Validation.CCM
                 Factor = 57043.2677590512
             };
 
-            p.PEPRegeneration = 400;
+            p.PEPRegeneration = 0;
             p.SpectralCorrectionFactor = 0.15;
             p.PS2ActivityFraction = 0.1;
-            p.BundleSheathConductance = 0.5;
+            p.BundleSheathConductance = 0.003;
 
             p.MaxRubiscoActivitySLNRatio = 1.1 * PsiFactor;
-            p.MaxElectronTransportSLNRatio = 1.9484 * PsiFactor;
+            p.MaxElectronTransportSLNRatio = 1.85 * PsiFactor;
             p.RespirationSLNRatio = 0.0 * PsiFactor;
-            p.MaxPEPcActivitySLNRatio = 0.373684157583268 * PsiFactor;
+            p.MaxPEPcActivitySLNRatio = 1.0 * PsiFactor;
             p.MesophyllCO2ConductanceSLNRatio = 0.00412 * PsiFactor;
 
             p.ExtraATPCost = 0.75;
@@ -117,11 +118,6 @@ namespace Validation.CCM
 
             p.ElectronTransportRateParams = j;
             p.MesophyllCO2ConductanceParams = g;
-
-            p.MesophyllElectronTransportFraction = p.ExtraATPCost / (3.0 + p.ExtraATPCost);
-            p.FractionOfCyclicElectronFlow = 0.25 * p.ExtraATPCost;
-            p.ATPProductionElectronTransportFactor = (3.0 - p.FractionOfCyclicElectronFlow) / (4.0 * (1.0 - p.FractionOfCyclicElectronFlow));
-
         }
     }
 }
